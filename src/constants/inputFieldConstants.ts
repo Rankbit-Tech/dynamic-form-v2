@@ -6,14 +6,18 @@ import SelectFieldSettings from '@components/molecules/SelectFieldSettings';
 import TextFieldDesigner from '@components/molecules/TextFieldDesigner';
 import SelectFieldDesigner from '@components/molecules/SelectFieldDesigner';
 
-
+//constants
 import { fieldTypes } from "@constants/fieldTypes"
 
+//icons
+
+import { LucideIcon, TextCursorInput } from "lucide-react"
 interface InputFieldConfig {
     type: string;
+    icon: LucideIcon;
     propertyComponent: React.ElementType;
     designerComponent: React.ElementType;
-    construct: () => any;
+    construct: () => Record<string, unknown>;
 }
 
 const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
@@ -21,6 +25,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.TEXT,
         propertyComponent: TextFieldSettings,
         designerComponent: TextFieldDesigner,
+        icon: TextCursorInput,
         construct: () => ({
             id: Date.now().toString(),
             type: fieldTypes.TEXT,
@@ -34,6 +39,8 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.SELECT,
         propertyComponent: SelectFieldSettings,
         designerComponent: SelectFieldDesigner,
+        icon: TextCursorInput,
+
         construct: () => ({
             id: Date.now().toString(),
             type: fieldTypes.SELECT,
@@ -47,6 +54,8 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.SECTION,
         propertyComponent: SelectFieldSettings,
         designerComponent: SelectFieldDesigner,
+        icon: TextCursorInput,
+
         construct: () => ({
             id: Date.now().toString(),
             type: fieldTypes.SECTION,

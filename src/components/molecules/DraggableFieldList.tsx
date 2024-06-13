@@ -13,6 +13,7 @@ const DraggableFieldList: React.FC = () => {
                         id={key}
                         type={field.type}
                         label={field.type}
+                        icon={field.icon}
                     />
                 );
             })}
