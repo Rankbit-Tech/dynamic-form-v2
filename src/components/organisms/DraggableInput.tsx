@@ -1,8 +1,6 @@
-import React from 'react';
 import { useDraggable } from '@dnd-kit/core';
 import INPUT_FIELDS from '@constants/inputFieldConstants';
 import { LucideIcon } from 'lucide-react';
-import DragOverlay from '@components/molecules/DragOverlay';
 
 interface DraggableInputProps {
     id: string;
@@ -11,7 +9,7 @@ interface DraggableInputProps {
     icon: LucideIcon;
 }
 
-const DraggableInput: React.FC<DraggableInputProps> = ({ id, type, label, icon: Icon }) => {
+const DraggableInput = ({ id, type, label, icon: Icon }: DraggableInputProps) => {
     const { attributes, listeners, setNodeRef, isDragging } = useDraggable(
         {
             id,
@@ -22,18 +20,18 @@ const DraggableInput: React.FC<DraggableInputProps> = ({ id, type, label, icon: 
     );
 
     return (
-        <>
-            <div
-                ref={setNodeRef}
-                {...listeners}
-                {...attributes}
-                className="p-2 border rounded bg-white shadow"
-                style={{ opacity: isDragging ? 0.5 : 1 }}
-            >
-                <Icon />
-                {label}
-            </div>
-        </>
+
+        <div
+            ref={setNodeRef}
+            {...listeners}
+            {...attributes}
+            className="p-2 border rounded bg-white shadow"
+            style={{ opacity: isDragging ? 0.5 : 1 }}
+        >
+            <Icon />
+            {label}
+        </div>
+
     );
 };
 

@@ -1,31 +1,34 @@
-import { useState } from 'react';
+import { fieldTypes } from "@constants/fieldTypes";
+import { useFormStore } from "@store/useFormStore";
 
-interface InputField {
-    id: string;
-    type: string;
-    label: string;
-    name: string;
-    placeholder?: string;
-    validations?: string[];
-}
+type record = Record<string, any>
+type recordArray = Record<string, any>[]
+const log = console.log
 
-interface FormSection {
-    id: string;
-    title: string;
-    fields: InputField[];
-}
 
 const useFormBuilder = () => {
 
+    const { setSection } = useFormStore(state => state)
 
-    const handleDragEnd = (event: Record<string, any>) => {
+    const addStepper = (active: record) => {
+        setSection((fields: recordArray) => {
+            return [...fields, active]
+        })
+    }
+
+    const handleDragEnd = (event: record) => {
         const { active, over } = event
-        console.log({ active, over })
 
         if (!active || !over) return
         if (active.id == over.id) return
 
+        const activeData = active.data.current;
+        const overData = over.data.current;
+        const activeType = active.data.current.type;
 
+        if (over.id == "droppable" && activeType == fieldTypes.STEPPER) {
+            addStepper(activeData)
+        }
     }
 
     return {
