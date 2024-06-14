@@ -27,7 +27,7 @@ const DraggableInput: React.FC<DraggableInputProps> = ({ id, type, label, icon: 
                 ref={setNodeRef}
                 {...listeners}
                 {...attributes}
-                className="p-2 border rounded bg-white shadow"
+                className="bg-gray-800 p-3 rounded text-white mb-4 cursor-pointer flex items-center gap-7"
                 style={{ opacity: isDragging ? 0.5 : 1 }}
             >
                 <Icon />
