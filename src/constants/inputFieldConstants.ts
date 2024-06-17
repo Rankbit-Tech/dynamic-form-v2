@@ -29,7 +29,6 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         designerComponent: TextFieldDesigner,
         icon: TextCursorInput,
         construct: () => ({
-            id: Date.now().toString(),
             type: fieldTypes.TEXT,
             label: '',
             name: '',
@@ -44,7 +43,6 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         icon: TextCursorInput,
 
         construct: () => ({
-            id: Date.now().toString(),
             type: fieldTypes.SELECT,
             label: '',
             name: '',
@@ -59,7 +57,6 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         icon: TextCursorInput,
 
         construct: () => ({
-            id: Date.now().toString(),
             type: fieldTypes.SECTION,
             cols: 1,
             isCollapsable: true
@@ -72,7 +69,6 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         icon: TextCursorInput,
 
         construct: () => ({
-            id: Date.now().toString(),
             type: fieldTypes.STEPPER,
             isCollapse: false
         })

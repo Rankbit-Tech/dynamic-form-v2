@@ -12,7 +12,7 @@ interface FormState {
     sections: record;
     selectedField: record | null;
     setSection: (data: record) => void;
-    selectField: (data: record) => void
+    setSelected: (data: record | null) => void
 }
 
 type updateFuncType = {
@@ -29,7 +29,7 @@ export const useFormStore = create<FormState>()(
                     state.sections = callback(get().sections);
                 })
             },
-            selectField: (data: record) => {
+            setSelected: (data: record | null) => {
                 set((state: FormState) => {
                     state.selectedField = data
                 })

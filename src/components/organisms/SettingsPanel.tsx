@@ -6,7 +6,7 @@ const SettingsPanel: React.FC = () => {
     const { selectedField } = useFormStore();
 
     if (!selectedField) return <div>Select a field to edit its properties.</div>;
-
+    console.log({ selectedField })
     const PropertyComponent = INPUT_FIELDS[selectedField.type].propertyComponent;
 
     return (

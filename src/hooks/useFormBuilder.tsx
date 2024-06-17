@@ -18,7 +18,7 @@ const useFormBuilder = () => {
 
     const handleDragEnd = (event: record) => {
         const { active, over } = event
-
+        log({ active, over })
         if (!active || !over) return
         if (active.id == over.id) return
 
