@@ -1,4 +1,5 @@
 import { fieldTypes } from "@constants/fieldTypes";
+import { arrayMove } from "@dnd-kit/sortable";
 import { useFormStore } from "@store/useFormStore";
 
 type record = Record<string, any>
@@ -8,17 +9,31 @@ const log = console.log
 
 const useFormBuilder = () => {
 
-    const { setSection } = useFormStore(state => state)
+    const { setSection, setSteps, steps } = useFormStore(state => state)
+
 
     const addStepper = (active: record) => {
-        setSection((fields: recordArray) => {
+        setSteps((fields: recordArray) => {
             return [...fields, active]
+        })
+    }
+
+    const insertAtIndex = (over: record, active: record, func: any, position: string) => {
+        func((fields: recordArray) => {
+            const newElement = [...fields]
+            const index = fields.findIndex(field => field.id == over.id)
+
+            if (position === "top") {
+                newElement.splice(index, 0, active);
+            } else if (position === "bottom") {
+                newElement.splice(index + 1, 0, active);
+            }
+            return newElement
         })
     }
 
     const handleDragEnd = (event: record) => {
         const { active, over } = event
-        log({ active, over })
         if (!active || !over) return
         if (active.id == over.id) return
 
@@ -28,6 +43,11 @@ const useFormBuilder = () => {
 
         if (over.id == "droppable" && activeType == fieldTypes.STEPPER) {
             addStepper(activeData)
+        }
+
+        if ((overData.position == "top" || overData.position == "bottom") && activeType == fieldTypes.STEPPER) {
+            const { position } = overData
+            insertAtIndex(overData, activeData, setSteps, position)
         }
     }
 

@@ -3,7 +3,7 @@ import { cn } from "@utils/cn";
 import { Card } from "antd"
 
 const StepperDesigner = ({ field }: any) => {
-    console.log(field)
+
     const topHalf = useDroppable({
         id: `top-stepper-${field.id}`,
         data: {
@@ -24,20 +24,17 @@ const StepperDesigner = ({ field }: any) => {
 
 
     return (
-        <>
-            <div className="relative flex flex-col text-foreground hover:cursor-pointer rounded-md ring-1 ring-accent ring-inset">
-                <div ref={topHalf.setNodeRef} className={cn("absolute w-full h-1/2 rounded-t-md -top-[10px]", {
-                    "bg-gray-500": topHalf.isOver
-                })} />
-                <div ref={bottomHalf.setNodeRef} className={cn("absolute w-full -bottom-[10px] h-1/2 rounded-b-md", {
-                    "bg-gray-500": bottomHalf.isOver
+        <div className="relative flex flex-col text-foreground hover:cursor-pointer rounded-md">
+            <div ref={topHalf.setNodeRef} className="absolute w-full top-0 h-[50px] rounded-t-md" />
+            <div ref={bottomHalf.setNodeRef} className="absolute w-full bottom-0 h-[50px] rounded-b-md" />
 
-                })} />
-                <Card title="step 1" className="shadow">
+            {topHalf.isOver && <div className="absolute top-0 w-full z-10 rounded-md h-[7px] bg-gray-700 rounded-b-none" />}
+            <Card title="step 1" className="shadow">
 
-                </Card>
-            </div>
-        </>
+            </Card>
+            {bottomHalf.isOver && <div className="absolute bottom-0 w-full rounded-md h-[7px] bg-gray-700 rounded-t-none" />}
+
+        </div>
     )
 }
 

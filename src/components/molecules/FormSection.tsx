@@ -10,7 +10,7 @@ interface FormSectionProps {
 const FormSection: React.FC<FormSectionProps> = ({ field }) => {
     const { setSelected } = useFormStore();
 
-    const { type } = field || {}
+    const { type, id } = field || {}
 
     const DesignerComponent = INPUT_FIELDS[type].designerComponent;
 
@@ -20,7 +20,7 @@ const FormSection: React.FC<FormSectionProps> = ({ field }) => {
     }
     return (
         <div
-            key={field.id}
+            key={id}
             onClick={handleSelectField}
             className="cursor-pointer"
         >
