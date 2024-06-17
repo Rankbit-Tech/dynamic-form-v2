@@ -10,7 +10,6 @@ const DraggableFieldList: React.FC = () => {
                 return (
                     <DraggableInput
                         key={key}
-                        id={key}
                         type={field.type}
                         label={field.type}
                         icon={field.icon}

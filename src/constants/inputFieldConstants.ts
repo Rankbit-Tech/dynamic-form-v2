@@ -12,6 +12,8 @@ import { fieldTypes } from "@constants/fieldTypes"
 //icons
 
 import { LucideIcon, TextCursorInput, CircleChevronUp, Rows2 } from "lucide-react"
+import StepperDesigner from '@components/molecules/StepperDesigner';
+
 interface InputFieldConfig {
     type: string;
     icon: LucideIcon;
@@ -27,7 +29,6 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         designerComponent: TextFieldDesigner,
         icon: TextCursorInput,
         construct: () => ({
-            id: Date.now().toString(),
             type: fieldTypes.TEXT,
             label: '',
             name: '',
@@ -42,7 +43,6 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         icon: CircleChevronUp,
 
         construct: () => ({
-            id: Date.now().toString(),
             type: fieldTypes.SELECT,
             label: '',
             name: '',
@@ -57,12 +57,21 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         icon: Rows2,
 
         construct: () => ({
-            id: Date.now().toString(),
             type: fieldTypes.SECTION,
             cols: 1,
-            options: [],
-            validations: [],
+            isCollapsable: true
         }),
+    },
+    [fieldTypes.STEPPER]: {
+        type: fieldTypes.STEPPER,
+        propertyComponent: SelectFieldDesigner,
+        designerComponent: StepperDesigner,
+        icon: TextCursorInput,
+
+        construct: () => ({
+            type: fieldTypes.STEPPER,
+            isCollapse: false
+        })
     }
 
 };

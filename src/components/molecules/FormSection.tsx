@@ -2,28 +2,31 @@ import React from 'react';
 import { useFormStore } from '@store/useFormStore';
 import INPUT_FIELDS from '@constants/inputFieldConstants';
 
-const FormSection: React.FC<{ sectionId: string }> = ({ sectionId }) => {
-    const { sections, selectField } = useFormStore();
-    const section = sections.find((sec) => sec.id === sectionId);
 
-    if (!section) return null;
+interface FormSectionProps {
+    field: Record<string, any>
+}
 
+const FormSection: React.FC<FormSectionProps> = ({ field }) => {
+    const { setSelected } = useFormStore();
+
+    const { type } = field || {}
+
+    const DesignerComponent = INPUT_FIELDS[type].designerComponent;
+
+    const handleSelectField = (e: React.SyntheticEvent) => {
+        e.stopPropagation()
+        setSelected(field)
+    }
     return (
-        <div>
-            <h3>{section.title}</h3>
-            {section.fields.map((field) => {
-                const DesignerComponent = INPUT_FIELDS[field.type].designerComponent;
-                return (
-                    <div
-                        key={field.id}
-                        onClick={() => selectField(field)}
-                        className="cursor-pointer"
-                    >
-                        <DesignerComponent {...field} />
-                    </div>
-                );
-            })}
+        <div
+            key={field.id}
+            onClick={handleSelectField}
+            className="cursor-pointer"
+        >
+            <DesignerComponent field={field} />
         </div>
+
     );
 };
 

@@ -1,39 +1,39 @@
-import React from 'react';
 import { useDraggable } from '@dnd-kit/core';
 import INPUT_FIELDS from '@constants/inputFieldConstants';
 import { LucideIcon } from 'lucide-react';
-import DragOverlay from '@components/molecules/DragOverlay';
+import { nanoid } from 'nanoid';
 
 interface DraggableInputProps {
-    id: string;
     type: string;
     label: string;
     icon: LucideIcon;
 }
 
-const DraggableInput: React.FC<DraggableInputProps> = ({ id, type, label, icon: Icon }) => {
+const DraggableInput = ({ type, label, icon: Icon }: DraggableInputProps) => {
+
     const { attributes, listeners, setNodeRef, isDragging } = useDraggable(
         {
-            id,
+            id: "Stepper",
             data: {
+                id: nanoid(),
                 ...INPUT_FIELDS[type].construct()
             }
         }
     );
 
     return (
-        <>
-            <div
-                ref={setNodeRef}
-                {...listeners}
-                {...attributes}
-                className="bg-gray-800 p-3 rounded text-white mb-4 cursor-pointer flex items-center gap-7"
-                style={{ opacity: isDragging ? 0.5 : 1 }}
-            >
-                <Icon />
-                {label}
-            </div>
-        </>
+
+        <div
+            ref={setNodeRef}
+            {...listeners}
+            {...attributes}
+            className="p-2 border rounded bg-white shadow"
+            style={{ opacity: isDragging ? 0.5 : 1 }}
+        >
+            <Icon />
+            {label}
+        </div>
+
     );
 };
 
