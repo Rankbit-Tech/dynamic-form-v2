@@ -11,7 +11,7 @@ import { fieldTypes } from "@constants/fieldTypes"
 
 //icons
 
-import { LucideIcon, TextCursorInput } from "lucide-react"
+import { LucideIcon, TextCursorInput, CircleChevronUp, Rows2 } from "lucide-react"
 interface InputFieldConfig {
     type: string;
     icon: LucideIcon;
@@ -39,7 +39,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.SELECT,
         propertyComponent: SelectFieldSettings,
         designerComponent: SelectFieldDesigner,
-        icon: TextCursorInput,
+        icon: CircleChevronUp,
 
         construct: () => ({
             id: Date.now().toString(),
@@ -54,7 +54,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.SECTION,
         propertyComponent: SelectFieldSettings,
         designerComponent: SelectFieldDesigner,
-        icon: TextCursorInput,
+        icon: Rows2,
 
         construct: () => ({
             id: Date.now().toString(),
@@ -64,6 +64,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             validations: [],
         }),
     }
+
 };
 
 export default INPUT_FIELDS;
