@@ -1,10 +1,10 @@
 import React from 'react';
 import { useFormStore } from '@store/useFormStore';
 import DraggableFieldList from '@components/molecules/DraggableFieldList';
-import INPUT_FIELDS from '@constants/inputFieldConstants';
 import DroppableZone from '@components/molecules/DroppableZone';
-import { X } from 'lucide-react';
+import { ImCross } from "react-icons/im";
 import DragOverlayContainer from '@components/molecules/DragOverlayContainer';
+
 
 const FormBuilderTemplate: React.FC = () => {
     const { selectedField, setSelected } = useFormStore();
@@ -24,7 +24,7 @@ const FormBuilderTemplate: React.FC = () => {
                     <div>
                         <div className='flex justify-between border-b py-2'>
                             <h3 className='font-semibold'>Field Settings</h3>
-                            <X className='text-lg hover:text-red-500 cursor-pointer' onClick={handeOutSideClick} />
+                            <ImCross className='text-lg hover:text-red-500 cursor-pointer' onClick={handeOutSideClick} />
                         </div>
                     </div>
                 ) : (
