@@ -7,7 +7,6 @@ import { X } from 'lucide-react';
 
 const FormBuilderTemplate: React.FC = () => {
     const { selectedField, setSelected } = useFormStore();
-    console.log(selectedField)
     const handeOutSideClick = (e: React.SyntheticEvent) => {
         e.stopPropagation()
         setSelected(null)

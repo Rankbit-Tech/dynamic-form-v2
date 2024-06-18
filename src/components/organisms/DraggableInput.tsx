@@ -10,10 +10,9 @@ interface DraggableInputProps {
 }
 
 const DraggableInput = ({ type, label, icon: Icon }: DraggableInputProps) => {
-
     const { attributes, listeners, setNodeRef, isDragging } = useDraggable(
         {
-            id: "Stepper",
+            id: `dragable-input-${type}`,
             data: {
                 id: nanoid(),
                 ...INPUT_FIELDS[type].construct()

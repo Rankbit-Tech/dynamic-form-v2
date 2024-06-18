@@ -1,9 +1,26 @@
+import { fieldTypes } from "@constants/fieldTypes";
 import { useDroppable } from "@dnd-kit/core"
+import { useFormStore } from "@store/useFormStore";
 import { cn } from "@utils/cn";
 import { Card } from "antd"
+import SectionDesigner from "./SectionDesigner";
+import DragAreaSeperator from "@components/atoms/DragAreaSeperator";
+import DragAreaSplitter from "@components/atoms/DragAreaSplitter";
 
 const StepperDesigner = ({ field }: any) => {
-    console.log(field)
+
+    const sections = useFormStore(state => {
+        return state.sections.filter((section: typeof state.sections) => section.stepId == field.id)
+    });
+
+    const step = useDroppable({
+        id: `step-drop-${field.id}`,
+        data: {
+            id: field.id,
+            type: fieldTypes.STEPPER
+        }
+
+    });
     const topHalf = useDroppable({
         id: `top-stepper-${field.id}`,
         data: {
@@ -18,26 +35,28 @@ const StepperDesigner = ({ field }: any) => {
         data: {
             id: field.id,
             position: "bottom",
-            tyle: "stepDropable"
+            type: "stepDropable"
         }
     });
 
-
     return (
-        <>
-            <div className="relative flex flex-col text-foreground hover:cursor-pointer rounded-md ring-1 ring-accent ring-inset">
-                <div ref={topHalf.setNodeRef} className={cn("absolute w-full h-1/2 rounded-t-md -top-[10px]", {
-                    "bg-gray-500": topHalf.isOver
-                })} />
-                <div ref={bottomHalf.setNodeRef} className={cn("absolute w-full -bottom-[10px] h-1/2 rounded-b-md", {
-                    "bg-gray-500": bottomHalf.isOver
+        <div className="relative flex flex-col text-foreground hover:cursor-pointer rounded-md">
+            <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
+            <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
+                <Card title="step 1" className={cn("shadow", {
+                    "bg-gray-300": step.isOver
+                })} ref={step.setNodeRef}>
 
-                })} />
-                <Card title="step 1" className="shadow">
+                    {
+                        sections?.length > 0 && sections.map((section: any) => (
+                            <SectionDesigner section={section} />
+                        ))
+                    }
 
                 </Card>
-            </div>
-        </>
+            </DragAreaSeperator>
+
+        </div>
     )
 }
 
