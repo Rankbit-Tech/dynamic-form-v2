@@ -40,33 +40,64 @@ const useFormBuilder = () => {
         const activeData = active.data.current;
         const overData = over.data.current;
         const activeType = active.data.current.type;
-        log({ over, activeType })
         if (over.id == "droppable" && activeType == fieldTypes.STEPPER) {
             addAnyFields(activeData, setSteps)
         }
 
-        if ((overData.position == "top" || overData.position == "bottom") && activeType == fieldTypes.STEPPER) {
-            const { position } = overData
-            insertAtIndex(overData, activeData, setSteps, position)
-        }
+
 
         if (overData.type == fieldTypes.STEPPER) {
 
-            switch (activeType) {
-                case fieldTypes.SECTION:
-                    activeData.stepId = overData.id
-                    addAnyFields(activeData, setSection)
-                    return
 
-                case activeType.TEXT:
-                    activeData.sectionId = overData.id
-                    addAnyFields(activeData, setFields)
-                    return
+            if ((overData?.position == "top" || overData?.position == "bottom")) {
+                const { position } = overData
+                insertAtIndex(overData, activeData, setSteps, position)
+            } else {
+                activeData.stepId = overData.id
 
-                default:
-                    break;
+                switch (activeType) {
+                    case fieldTypes.SECTION:
+                        addAnyFields(activeData, setSection)
+                        return
+
+                    case fieldTypes.TEXT:
+                        addAnyFields(activeData, setFields)
+                        return
+
+                    default:
+                        break;
+                }
             }
+
+
         }
+
+        if (overData.type == fieldTypes.SECTION) {
+
+            if ((overData?.position == "top" || overData?.position == "bottom")) {
+                const { position } = overData
+                insertAtIndex(overData, activeData, setSteps, position)
+            } else {
+                activeData.sectionId = overData.id
+
+                switch (activeType) {
+                    case fieldTypes.SECTION:
+                        addAnyFields(activeData, setSection)
+                        return
+
+                    case fieldTypes.TEXT:
+                        addAnyFields(activeData, setFields)
+                        return
+
+                    default:
+                        break;
+                }
+            }
+
+
+        }
+
+
 
 
     }

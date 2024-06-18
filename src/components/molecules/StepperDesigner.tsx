@@ -4,6 +4,8 @@ import { useFormStore } from "@store/useFormStore";
 import { cn } from "@utils/cn";
 import { Card } from "antd"
 import SectionDesigner from "./SectionDesigner";
+import DragAreaSeperator from "@components/atoms/DragAreaSeperator";
+import DragAreaSplitter from "@components/atoms/DragAreaSplitter";
 
 const StepperDesigner = ({ field }: any) => {
 
@@ -36,28 +38,23 @@ const StepperDesigner = ({ field }: any) => {
             type: "stepDropable"
         }
     });
-    console.log({ sections })
-
 
     return (
         <div className="relative flex flex-col text-foreground hover:cursor-pointer rounded-md">
-            <div ref={topHalf.setNodeRef} className="absolute w-full top-0 h-[10px] rounded-t-md" />
-            <div ref={bottomHalf.setNodeRef} className="absolute w-full bottom-0 h-[10px] rounded-b-md" />
+            <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
+            <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
+                <Card title="step 1" className={cn("shadow", {
+                    "bg-gray-300": step.isOver
+                })} ref={step.setNodeRef}>
 
-            {topHalf.isOver && <div className="absolute top-0 w-full z-10 rounded-md h-[7px] bg-gray-700 rounded-b-none" />}
-            <Card title="step 1" className={cn("shadow", {
-                "bg-gray-300": step.isOver
-            })} ref={step.setNodeRef}>
+                    {
+                        sections?.length > 0 && sections.map((section: any) => (
+                            <SectionDesigner section={section} />
+                        ))
+                    }
 
-                {
-                    sections?.length > 0 && sections.map((section: any) => (
-                        <SectionDesigner section={section} />
-                    )
-                    )
-                }
-
-            </Card>
-            {bottomHalf.isOver && <div className="absolute bottom-0 w-full rounded-md h-[7px] bg-gray-700 rounded-t-none" />}
+                </Card>
+            </DragAreaSeperator>
 
         </div>
     )
