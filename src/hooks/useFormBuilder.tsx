@@ -1,5 +1,4 @@
 import { fieldTypes } from "@constants/fieldTypes";
-import { arrayMove } from "@dnd-kit/sortable";
 import { useFormStore } from "@store/useFormStore";
 
 type record = Record<string, any>
@@ -40,20 +39,18 @@ const useFormBuilder = () => {
         const activeData = active.data.current;
         const overData = over.data.current;
         const activeType = active.data.current.type;
+
         if (over.id == "droppable" && activeType == fieldTypes.STEPPER) {
             addAnyFields(activeData, setSteps)
         }
-
-
+        console.log({ overData })
 
         if (overData.type == fieldTypes.STEPPER) {
-
-
-            if ((overData?.position == "top" || overData?.position == "bottom")) {
+            if ((overData?.position == "top" || overData?.position == "bottom") && activeData.type == fieldTypes.STEPPER) {
                 const { position } = overData
                 insertAtIndex(overData, activeData, setSteps, position)
             } else {
-                activeData.stepId = overData.id
+                activeData.parentId = overData.id
 
                 switch (activeType) {
                     case fieldTypes.SECTION:
@@ -68,17 +65,19 @@ const useFormBuilder = () => {
                         break;
                 }
             }
-
-
         }
 
         if (overData.type == fieldTypes.SECTION) {
 
             if ((overData?.position == "top" || overData?.position == "bottom")) {
                 const { position } = overData
-                insertAtIndex(overData, activeData, setSteps, position)
+                activeData.parentId = overData.id
+
+                log(overData, activeData)
+                let calllback = activeType == fieldTypes.SECTION ? setSection : setFields
+                insertAtIndex(overData, activeData, calllback, position)
             } else {
-                activeData.sectionId = overData.id
+                activeData.parentId = overData.id
 
                 switch (activeType) {
                     case fieldTypes.SECTION:
@@ -96,9 +95,6 @@ const useFormBuilder = () => {
 
 
         }
-
-
-
 
     }
 

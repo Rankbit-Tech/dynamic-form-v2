@@ -1,41 +1,43 @@
 import { fieldTypes } from "@constants/fieldTypes";
 import { useDroppable } from "@dnd-kit/core"
-import { useFormStore } from "@store/useFormStore";
 import { cn } from "@utils/cn";
 import { Card } from "antd"
-import SectionDesigner from "./SectionDesigner";
 import DragAreaSeperator from "@components/atoms/DragAreaSeperator";
 import DragAreaSplitter from "@components/atoms/DragAreaSplitter";
+import { ReactNode } from "react";
 
-const StepperDesigner = ({ field }: any) => {
+interface StepperDesignerProps {
+    id: string
+    children: ReactNode
+}
 
-    const sections = useFormStore(state => {
-        return state.sections.filter((section: typeof state.sections) => section.stepId == field.id)
-    });
+
+const StepperDesigner = ({ id, children }: StepperDesignerProps) => {
+
 
     const step = useDroppable({
-        id: `step-drop-${field.id}`,
+        id: `step-drop-${id}`,
         data: {
-            id: field.id,
+            id: id,
             type: fieldTypes.STEPPER
         }
 
     });
     const topHalf = useDroppable({
-        id: `top-stepper-${field.id}`,
+        id: `top-stepper-${id}`,
         data: {
-            id: field.id,
+            id: id,
             position: "top",
-            type: "stepDropable"
+            type: fieldTypes.STEPPER
         }
 
     });
     const bottomHalf = useDroppable({
-        id: `bottom-stepper-${field.id}`,
+        id: `bottom-stepper-${id}`,
         data: {
-            id: field.id,
+            id: id,
             position: "bottom",
-            type: "stepDropable"
+            type: fieldTypes.STEPPER
         }
     });
 
@@ -46,13 +48,7 @@ const StepperDesigner = ({ field }: any) => {
                 <Card title="step 1" className={cn("shadow", {
                     "bg-gray-300": step.isOver
                 })} ref={step.setNodeRef}>
-
-                    {
-                        sections?.length > 0 && sections.map((section: any) => (
-                            <SectionDesigner section={section} />
-                        ))
-                    }
-
+                    {children}
                 </Card>
             </DragAreaSeperator>
 

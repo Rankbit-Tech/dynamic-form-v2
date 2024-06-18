@@ -26,7 +26,7 @@ const DraggableInput = ({ type, label, icon: Icon }: DraggableInputProps) => {
             ref={setNodeRef}
             {...listeners}
             {...attributes}
-            className="p-2 border rounded bg-white shadow"
+            className="p-2 border rounded bg-white shadow cursor-grab"
             style={{ opacity: isDragging ? 0.5 : 1 }}
         >
             <Icon />

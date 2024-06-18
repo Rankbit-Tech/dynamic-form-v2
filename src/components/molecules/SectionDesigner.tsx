@@ -1,52 +1,56 @@
 import DragAreaSeperator from '@components/atoms/DragAreaSeperator'
 import DragAreaSplitter from '@components/atoms/DragAreaSplitter'
+import { fieldTypes } from '@constants/fieldTypes'
 import { useDroppable } from '@dnd-kit/core'
 import { cn } from '@utils/cn'
 import { Card } from 'antd'
+import { ReactNode } from 'react'
 
 interface SectionProps {
-    section: Record<string, any>
+    id: string
+    type: string
+    isCollapsable: boolean
+    children: ReactNode
+    parentId: string
 }
 
-const SectionDesigner = ({ section }: SectionProps) => {
+const SectionDesigner = ({ id, type,
+    isCollapsable, parentId, children }: SectionProps) => {
 
     const sectionRef = useDroppable({
-        id: `section-drag-${section.id}`,
+        id: `section-drag-${id}`,
         data: {
-            id: section.id,
-            type: section.type
-
+            id: id,
+            type: type
         }
     })
 
     const topHalf = useDroppable({
-        id: `top-section-${section.id}`,
+        id: `top-section-${id}`,
         data: {
-            id: section.id,
+            id: parentId,
             position: "top",
-            type: section.type
+            type: type
         }
 
     });
     const bottomHalf = useDroppable({
-        id: `bottom-section-${section.id}`,
+        id: `bottom-section-${id}`,
         data: {
-            id: section.id,
+            id: parentId,
             position: "bottom",
-            type: section.type
+            type: type
         }
     });
 
     return (
-        <div className="relative">
+        <div className="relative my-1">
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
             <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
                 <Card title="section" className={cn("shadow", {
                     "bg-gray-300": sectionRef.isOver
                 })} ref={sectionRef.setNodeRef}>
-                    <div>
-                        {JSON.stringify(section)}
-                    </div>
+                    {children}
                 </Card>
             </DragAreaSeperator>
         </div>

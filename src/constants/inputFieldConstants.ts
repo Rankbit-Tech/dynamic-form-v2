@@ -13,8 +13,9 @@ import { fieldTypes } from "@constants/fieldTypes"
 
 import { LucideIcon, TextCursorInput, CircleChevronUp, Rows2 } from "lucide-react"
 import StepperDesigner from '@components/molecules/StepperDesigner';
+import SectionDesigner from '@components/molecules/SectionDesigner';
 
-interface InputFieldConfig {
+export interface InputFieldConfig {
     type: string;
     icon: LucideIcon;
     propertyComponent: React.ElementType;
@@ -30,9 +31,9 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         icon: TextCursorInput,
         construct: () => ({
             type: fieldTypes.TEXT,
-            label: '',
-            name: '',
-            placeholder: '',
+            label: 'Label',
+            name: 'name',
+            placeholder: 'Placeholder',
             validations: [],
         }),
     },
@@ -53,7 +54,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
     [fieldTypes.SECTION]: {
         type: fieldTypes.SECTION,
         propertyComponent: SelectFieldSettings,
-        designerComponent: SelectFieldDesigner,
+        designerComponent: SectionDesigner,
         icon: Rows2,
 
         construct: () => ({

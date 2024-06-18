@@ -1,13 +1,9 @@
 import React from 'react';
-import { useFormStore } from '@store/useFormStore';
 import INPUT_FIELDS from '@constants/inputFieldConstants';
+import { Field, useFormStore } from '@store/useFormStore';
 
+const FieldComponent: React.FC<{ field: Field }> = ({ field }) => {
 
-interface FormSectionProps {
-    field: Record<string, any>
-}
-
-const FormSection: React.FC<FormSectionProps> = ({ field }) => {
     const { setSelected } = useFormStore();
 
     const { type, id } = field || {}
@@ -24,10 +20,13 @@ const FormSection: React.FC<FormSectionProps> = ({ field }) => {
             onClick={handleSelectField}
             className="cursor-pointer"
         >
-            <DesignerComponent field={field} />
+            {DesignerComponent && <DesignerComponent {...field}>
+                {field.children && field.children.map((child) => (
+                    <FieldComponent key={child.id} field={child} />
+                ))}
+            </DesignerComponent>}
         </div>
-
     );
 };
 
-export default FormSection;
+export default FieldComponent;

@@ -1,10 +1,16 @@
 import React from 'react';
 
-const TextFieldDesigner: React.FC<{ label: string }> = ({ label }) => {
+interface TextFieldDesignerProps {
+    label: string
+    placeholder: string
+    name: string
+}
+
+const TextFieldDesigner = ({ label, placeholder, name }: TextFieldDesignerProps) => {
     return (
-        <div className="p-2 border rounded bg-white shadow">
+        <div className="p-2 my-1 border rounded bg-white shadow">
             <label>{label}</label>
-            <input type="text" className="mt-1 p-2 border rounded w-full" />
+            <input readOnly disabled placeholder={placeholder} type="text" className="mt-1 p-2 border rounded w-full" />
         </div>
     );
 };

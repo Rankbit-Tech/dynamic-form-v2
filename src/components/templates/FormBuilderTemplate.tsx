@@ -4,6 +4,7 @@ import DraggableFieldList from '@components/molecules/DraggableFieldList';
 import INPUT_FIELDS from '@constants/inputFieldConstants';
 import DroppableZone from '@components/molecules/DroppableZone';
 import { X } from 'lucide-react';
+import DragOverlayContainer from '@components/molecules/DragOverlayContainer';
 
 const FormBuilderTemplate: React.FC = () => {
     const { selectedField, setSelected } = useFormStore();
@@ -25,7 +26,6 @@ const FormBuilderTemplate: React.FC = () => {
                             <h3 className='font-semibold'>Field Settings</h3>
                             <X className='text-lg hover:text-red-500 cursor-pointer' onClick={handeOutSideClick} />
                         </div>
-                        {/* {React.createElement(INPUT_FIELDS[selectedField.type].propertyComponent)} */}
                     </div>
                 ) : (
                     <div className="w-full bg-white p-4 border-r border-gray-200">
@@ -33,6 +33,8 @@ const FormBuilderTemplate: React.FC = () => {
                     </div>
                 )}
             </div>
+            <DragOverlayContainer />
+
         </div>
     );
 };
