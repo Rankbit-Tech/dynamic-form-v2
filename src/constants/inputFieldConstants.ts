@@ -18,7 +18,11 @@ import NumberFieldDesigner from '@components/organisms/designer/NumberFieldDesig
 import PasswordFieldSettings from '@components/organisms/property/PasswordFieldSettings';
 import PasswordFieldDesigner from '@components/organisms/designer/PasswordFieldDesigner';
 import CheckboxFieldDesigner from '@components/organisms/designer/CheckboxFieldDesigner copy';
+import TextAreaFieldSettings from '@components/organisms/property/TextAreaFieldSettings';
+import TextAreaFieldDesigner from '@components/organisms/designer/TextAreaFieldDesigner';
+import SectionFieldSettings from '@components/organisms/property/SectionFieldSettings';
 
+import StepperFieldSettings from '@components/organisms/property/StepperFieldSettings';
 
 import SectionDesigner from '@components/organisms/designer/SectionDesigner';
 
@@ -36,8 +40,6 @@ import { GoNumber } from 'react-icons/go';
 import { MdOutlinePassword } from 'react-icons/md';
 import { RxDividerVertical } from 'react-icons/rx';
 import { TbSection } from 'react-icons/tb';
-import TextAreaFieldSettings from '@components/organisms/property/TextAreaFieldSettings';
-import TextAreaFieldDesigner from '@components/organisms/designer/TextAreaFieldDesigner';
 
 export interface InputFieldConfig {
     type: string;
@@ -83,7 +85,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
     },
     [fieldTypes.SECTION]: {
         type: fieldTypes.SECTION,
-        propertyComponent: SelectFieldSettings,
+        propertyComponent: SectionFieldSettings,
         designerComponent: SectionDesigner,
         icon: TbSection,
         title: "Section",
@@ -97,7 +99,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
     },
     [fieldTypes.STEPPER]: {
         type: fieldTypes.STEPPER,
-        propertyComponent: SelectFieldDesigner,
+        propertyComponent: StepperFieldSettings,
         designerComponent: StepperDesigner,
         icon: RxDividerVertical,
         title: "Stepper",
