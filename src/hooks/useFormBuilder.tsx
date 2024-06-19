@@ -8,20 +8,20 @@ const log = console.log
 
 const useFormBuilder = () => {
 
-    const { setSection, setSteps, setFields } = useFormStore(state => state)
+    const { setFields } = useFormStore(state => state)
 
 
-    const addAnyFields = (active: record, func: any) => {
-        func((fields: recordArray) => {
+    const addFields = (active: record) => {
+        setFields((fields: recordArray) => {
             return [...fields, active]
         })
     }
 
-    const insertAtIndex = (over: record, active: record, func: any, position: string) => {
-        func((fields: recordArray) => {
+    const insertAtIndex = (over: record, active: record, position: string) => {
+        setFields((fields: recordArray) => {
             const newElement = [...fields]
             const index = fields.findIndex(field => field.id == over.id)
-
+            console.log({ index })
             if (position === "top") {
                 newElement.splice(index, 0, active);
             } else if (position === "bottom") {
@@ -41,56 +41,28 @@ const useFormBuilder = () => {
         const activeType = active.data.current.type;
 
         if (over.id == "droppable" && activeType == fieldTypes.STEPPER) {
-            addAnyFields(activeData, setSteps)
+            addFields(activeData)
         }
-        console.log({ overData })
 
         if (overData.type == fieldTypes.STEPPER) {
             if ((overData?.position == "top" || overData?.position == "bottom") && activeData.type == fieldTypes.STEPPER) {
                 const { position } = overData
-                insertAtIndex(overData, activeData, setSteps, position)
+                insertAtIndex(overData, activeData, position)
             } else {
                 activeData.parentId = overData.id
-
-                switch (activeType) {
-                    case fieldTypes.SECTION:
-                        addAnyFields(activeData, setSection)
-                        return
-
-                    case fieldTypes.TEXT:
-                        addAnyFields(activeData, setFields)
-                        return
-
-                    default:
-                        break;
-                }
+                addFields(activeData)
             }
         }
 
         if (overData.type == fieldTypes.SECTION) {
-
             if ((overData?.position == "top" || overData?.position == "bottom")) {
                 const { position } = overData
-                activeData.parentId = overData.id
-
-                log(overData, activeData)
-                let calllback = activeType == fieldTypes.SECTION ? setSection : setFields
-                insertAtIndex(overData, activeData, calllback, position)
+                activeData.parentId = overData.parentId
+                console.log({ overData })
+                insertAtIndex(overData, activeData, position)
             } else {
                 activeData.parentId = overData.id
-
-                switch (activeType) {
-                    case fieldTypes.SECTION:
-                        addAnyFields(activeData, setSection)
-                        return
-
-                    case fieldTypes.TEXT:
-                        addAnyFields(activeData, setFields)
-                        return
-
-                    default:
-                        break;
-                }
+                addFields(activeData)
             }
 
 

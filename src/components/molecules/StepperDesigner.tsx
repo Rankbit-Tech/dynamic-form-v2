@@ -23,6 +23,7 @@ const StepperDesigner = ({ id, children }: StepperDesignerProps) => {
         }
 
     });
+
     const topHalf = useDroppable({
         id: `top-stepper-${id}`,
         data: {
