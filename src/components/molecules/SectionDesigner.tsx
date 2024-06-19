@@ -28,7 +28,8 @@ const SectionDesigner = ({ id, type,
     const topHalf = useDroppable({
         id: `top-section-${id}`,
         data: {
-            id: parentId,
+            id: id,
+            parentId,
             position: "top",
             type: type
         }
@@ -37,7 +38,8 @@ const SectionDesigner = ({ id, type,
     const bottomHalf = useDroppable({
         id: `bottom-section-${id}`,
         data: {
-            id: parentId,
+            id: id,
+            parentId,
             position: "bottom",
             type: type
         }

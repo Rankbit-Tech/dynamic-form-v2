@@ -23,7 +23,7 @@ import PasswordFieldDesigner from '@components/organisms/PasswordFieldDesigner';
 import SectionDesigner from '@components/molecules/SectionDesigner';
 
 //constants
-import { fieldTypes } from "@constants/fieldTypes"
+import { VARIANT, fieldTypes } from "@constants/fieldTypes"
 
 //icons
 import { IconType } from "react-icons";
@@ -40,6 +40,8 @@ import { TbSection } from 'react-icons/tb';
 export interface InputFieldConfig {
     type: string;
     icon: IconType;
+    title: string;
+    variant: string;
     propertyComponent: React.ElementType;
     designerComponent: React.ElementType;
     construct: () => Record<string, unknown>;
@@ -51,6 +53,8 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         propertyComponent: TextFieldSettings,
         designerComponent: TextFieldDesigner,
         icon: CiText,
+        title: "Input",
+        variant: VARIANT.FIELD,
         construct: () => ({
             type: fieldTypes.TEXT,
             label: 'Label',
@@ -64,6 +68,8 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         propertyComponent: SelectFieldSettings,
         designerComponent: SelectFieldDesigner,
         icon: LuBoxSelect,
+        title: "Select",
+        variant: VARIANT.FIELD,
 
         construct: () => ({
             type: fieldTypes.SELECT,
@@ -78,6 +84,8 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         propertyComponent: SelectFieldSettings,
         designerComponent: SectionDesigner,
         icon: TbSection,
+        title: "Section",
+        variant: VARIANT.SECTION,
 
         construct: () => ({
             type: fieldTypes.SECTION,
@@ -90,6 +98,8 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         propertyComponent: SelectFieldDesigner,
         designerComponent: StepperDesigner,
         icon: RxDividerVertical,
+        title: "Stepper",
+        variant: VARIANT.STEPPER,
 
         construct: () => ({
             type: fieldTypes.STEPPER,
@@ -102,6 +112,8 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         propertyComponent: RadioButtonFieldSettings,
         designerComponent: RadioButtonFieldDesigner,
         icon: IoMdRadioButtonOn,
+        title: "Radio",
+        variant: VARIANT.FIELD,
 
         construct: () => ({
             type: fieldTypes.RADIO,
@@ -117,6 +129,8 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         propertyComponent: CheckBoxFieldSettings,
         designerComponent: CheckBoxFieldDesigner,
         icon: IoMdCheckbox,
+        title: "CheckBox",
+        variant: VARIANT.FIELD,
         construct: () => ({
             type: fieldTypes.CHECKBOX,
             label: '',
@@ -131,6 +145,8 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         propertyComponent: DateTimeFieldSettings,
         designerComponent: DateTimeFieldDesigner,
         icon: BsCalendar2DateFill,
+        title: "DateTime",
+        variant: VARIANT.FIELD,
 
         construct: () => ({
             type: fieldTypes.DATETIME,
@@ -140,14 +156,14 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             validations: [],
 
         }),
-
-
     },
     [fieldTypes.FILEUPLOAD]: {
         type: fieldTypes.FILEUPLOAD,
         propertyComponent: FileUploadFieldSettings,
         designerComponent: FileUploadFieldDesigner,
         icon: FaFileUpload,
+        title: "FileUpload",
+        variant: VARIANT.FIELD,
 
         construct: () => ({
             type: fieldTypes.DATETIME,
@@ -157,14 +173,14 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             validations: [],
 
         }),
-
-
     },
     [fieldTypes.NUMBER]: {
         type: fieldTypes.NUMBER,
         propertyComponent: NumberFieldSettings,
         designerComponent: NumberFieldDesigner,
         icon: GoNumber,
+        title: "Number",
+        variant: VARIANT.FIELD,
 
         construct: () => ({
             type: fieldTypes.NUMBER,
@@ -177,14 +193,14 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             validations: [],
 
         }),
-
-
     },
     [fieldTypes.PASSWORD]: {
         type: fieldTypes.PASSWORD,
         propertyComponent: PasswordFieldSettings,
         designerComponent: PasswordFieldDesigner,
         icon: MdOutlinePassword,
+        title: "Password",
+        variant: VARIANT.FIELD,
 
         construct: () => ({
             type: fieldTypes.PASSWORD,
@@ -196,9 +212,6 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             maxLength: null,
             pattern: '',
         }),
-
-
-
     },
 
     [fieldTypes.TEXTAREA]: {
@@ -206,6 +219,8 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         propertyComponent: TextFieldSettings,
         designerComponent: TextFieldDesigner,
         icon: BsTextareaT,
+        title: "TextArea",
+        variant: VARIANT.FIELD,
 
         construct: () => ({
             type: fieldTypes.TEXTAREA,
@@ -217,10 +232,6 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             cols: 30,
             maxLength: null,
         }),
-
-
-
-
     },
 
 

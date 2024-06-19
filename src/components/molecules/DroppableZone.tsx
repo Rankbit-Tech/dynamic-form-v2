@@ -7,7 +7,7 @@ import RecursiveComponent from './RecursiveComponent';
 import { transformData } from '@utils/transform';
 
 const DroppableZone: React.FC = () => {
-    const { steps, sections, fields } = useFormStore(state => state);
+    const { fields } = useFormStore(state => state);
 
     const { isOver, setNodeRef } = useDroppable({
         id: 'droppable',
@@ -16,8 +16,7 @@ const DroppableZone: React.FC = () => {
         }
 
     });
-    const data = transformData(steps, sections, fields)
-
+    const data = transformData(fields)
     return (
         <div ref={setNodeRef} className={cn("flex flex-col min-h-full border-dashed border-2 border-gray-300 p-2 py-4 bg-gray-100", {
             'bg-gray-200': isOver && data?.length
@@ -31,7 +30,7 @@ const DroppableZone: React.FC = () => {
             }
 
             <div className='flex flex-col gap-2'>
-                {data?.length > 0 && data.map(item => (
+                {data?.length > 0 && data.map((item: any) => (
                     <RecursiveComponent key={item.id} item={item} />
                 ))}
             </div>

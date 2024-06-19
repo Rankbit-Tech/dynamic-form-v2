@@ -12,3 +12,9 @@ export const fieldTypes = {
     PASSWORD: "PASSWORD",
     TEXTAREA: "TEXTAREA"
 }
+
+export const VARIANT = {
+    SECTION: "SECTION",
+    STEPPER: "STEPPER",
+    FIELD: "FIELD"
+}
