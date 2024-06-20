@@ -19,7 +19,13 @@ const TextAreaFieldSettings: React.FC = () => {
                 <TextArea rows={4} />
             </Form.Item>
             <Form.Item label="Rows">
-                <Input />
+                <Input type="number" min={1} />
+            </Form.Item>
+            <Form.Item label="Cols">
+                <Input type="number" min={1} />
+            </Form.Item>
+            <Form.Item label="Max Length">
+                <Input type="number" min={1} />
             </Form.Item>
             {/* Add more settings as needed */}
         </Form>

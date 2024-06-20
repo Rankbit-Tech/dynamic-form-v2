@@ -13,6 +13,9 @@ const CheckboxFieldSettings: React.FC = () => {
             <Form.Item label="Default Checked">
                 <Checkbox />
             </Form.Item>
+            <Form.Item label="Options">
+                <Input placeholder="Comma-separated options (e.g., Option1, Option2, Option3)" />
+            </Form.Item>
             {/* Add more settings as needed */}
         </Form>
     );

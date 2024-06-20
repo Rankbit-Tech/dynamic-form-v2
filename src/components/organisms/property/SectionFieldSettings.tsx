@@ -4,17 +4,16 @@ import { Input, Form, Switch } from 'antd';
 const SectionFieldSettings: React.FC = () => {
     return (
         <Form layout="vertical">
-            <Form.Item label="Section Title">
-                <Input />
-            </Form.Item>
-            <Form.Item label="Description">
-                <Input.TextArea rows={3} />
+
+
+            <Form.Item label="Number of Columns">
+                <Input type="number" min={1} max={12} />
             </Form.Item>
             <Form.Item label="Collapsible">
                 <Switch />
             </Form.Item>
-            <Form.Item label="Default Collapsed">
-                <Switch />
+            <Form.Item label="Default Collapsed" dependencies={['Collapsible']}>
+                {({ getFieldValue }) => getFieldValue('Collapsible') ? <Switch /> : null}
             </Form.Item>
             {/* Add more settings as needed */}
         </Form>
