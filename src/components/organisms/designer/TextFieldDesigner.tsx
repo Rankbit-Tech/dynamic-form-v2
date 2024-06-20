@@ -1,16 +1,48 @@
-import React from 'react';
+import DragAreaSeperator from '@components/atoms/DragAreaSeperator';
+import DragAreaSplitter from '@components/atoms/DragAreaSplitter';
+import { fieldTypes } from '@constants/fieldTypes';
+import { useDroppable } from '@dnd-kit/core';
+import { Input } from 'antd';
 
 interface TextFieldDesignerProps {
-    label: string;
-    placeholder: string;
-    name: string;
+    id: string
+    label: string
+    placeholder: string
+    name: string
+    parentId: string
 }
 
-const TextFieldDesigner: React.FC<TextFieldDesignerProps> = ({ label, placeholder, name }) => {
+const TextFieldDesigner = ({ id, parentId, label, placeholder }: TextFieldDesignerProps) => {
+
+    const topHalf = useDroppable({
+        id: `top-field-${id}`,
+        data: {
+            id: id,
+            position: "top",
+            parentId,
+            type: fieldTypes.TEXT
+        }
+
+    });
+    const bottomHalf = useDroppable({
+        id: `bottom-field-${id}`,
+        data: {
+            id: id,
+            position: "bottom",
+            parentId,
+            type: fieldTypes.TEXT
+        }
+    });
+
     return (
-        <div className="p-2 my-1 border rounded bg-white shadow">
-            <label>{label}</label>
-            <input readOnly disabled placeholder={placeholder} type="text" name={name} className="mt-1 p-2 border rounded w-full" />
+        <div className="relative my-1 border rounded bg-white shadow">
+            <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
+            <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
+                <div className='p-2'>
+                    <label>{label}</label>
+                    <Input readOnly disabled placeholder={placeholder} type="text" className="mt-1 p-2 border rounded w-full" />
+                </div>
+            </DragAreaSeperator>
         </div>
     );
 };

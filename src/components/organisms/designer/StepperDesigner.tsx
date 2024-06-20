@@ -16,7 +16,7 @@ const StepperDesigner = ({ id, children }: StepperDesignerProps) => {
 
 
     const step = useDroppable({
-        id: `step-drop-${id}`,
+        id: `step-drop`,
         data: {
             id: id,
             type: fieldTypes.STEPPER

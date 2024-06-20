@@ -1,78 +1,69 @@
 import { fieldTypes } from "@constants/fieldTypes";
 import { useFormStore } from "@store/useFormStore";
 
-type record = Record<string, any>
-type recordArray = Record<string, any>[]
-const log = console.log
-
+type RecordType = Record<string, any>;
+type RecordArray = Record<string, any>[];
 
 const useFormBuilder = () => {
+    const { setFields } = useFormStore((state) => state);
 
-    const { setFields } = useFormStore(state => state)
+    const addField = (newField: RecordType) => {
+        setFields((fields: RecordArray) => [...fields, newField]);
+    };
 
+    const insertFieldAtIndex = (targetField: RecordType, newField: RecordType, position: string) => {
+        setFields((fields: RecordArray) => {
+            const newFields = [...fields];
+            const index = fields.findIndex((field) => field.id === targetField.id);
 
-    const addFields = (active: record) => {
-        setFields((fields: recordArray) => {
-            return [...fields, active]
-        })
-    }
-
-    const insertAtIndex = (over: record, active: record, position: string) => {
-        setFields((fields: recordArray) => {
-            const newElement = [...fields]
-            const index = fields.findIndex(field => field.id == over.id)
-            console.log({ index })
             if (position === "top") {
-                newElement.splice(index, 0, active);
+                newFields.splice(index, 0, newField);
             } else if (position === "bottom") {
-                newElement.splice(index + 1, 0, active);
+                newFields.splice(index + 1, 0, newField);
             }
-            return newElement
-        })
-    }
 
-    const handleDragEnd = (event: record) => {
-        const { active, over } = event
-        if (!active || !over) return
-        if (active.id == over.id) return
+            return newFields;
+        });
+    };
+
+    const handleDragEnd = (event: RecordType) => {
+        const { active, over } = event;
+        if (!active || !over || active.id === over.id) return;
 
         const activeData = active.data.current;
         const overData = over.data.current;
-        const activeType = active.data.current.type;
 
-        if (over.id == "droppable" && activeType == fieldTypes.STEPPER) {
-            addFields(activeData)
+        const isDroppingOnCanvas = over.id === "droppable" && activeData.type === fieldTypes.STEPPER;
+        const isDroppingOnStepper = overData.type === fieldTypes.STEPPER && activeData.type !== fieldTypes.STEPPER;
+        const isDroppingOnSection = overData.type === fieldTypes.SECTION;
+        const isDroppingOnField = overData.type === fieldTypes.TEXT;
+
+
+        if (isDroppingOnCanvas) {
+            addField(activeData);
+        } else if (isDroppingOnStepper) {
+            handlePositionedDrop(overData, activeData);
+        } else if (isDroppingOnSection) {
+            handlePositionedDrop(overData, activeData, overData.parentId);
+        } else if (isDroppingOnField) {
+            handlePositionedDrop(overData, activeData, overData.parentId);
         }
+    };
 
-        if (overData.type == fieldTypes.STEPPER) {
-            if ((overData?.position == "top" || overData?.position == "bottom") && activeData.type == fieldTypes.STEPPER) {
-                const { position } = overData
-                insertAtIndex(overData, activeData, position)
-            } else {
-                activeData.parentId = overData.id
-                addFields(activeData)
-            }
+    const handlePositionedDrop = (overData: RecordType, activeData: RecordType, parentId: string = overData.id) => {
+        const { position } = overData;
+        if (position === "top" || position === "bottom") {
+            activeData.parentId = parentId;
+            insertFieldAtIndex(overData, activeData, position);
+        } else {
+            activeData.parentId = overData.id;
+            addField(activeData);
         }
-
-        if (overData.type == fieldTypes.SECTION) {
-            if ((overData?.position == "top" || overData?.position == "bottom")) {
-                const { position } = overData
-                activeData.parentId = overData.parentId
-                console.log({ overData })
-                insertAtIndex(overData, activeData, position)
-            } else {
-                activeData.parentId = overData.id
-                addFields(activeData)
-            }
-
-
-        }
-
-    }
+    };
 
     return {
-        handleDragEnd
-    }
+        handleDragEnd,
+    };
 };
 
 export default useFormBuilder;

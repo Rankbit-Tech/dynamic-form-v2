@@ -1,5 +1,3 @@
-// inputFieldConstants.ts
-
 import React from 'react';
 import TextFieldSettings from '@components/organisms/property/TextFieldSettings';
 import SelectFieldSettings from '@components/organisms/property/SelectFieldSettings';
@@ -17,19 +15,15 @@ import NumberFieldSettings from '@components/organisms/property/NumberFieldSetti
 import NumberFieldDesigner from '@components/organisms/designer/NumberFieldDesigner';
 import PasswordFieldSettings from '@components/organisms/property/PasswordFieldSettings';
 import PasswordFieldDesigner from '@components/organisms/designer/PasswordFieldDesigner';
-import CheckboxFieldDesigner from '@components/organisms/designer/CheckboxFieldDesigner copy';
+import CheckboxFieldDesigner from '@components/organisms/designer/CheckboxFieldDesigner';
 import TextAreaFieldSettings from '@components/organisms/property/TextAreaFieldSettings';
 import TextAreaFieldDesigner from '@components/organisms/designer/TextAreaFieldDesigner';
 import SectionFieldSettings from '@components/organisms/property/SectionFieldSettings';
-
 import StepperFieldSettings from '@components/organisms/property/StepperFieldSettings';
-
 import SectionDesigner from '@components/organisms/designer/SectionDesigner';
 
-//constants
-import { VARIANT, fieldTypes } from "@constants/fieldTypes"
+import { VARIANT, fieldTypes } from "@constants/fieldTypes";
 
-//icons
 import { IconType } from "react-icons";
 import { CiText } from "react-icons/ci";
 import { LuBoxSelect } from 'react-icons/lu';
@@ -65,6 +59,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             name: 'name',
             placeholder: 'Placeholder',
             validations: [],
+            conditions: {},
         }),
     },
     [fieldTypes.SELECT]: {
@@ -74,13 +69,13 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         icon: LuBoxSelect,
         title: "Select",
         variant: VARIANT.FIELD,
-
         construct: () => ({
             type: fieldTypes.SELECT,
             label: '',
             name: '',
             options: [],
             validations: [],
+            conditions: {},
         }),
     },
     [fieldTypes.SECTION]: {
@@ -90,11 +85,11 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         icon: TbSection,
         title: "Section",
         variant: VARIANT.SECTION,
-
         construct: () => ({
             type: fieldTypes.SECTION,
             cols: 1,
-            isCollapsable: true
+            isCollapsable: true,
+            conditions: {},
         }),
     },
     [fieldTypes.STEPPER]: {
@@ -104,13 +99,12 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         icon: RxDividerVertical,
         title: "Stepper",
         variant: VARIANT.STEPPER,
-
         construct: () => ({
             type: fieldTypes.STEPPER,
-            isCollapse: false
-        })
+            isCollapse: false,
+            conditions: {},
+        }),
     },
-
     [fieldTypes.RADIO]: {
         type: fieldTypes.RADIO,
         propertyComponent: RadioButtonFieldSettings,
@@ -118,16 +112,15 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         icon: IoMdRadioButtonOn,
         title: "Radio",
         variant: VARIANT.FIELD,
-
         construct: () => ({
             type: fieldTypes.RADIO,
             label: '',
             name: '',
             options: [],
             validations: [],
+            conditions: {},
         }),
     },
-
     [fieldTypes.CHECKBOX]: {
         type: fieldTypes.CHECKBOX,
         propertyComponent: CheckBoxFieldSettings,
@@ -139,10 +132,10 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             type: fieldTypes.CHECKBOX,
             label: '',
             name: '',
-            Option: [],
+            options: [],
             validations: [],
+            conditions: {},
         }),
-
     },
     [fieldTypes.DATETIME]: {
         type: fieldTypes.DATETIME,
@@ -151,14 +144,13 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         icon: BsCalendar2DateFill,
         title: "DateTime",
         variant: VARIANT.FIELD,
-
         construct: () => ({
             type: fieldTypes.DATETIME,
             label: '',
             name: '',
             defaultValue: '',
             validations: [],
-
+            conditions: {},
         }),
     },
     [fieldTypes.FILEUPLOAD]: {
@@ -168,14 +160,14 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         icon: FaFileUpload,
         title: "FileUpload",
         variant: VARIANT.FIELD,
-
         construct: () => ({
-            type: fieldTypes.DATETIME,
+            type: fieldTypes.FILEUPLOAD,
             label: '',
             name: '',
-            defaultValue: '',
+            accept: '', // file types
+            maxFileSize: null, // in bytes
             validations: [],
-
+            conditions: {},
         }),
     },
     [fieldTypes.NUMBER]: {
@@ -185,7 +177,6 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         icon: GoNumber,
         title: "Number",
         variant: VARIANT.FIELD,
-
         construct: () => ({
             type: fieldTypes.NUMBER,
             label: '',
@@ -195,7 +186,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             max: null,
             step: 1,
             validations: [],
-
+            conditions: {},
         }),
     },
     [fieldTypes.PASSWORD]: {
@@ -205,7 +196,6 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         icon: MdOutlinePassword,
         title: "Password",
         variant: VARIANT.FIELD,
-
         construct: () => ({
             type: fieldTypes.PASSWORD,
             label: '',
@@ -215,9 +205,9 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             minLength: null,
             maxLength: null,
             pattern: '',
+            conditions: {},
         }),
     },
-
     [fieldTypes.TEXTAREA]: {
         type: fieldTypes.TEXTAREA,
         propertyComponent: TextAreaFieldSettings,
@@ -225,7 +215,6 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         icon: BsTextareaT,
         title: "TextArea",
         variant: VARIANT.FIELD,
-
         construct: () => ({
             type: fieldTypes.TEXTAREA,
             label: '',
@@ -235,10 +224,9 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             rows: 3,
             cols: 30,
             maxLength: null,
+            conditions: {},
         }),
     },
-
-
 };
 
-export default INPUT_FIELDS
+export default INPUT_FIELDS;
