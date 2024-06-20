@@ -1,8 +1,8 @@
 import React from 'react';
 import INPUT_FIELDS from '@constants/inputFieldConstants';
-import { Field, useFormStore } from '@store/useFormStore';
+import { useFormStore } from '@store/useFormStore';
 
-const FieldComponent: React.FC<{ field: Field }> = ({ field }) => {
+const FieldComponent: React.FC<{ field: any }> = ({ field }) => {
 
     const { setSelected } = useFormStore();
 
@@ -21,7 +21,7 @@ const FieldComponent: React.FC<{ field: Field }> = ({ field }) => {
             className="cursor-pointer"
         >
             {DesignerComponent && <DesignerComponent {...field}>
-                {field.children && field.children.map((child) => (
+                {field.children && field.children.map((child: any) => (
                     <FieldComponent key={child.id} field={child} />
                 ))}
             </DesignerComponent>}

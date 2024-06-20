@@ -18,11 +18,15 @@ const DragOverlayContainer: React.FC = () => {
     });
 
     if (!draggedItem) return null;
-    const DesignerComponent = INPUT_FIELDS[draggedItem.type].designerComponent;
+    const Icon = INPUT_FIELDS[draggedItem.type].icon
 
     return (
-        <DragOverlay className='w-[500px]'>
-            <DesignerComponent {...draggedItem} />
+        <DragOverlay>
+            <div className='h-full w-full bg-slate-500 rounded-md flex justify-center items-center'>
+                <div className='h-8 w-8 bg-gray-200 rounded-full flex justify-center items-center'>
+                    {Icon && (<Icon className='h-6 w-6' />)}
+                </div>
+            </div>
         </DragOverlay>
     );
 };

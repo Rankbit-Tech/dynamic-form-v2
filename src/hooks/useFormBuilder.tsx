@@ -38,13 +38,14 @@ const useFormBuilder = () => {
 
         const activeData = active.data.current;
         const overData = over.data.current;
-        const activeType = active.data.current.type;
 
-        if (over.id == "droppable" && activeType == fieldTypes.STEPPER) {
+        // This will check something droping on canvas
+        if (over.id == "droppable" && activeData.type == fieldTypes.STEPPER) {
             addFields(activeData)
         }
 
-        if (overData.type == fieldTypes.STEPPER) {
+        //this will execute if something drop on stpper
+        if (overData.type == fieldTypes.STEPPER && activeData.type !== fieldTypes.STEPPER) {
             if ((overData?.position == "top" || overData?.position == "bottom") && activeData.type == fieldTypes.STEPPER) {
                 const { position } = overData
                 insertAtIndex(overData, activeData, position)
@@ -54,6 +55,7 @@ const useFormBuilder = () => {
             }
         }
 
+        //checl dropable area is section
         if (overData.type == fieldTypes.SECTION) {
             if ((overData?.position == "top" || overData?.position == "bottom")) {
                 const { position } = overData

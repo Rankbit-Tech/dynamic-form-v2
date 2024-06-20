@@ -1,8 +1,7 @@
 import React from 'react';
 import FieldComponent from '@components/molecules/FieldComponent';
-import { Field, Step, Section } from '@store/useFormStore';
 
-const RecursiveComponent: React.FC<{ item: Field | Step | Section }> = ({ item }) => {
+const RecursiveComponent: React.FC<{ item: Record<string, any> }> = ({ item }) => {
     return <FieldComponent field={item} />;
 };
 
