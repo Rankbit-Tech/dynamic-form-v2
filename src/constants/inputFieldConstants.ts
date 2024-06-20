@@ -1,26 +1,30 @@
 // inputFieldConstants.ts
 
 import React from 'react';
-import TextFieldSettings from '@components/molecules/TextFieldSettings';
-import SelectFieldSettings from '@components/molecules/SelectFieldSettings';
-import TextFieldDesigner from '@components/molecules/TextFieldDesigner';
-import SelectFieldDesigner from '@components/molecules/SelectFieldDesigner';
-import RadioButtonFieldDesigner from '@components/organisms/RadioButtonFieldDesigner';
-import RadioButtonFieldSettings from '@components/organisms/RadioButtonFieldSettings';
-import CheckBoxFieldDesigner from '@components/organisms/CheckboxFieldDesigner';
-import CheckBoxFieldSettings from '@components/organisms/CheckboxFieldSettings';
-import DateTimeFieldDesigner from '@components/organisms/DateTimeFieldDesigner';
-import DateTimeFieldSettings from '@components/organisms/DateTimeFieldSettings';
-import FileUploadFieldSettings from '@components/organisms/FileUploadFieldSettings';
-import FileUploadFieldDesigner from '@components/organisms/FileUploadFieldDesigner';
-import StepperDesigner from '@components/molecules/StepperDesigner';
-import NumberFieldSettings from '@components/organisms/NumberFieldSettings';
-import NumberFieldDesigner from '@components/organisms/NumberFieldDesigner';
-import PasswordFieldSettings from '@components/organisms/PasswordFieldSettings';
-import PasswordFieldDesigner from '@components/organisms/PasswordFieldDesigner';
+import TextFieldSettings from '@components/organisms/property/TextFieldSettings';
+import SelectFieldSettings from '@components/organisms/property/SelectFieldSettings';
+import TextFieldDesigner from '@components/organisms/designer/TextFieldDesigner';
+import SelectFieldDesigner from '@components/organisms/designer/SelectFieldDesigner';
+import RadioButtonFieldDesigner from '@components/organisms/designer/RadioButtonFieldDesigner';
+import RadioButtonFieldSettings from '@components/organisms/property/RadioButtonFieldSettings';
+import CheckBoxFieldSettings from '@components/organisms/property/CheckboxFieldSettings';
+import DateTimeFieldDesigner from '@components/organisms/designer/DateTimeFieldDesigner';
+import DateTimeFieldSettings from '@components/organisms/property/DateTimeFieldSettings';
+import FileUploadFieldSettings from '@components/organisms/property/FileUploadFieldSettings';
+import FileUploadFieldDesigner from '@components/organisms/designer/FileUploadFieldDesigner';
+import StepperDesigner from '@components/organisms/designer/StepperDesigner';
+import NumberFieldSettings from '@components/organisms/property/NumberFieldSettings';
+import NumberFieldDesigner from '@components/organisms/designer/NumberFieldDesigner';
+import PasswordFieldSettings from '@components/organisms/property/PasswordFieldSettings';
+import PasswordFieldDesigner from '@components/organisms/designer/PasswordFieldDesigner';
+import CheckboxFieldDesigner from '@components/organisms/designer/CheckboxFieldDesigner copy';
+import TextAreaFieldSettings from '@components/organisms/property/TextAreaFieldSettings';
+import TextAreaFieldDesigner from '@components/organisms/designer/TextAreaFieldDesigner';
+import SectionFieldSettings from '@components/organisms/property/SectionFieldSettings';
 
+import StepperFieldSettings from '@components/organisms/property/StepperFieldSettings';
 
-import SectionDesigner from '@components/molecules/SectionDesigner';
+import SectionDesigner from '@components/organisms/designer/SectionDesigner';
 
 //constants
 import { VARIANT, fieldTypes } from "@constants/fieldTypes"
@@ -81,7 +85,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
     },
     [fieldTypes.SECTION]: {
         type: fieldTypes.SECTION,
-        propertyComponent: SelectFieldSettings,
+        propertyComponent: SectionFieldSettings,
         designerComponent: SectionDesigner,
         icon: TbSection,
         title: "Section",
@@ -95,7 +99,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
     },
     [fieldTypes.STEPPER]: {
         type: fieldTypes.STEPPER,
-        propertyComponent: SelectFieldDesigner,
+        propertyComponent: StepperFieldSettings,
         designerComponent: StepperDesigner,
         icon: RxDividerVertical,
         title: "Stepper",
@@ -127,7 +131,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
     [fieldTypes.CHECKBOX]: {
         type: fieldTypes.CHECKBOX,
         propertyComponent: CheckBoxFieldSettings,
-        designerComponent: CheckBoxFieldDesigner,
+        designerComponent: CheckboxFieldDesigner,
         icon: IoMdCheckbox,
         title: "CheckBox",
         variant: VARIANT.FIELD,
@@ -216,8 +220,8 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
 
     [fieldTypes.TEXTAREA]: {
         type: fieldTypes.TEXTAREA,
-        propertyComponent: TextFieldSettings,
-        designerComponent: TextFieldDesigner,
+        propertyComponent: TextAreaFieldSettings,
+        designerComponent: TextAreaFieldDesigner,
         icon: BsTextareaT,
         title: "TextArea",
         variant: VARIANT.FIELD,
