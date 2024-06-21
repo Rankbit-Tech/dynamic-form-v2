@@ -103,6 +103,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         construct: () => ({
             type: fieldTypes.STEPPER,
             isCollapse: false,
+            title: "Step",
             conditions: {},
         }),
     },

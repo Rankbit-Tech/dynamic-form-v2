@@ -57,11 +57,13 @@ const SectionDesigner = ({ id, title, type,
 
     ];
 
+
+
     return (
         <div className="relative my-1">
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
             <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
-                <Collapse className={cn("shadow", {
+                <Collapse defaultActiveKey={id} {... !isCollapsable && { activeKey: id }} className={cn("shadow", {
                     "bg-gray-300": sectionRef.isOver
                 })} ref={sectionRef.setNodeRef} items={items} />
 

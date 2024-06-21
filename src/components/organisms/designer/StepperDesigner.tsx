@@ -8,12 +8,13 @@ import { ReactNode } from "react";
 
 interface StepperDesignerProps {
     id: string
+    title: string
     children: ReactNode
+    className: string
 }
 
 
-const StepperDesigner = ({ id, children }: StepperDesignerProps) => {
-
+const StepperDesigner = ({ id, title, children, className }: StepperDesignerProps) => {
 
     const step = useDroppable({
         id: `step-drop`,
@@ -29,7 +30,7 @@ const StepperDesigner = ({ id, children }: StepperDesignerProps) => {
         data: {
             id: id,
             position: "top",
-            type: fieldTypes.STEPPER
+            type: fieldTypes.CANVAS
         }
 
     });
@@ -38,15 +39,15 @@ const StepperDesigner = ({ id, children }: StepperDesignerProps) => {
         data: {
             id: id,
             position: "bottom",
-            type: fieldTypes.STEPPER
+            type: fieldTypes.CANVAS
         }
     });
 
     return (
-        <div className="relative flex flex-col text-foreground hover:cursor-pointer rounded-md">
+        <div className={cn("relative flex flex-col text-foreground hover:cursor-pointer rounded-md", className)}>
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
             <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
-                <Card title="step 1" className={cn("shadow", {
+                <Card title={title || "Step"} className={cn("shadow", {
                     "bg-gray-300": step.isOver
                 })} ref={step.setNodeRef}>
                     {children}
