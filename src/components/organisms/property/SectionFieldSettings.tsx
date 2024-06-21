@@ -1,17 +1,11 @@
 import React from 'react';
 import { Input, Form, Switch } from 'antd';
-import useSettingsForm, { isHandleValuesChangeObject } from '@hooks/useSettingsForm';
+import useSettingsForm from '@hooks/useSettingsForm';
 
 const SectionFieldSettings: React.FC = () => {
 
-    const result = useSettingsForm();
 
-    if (React.isValidElement(result)) {
-        return result;
-    }
-
-    if (!isHandleValuesChangeObject(result)) return null
-    const { handleValuesChange, values } = result;
+    const { handleValuesChange, values } = useSettingsForm();
 
     return (
         <Form layout="vertical" initialValues={values} onValuesChange={handleValuesChange}>

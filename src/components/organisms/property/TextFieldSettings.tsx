@@ -1,23 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Input, Form, Checkbox, InputNumber, Flex } from 'antd';
-import useSettingsForm, { isHandleValuesChangeObject } from '@hooks/useSettingsForm';
+import useSettingsForm from '@hooks/useSettingsForm';
 import DividerWithHeader from '@components/atoms/Divider';
 
 const TextFieldSettings: React.FC = () => {
-    const result = useSettingsForm();
 
-    if (React.isValidElement(result)) {
-        return result;
-    }
-
-    if (!isHandleValuesChangeObject(result)) return null
-    const { handleValuesChange, values } = result;
-
-    const [form] = Form.useForm()
-
+    const { handleValuesChange, values } = useSettingsForm();
 
     return (
-        <Form form={form} initialValues={values} layout="vertical" onValuesChange={handleValuesChange}>
+        <Form initialValues={values} layout="vertical" onValuesChange={handleValuesChange}>
             <Form.Item label="Label" name="label">
                 <Input />
             </Form.Item>

@@ -14,16 +14,15 @@ interface FieldType {
 }
 
 
-type UseSettingsFormReturnType = ReactElement | {
+type UseSettingsFormReturnType = {
     handleValuesChange: (changedValues: Record<string, any>, allValues: Record<string, any>) => void;
     values: FieldType;
 };
 
 const useSettingsForm = (): UseSettingsFormReturnType => {
     const { selectedField, setFields, fields } = useFormStore(state => state);
-
-    if (!selectedField) return <h2>Please select a field to change settings</h2>;
-    const values = fields.find(item => item.id == selectedField.id) as FieldType
+    // if (!selectedField) return null
+    const values = fields.find(item => item.id == selectedField?.id) as FieldType
 
     if (values && values?.options === null) {
         values.options = [];
@@ -31,8 +30,7 @@ const useSettingsForm = (): UseSettingsFormReturnType => {
     const handleValuesChange = (changedValues: Record<string, any>, allValues: Record<string, any>) => {
         setFields((fields: FieldType[]) => {
             const elements = [...fields];
-            const index = elements.findIndex((item: FieldType) => item.id === selectedField.id);
-
+            const index = elements.findIndex((item: FieldType) => item.id === selectedField?.id);
 
             if (index !== -1) {
                 elements[index] = {
@@ -58,9 +56,3 @@ const useSettingsForm = (): UseSettingsFormReturnType => {
 };
 
 export default useSettingsForm;
-
-export function isHandleValuesChangeObject(
-    value: UseSettingsFormReturnType
-): value is { handleValuesChange: (changedValues: Record<string, any>) => void; values: FieldType } {
-    return (value as { handleValuesChange: (changedValues: Record<string, any>, allValues: Record<string, any>) => void; values: FieldType }).handleValuesChange !== undefined;
-}

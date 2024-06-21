@@ -1,17 +1,10 @@
 import React from 'react';
 import { Input, Form, Switch } from 'antd';
-import useSettingsForm, { isHandleValuesChangeObject } from '@hooks/useSettingsForm';
+import useSettingsForm from '@hooks/useSettingsForm';
 
 const StepperFieldSettings: React.FC = () => {
 
-    const result = useSettingsForm();
-
-    if (React.isValidElement(result)) {
-        return result;
-    }
-
-    if (!isHandleValuesChangeObject(result)) return null
-    const { handleValuesChange, values } = result;
+    const { handleValuesChange, values } = useSettingsForm();
 
     return (
         <Form initialValues={values} layout="vertical" onValuesChange={handleValuesChange}>

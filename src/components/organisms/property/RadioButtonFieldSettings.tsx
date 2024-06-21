@@ -1,28 +1,16 @@
-import React, { useEffect } from 'react';
-import { Form, Input, Button, Row, Col, Checkbox, InputNumber, Select } from 'antd';
+import React from 'react';
+import { Form, Input, Button, Row, Col, Checkbox, Select } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import useSettingsForm, { isHandleValuesChangeObject } from '@hooks/useSettingsForm';
+import useSettingsForm from '@hooks/useSettingsForm';
 import DividerWithHeader from '@components/atoms/Divider';
 import { RADIO_DIRECTION } from '@constants/inputFieldConstants';
 
 const RadioButtonFieldSettings: React.FC = () => {
-    const result = useSettingsForm();
 
-    if (React.isValidElement(result)) {
-        return result;
-    }
-
-    if (!isHandleValuesChangeObject(result)) return null;
-    const { handleValuesChange, values } = result;
-
-    const [form] = Form.useForm();
-
-    useEffect(() => {
-        form.setFieldsValue(values);
-    }, [values, form]);
+    const { handleValuesChange, values } = useSettingsForm();
 
     return (
-        <Form form={form} layout="vertical" onValuesChange={handleValuesChange}>
+        <Form initialValues={values} layout="vertical" onValuesChange={handleValuesChange}>
             <Form.Item label="Label" name="label">
                 <Input />
             </Form.Item>
@@ -44,8 +32,6 @@ const RadioButtonFieldSettings: React.FC = () => {
                     }
                 />
             </Form.Item>
-
-
 
             <DividerWithHeader title="Options" />
             <Form.List name="options">
