@@ -88,6 +88,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         construct: () => ({
             type: fieldTypes.SECTION,
             cols: 1,
+            title: "section 1",
             isCollapsable: true,
             conditions: {},
         }),

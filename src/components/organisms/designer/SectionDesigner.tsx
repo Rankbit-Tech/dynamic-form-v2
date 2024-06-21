@@ -1,9 +1,9 @@
 import DragAreaSeperator from '@components/atoms/DragAreaSeperator'
 import DragAreaSplitter from '@components/atoms/DragAreaSplitter'
-import { fieldTypes } from '@constants/fieldTypes'
 import { useDroppable } from '@dnd-kit/core'
 import { cn } from '@utils/cn'
-import { Card } from 'antd'
+import type { CollapseProps } from 'antd';
+import { Collapse } from 'antd';
 import { ReactNode } from 'react'
 
 interface SectionProps {
@@ -12,11 +12,14 @@ interface SectionProps {
     isCollapsable: boolean
     children: ReactNode
     parentId: string
+    title: string
+    cols: number
 }
 
-const SectionDesigner = ({ id, type,
-    isCollapsable, parentId, children }: SectionProps) => {
+const SectionDesigner = ({ id, title, type,
+    isCollapsable, parentId, children, cols }: SectionProps) => {
 
+    console.log({ cols, isCollapsable })
     const sectionRef = useDroppable({
         id: `section-drag-${id}`,
         data: {
@@ -45,15 +48,23 @@ const SectionDesigner = ({ id, type,
         }
     });
 
+    const items: CollapseProps['items'] = [
+        {
+            key: id,
+            label: title,
+            children,
+        },
+
+    ];
+
     return (
         <div className="relative my-1">
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
             <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
-                <Card title="section" className={cn("shadow", {
+                <Collapse className={cn("shadow", {
                     "bg-gray-300": sectionRef.isOver
-                })} ref={sectionRef.setNodeRef}>
-                    {children}
-                </Card>
+                })} ref={sectionRef.setNodeRef} items={items} />
+
             </DragAreaSeperator>
         </div>
 

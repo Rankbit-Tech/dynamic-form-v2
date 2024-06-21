@@ -4,6 +4,10 @@ import { useFormStore } from "@store/useFormStore";
 type RecordType = Record<string, any>;
 type RecordArray = Record<string, any>[];
 
+//remove below line
+
+const log = console.log
+
 const useFormBuilder = () => {
     const { setFields } = useFormStore((state) => state);
 
@@ -33,7 +37,10 @@ const useFormBuilder = () => {
         const activeData = active.data.current;
         const overData = over.data.current;
 
-        const isDroppingOnCanvas = over.id === "droppable" && activeData.type === fieldTypes.STEPPER;
+        log(activeData.type == fieldTypes.STEPPER && overData.type != fieldTypes.CANVAS)
+        if (activeData.type == fieldTypes.STEPPER && overData.type != fieldTypes.CANVAS) return
+
+        const isDroppingOnCanvas = overData.type == fieldTypes.CANVAS && activeData.type === fieldTypes.STEPPER;
         const isDroppingOnStepper = overData.type === fieldTypes.STEPPER && activeData.type !== fieldTypes.STEPPER;
         const isDroppingOnSection = overData.type === fieldTypes.SECTION;
         const isDroppingOnField = overData.type === fieldTypes.TEXT;
