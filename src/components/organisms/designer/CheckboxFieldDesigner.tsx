@@ -1,6 +1,11 @@
 import React from 'react';
 
-const CheckboxFieldDesigner: React.FC<{ label: string; options: string[] }> = ({ label, options }) => {
+interface CheckboxFieldDesignerProps {
+    label: string;
+    options?: string[];
+}
+
+const CheckboxFieldDesigner: React.FC<CheckboxFieldDesignerProps> = ({ label, options = [] }) => {
     return (
         <div className="p-2 border rounded bg-white shadow">
             <label>{label}</label>

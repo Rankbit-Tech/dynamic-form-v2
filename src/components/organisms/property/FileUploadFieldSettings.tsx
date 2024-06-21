@@ -11,8 +11,12 @@ const FileUploadFieldSettings: React.FC = () => {
             <Form.Item label="Name">
                 <Input />
             </Form.Item>
-            <Form.Item label="Placeholder">
-                <Input />
+
+            <Form.Item label="Accepted File Types">
+                <Input placeholder="e.g., .jpg, .png, .pdf" />
+            </Form.Item>
+            <Form.Item label="Max File Size (MB)">
+                <Input type="number" placeholder="e.g., 5" />
             </Form.Item>
             <Form.Item label="Default File">
                 <Upload>

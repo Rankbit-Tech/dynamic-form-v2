@@ -1,28 +1,15 @@
 import React from 'react';
-import { Input, Form, InputNumber } from 'antd';
+import { Input, Form, Switch } from 'antd';
 
 const StepperFieldSettings: React.FC = () => {
     return (
         <Form layout="vertical">
-            <Form.Item label="Label">
+            <Form.Item label="Title">
                 <Input />
             </Form.Item>
-            <Form.Item label="Name">
-                <Input />
+            <Form.Item label="Collapse">
+                <Switch />
             </Form.Item>
-            <Form.Item label="Min Value">
-                <InputNumber />
-            </Form.Item>
-            <Form.Item label="Max Value">
-                <InputNumber />
-            </Form.Item>
-            <Form.Item label="Step">
-                <InputNumber />
-            </Form.Item>
-            <Form.Item label="Default Value">
-                <InputNumber />
-            </Form.Item>
-            {/* Add more settings as needed */}
         </Form>
     );
 };

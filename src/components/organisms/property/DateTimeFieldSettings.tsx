@@ -10,9 +10,7 @@ const DateTimeFieldSettings: React.FC = () => {
             <Form.Item label="Name">
                 <Input />
             </Form.Item>
-            <Form.Item label="Placeholder">
-                <Input />
-            </Form.Item>
+
             <Form.Item label="Default Value">
                 <DatePicker showTime />
             </Form.Item>
