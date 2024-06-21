@@ -1,17 +1,26 @@
+import { Radio, Space } from 'antd';
 import React from 'react';
 
-const RadioButtonFieldDesigner: React.FC<{ label: string; options: string[] }> = ({ label, options }) => {
+interface RadioButtonFieldDesigner {
+    label: string
+    direction: "horizontal" | "vertical" | undefined
+    options: Array<{ label: string, value: string }>,
+    name: string
+}
+
+const RadioButtonFieldDesigner: React.FC<RadioButtonFieldDesigner> = ({ direction, label, options, name }) => {
     return (
-        <div className="p-2 border rounded bg-white shadow">
-            <label>{label}</label>
-            <div className="mt-1">
-                {options.map((option, index) => (
-                    <div key={index} className="flex items-center">
-                        <input type="radio" id={option} name={label} className="mr-2" />
-                        <label htmlFor={option}>{option}</label>
-                    </div>
-                ))}
-            </div>
+        <div className="p-2 py-4 border rounded bg-white shadow">
+            <label className='m-1 font-semibold'>{label}</label>
+            {options?.length > 0 && <Radio.Group name={name}>
+                <Space direction={direction}>
+                    {options.map(option => (
+                        <Radio key={option.value} value={option.value}>
+                            {option.label}
+                        </Radio>
+                    ))}
+                </Space>
+            </Radio.Group>}
         </div>
     );
 };

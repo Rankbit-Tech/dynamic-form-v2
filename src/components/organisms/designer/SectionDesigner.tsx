@@ -19,7 +19,6 @@ interface SectionProps {
 const SectionDesigner = ({ id, title, type,
     isCollapsable, parentId, children, cols }: SectionProps) => {
 
-    console.log({ cols, isCollapsable })
     const sectionRef = useDroppable({
         id: `section-drag-${id}`,
         data: {
@@ -56,8 +55,6 @@ const SectionDesigner = ({ id, title, type,
         },
 
     ];
-
-
 
     return (
         <div className="relative my-1">

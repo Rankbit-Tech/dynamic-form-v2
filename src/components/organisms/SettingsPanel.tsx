@@ -10,7 +10,7 @@ const SettingsPanel: React.FC = () => {
 
     return (
         <div className='mt-2'>
-            <PropertyComponent />
+            <PropertyComponent key={selectedField.id} />
         </div>
     );
 };

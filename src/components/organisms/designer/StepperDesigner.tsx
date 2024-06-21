@@ -14,10 +14,10 @@ interface StepperDesignerProps {
 }
 
 
-const StepperDesigner = ({ id, title, children, className }: StepperDesignerProps) => {
+const StepperDesigner = ({ id, title, children }: StepperDesignerProps) => {
 
     const step = useDroppable({
-        id: `step-drop`,
+        id: `step-drop-${id}`,
         data: {
             id: id,
             type: fieldTypes.STEPPER
@@ -44,7 +44,7 @@ const StepperDesigner = ({ id, title, children, className }: StepperDesignerProp
     });
 
     return (
-        <div className={cn("relative flex flex-col text-foreground hover:cursor-pointer rounded-md", className)}>
+        <div className={cn("relative flex flex-col text-foreground hover:cursor-pointer rounded-md")}>
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
             <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
                 <Card title={title || "Step"} className={cn("shadow", {

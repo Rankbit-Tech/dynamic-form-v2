@@ -45,6 +45,11 @@ export interface InputFieldConfig {
     construct: () => Record<string, unknown>;
 }
 
+export const RADIO_DIRECTION = {
+    VERTICAL: "vertical",
+    HORIZONTAL: "horizontal"
+}
+
 const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
     [fieldTypes.TEXT]: {
         type: fieldTypes.TEXT,
@@ -58,7 +63,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             label: 'Label',
             name: 'name',
             placeholder: 'Placeholder',
-            validations: [],
+            validations: {},
             conditions: {},
         }),
     },
@@ -118,6 +123,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             type: fieldTypes.RADIO,
             label: '',
             name: '',
+            direction: RADIO_DIRECTION.VERTICAL,
             options: [],
             validations: [],
             conditions: {},

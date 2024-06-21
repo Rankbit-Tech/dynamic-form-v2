@@ -7,7 +7,7 @@ interface DividerWithHeaderProps {
 
 const DividerWithHeader = ({ title, children }: DividerWithHeaderProps) => {
     return (
-        <div className='border-b flex justify-between items-center py-2 w-full'>
+        <div className='border-b flex justify-between items-center py-2 my-2 w-full'>
             <h3 className='font-semibold text-lg'>{title}</h3>
             {children && children}
         </div>
