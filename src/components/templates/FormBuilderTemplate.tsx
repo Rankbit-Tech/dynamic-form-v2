@@ -5,6 +5,7 @@ import DroppableZone from '@components/molecules/DroppableZone';
 import { ImCross } from "react-icons/im";
 import DragOverlayContainer from '@components/molecules/DragOverlayContainer';
 import SettingsPanel from '@components/organisms/SettingsPanel';
+import DividerWithHeader from '@components/atoms/Divider';
 
 
 const FormBuilderTemplate: React.FC = () => {
@@ -20,14 +21,13 @@ const FormBuilderTemplate: React.FC = () => {
                     <DroppableZone />
                 </div>
             </div>
-            <div className="w-1/4 bg-white p-4 border-l border-gray-200">
+            <div className="w-1/5 bg-white p-4 border-l border-gray-200">
                 {selectedField ? (
                     <div>
                         <div className='flex flex-col'>
-                            <div className='flex justify-between border-b py-2 '>
-                                <h3 className='font-semibold'>Field Settings</h3>
-                                <ImCross className='text-lg hover:text-red-500 cursor-pointer' onClick={handeOutSideClick} />
-                            </div>
+                            <DividerWithHeader title='Field Settings'>
+                                <ImCross size={15} className='text-lg hover:text-red-500 cursor-pointer' onClick={handeOutSideClick} />
+                            </DividerWithHeader>
                             <SettingsPanel />
                         </div>
                     </div>

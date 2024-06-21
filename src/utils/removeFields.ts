@@ -1,7 +1,6 @@
 export function removeField(fields: Record<string, any>, id: string) {
     const idsToRemove = new Set<string>()
 
-
     const collectIdsToRemove = (fieldId: string) => {
         idsToRemove.add(fieldId)
 

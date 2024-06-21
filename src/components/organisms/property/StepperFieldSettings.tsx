@@ -1,23 +1,20 @@
 import React from 'react';
 import { Input, Form, Switch } from 'antd';
-import { useFormStore } from '@store/useFormStore';
+import useSettingsForm, { isHandleValuesChangeObject } from '@hooks/useSettingsForm';
 
 const StepperFieldSettings: React.FC = () => {
 
-    const { selectedField, setFields } = useFormStore(state => state)
+    const result = useSettingsForm();
 
-    if (!selectedField) return <h2>PLease select field to change settings</h2>
+    if (React.isValidElement(result)) {
+        return result;
+    }
 
-    const handleValuesChange = (changedValues: string[], allValues: string[]) => {
-        setFields((fields: any) => {
-            const elements = [...fields]
-            const index = elements.findIndex((item: Record<string, any>) => item.id == selectedField.id)
-            elements[index] = { ...elements[index], ...allValues }
-            return elements
-        })
-    };
+    if (!isHandleValuesChangeObject(result)) return null
+    const { handleValuesChange, values } = result;
+
     return (
-        <Form layout="vertical" onValuesChange={handleValuesChange}>
+        <Form initialValues={values} layout="vertical" onValuesChange={handleValuesChange}>
             <Form.Item label="Title" name="title">
                 <Input />
             </Form.Item>
