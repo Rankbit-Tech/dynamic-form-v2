@@ -1,20 +1,31 @@
-import React from "react";
-import { Input, InputProps } from "antd";
+import React from 'react';
+import { Form, Input } from 'antd';
 
-interface InputFieldProps extends InputProps {
+interface TextInputProps {
   label: string;
+  name: string;
+  placeholder?: string;
+  validations: {
+    required: boolean
+    minLength?: number
+    maxLength?: number
+  }
 }
 
-const InputField: React.FC<InputFieldProps> = ({
-  label,
-  ...inputProps
-}) => {
+const TextInput: React.FC<TextInputProps> = ({ label, name, placeholder, validations }) => {
+  const { required, maxLength, minLength } = validations || {}
+
+  const rules = [
+    { required, message: `Please enter your ${label}` },
+    { min: minLength, message: `Minimum length is ${minLength} characters` },
+    { max: maxLength, message: `Maximum length is ${maxLength} characters` },
+  ].filter(rule => rule.required || rule.min !== undefined || rule.max !== undefined);
+
   return (
-    <div className="flex items-center space-x-2">
-      <label className="text-gray-700">{label}</label>
-      <Input {...inputProps} />
-    </div>
+    <Form.Item label={label} name={name} rules={rules}>
+      <Input placeholder={placeholder} />
+    </Form.Item>
   );
 };
 
-export default InputField;
+export default TextInput;

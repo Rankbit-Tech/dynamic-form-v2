@@ -34,6 +34,9 @@ import { GoNumber } from 'react-icons/go';
 import { MdOutlinePassword } from 'react-icons/md';
 import { RxDividerVertical } from 'react-icons/rx';
 import { TbSection } from 'react-icons/tb';
+import TextInput from '@components/atoms/Input';
+import SelectInput from '@components/atoms/SelectInput';
+import SectionComponent from '@components/organisms/SectionComponent';
 
 export interface InputFieldConfig {
     type: string;
@@ -41,6 +44,7 @@ export interface InputFieldConfig {
     title: string;
     variant: string;
     propertyComponent: React.ElementType;
+    renderComponent?: React.ElementType;
     designerComponent: React.ElementType;
     construct: () => Record<string, unknown>;
 }
@@ -55,6 +59,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.TEXT,
         propertyComponent: TextFieldSettings,
         designerComponent: TextFieldDesigner,
+        renderComponent: TextInput,
         icon: CiText,
         title: "Input",
         variant: VARIANT.FIELD,
@@ -71,6 +76,8 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.SELECT,
         propertyComponent: SelectFieldSettings,
         designerComponent: SelectFieldDesigner,
+        renderComponent: SelectInput,
+
         icon: LuBoxSelect,
         title: "Select",
         variant: VARIANT.FIELD,
@@ -79,7 +86,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             label: '',
             name: '',
             options: [],
-            validations: [],
+            validations: {},
             conditions: {},
         }),
     },
@@ -87,14 +94,18 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.SECTION,
         propertyComponent: SectionFieldSettings,
         designerComponent: SectionDesigner,
+        renderComponent: SectionComponent,
         icon: TbSection,
         title: "Section",
         variant: VARIANT.SECTION,
         construct: () => ({
             type: fieldTypes.SECTION,
-            cols: 1,
             title: "section 1",
             isCollapsable: true,
+            grid: {
+                columns: 1,
+                gap: "16px",
+            },
             conditions: {},
         }),
     },
@@ -124,7 +135,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             name: '',
             direction: RADIO_DIRECTION.VERTICAL,
             options: [],
-            validations: [],
+            validations: {},
             conditions: {},
         }),
     },
@@ -140,7 +151,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             label: '',
             name: '',
             options: [],
-            validations: [],
+            validations: {},
             conditions: {},
         }),
     },
@@ -156,7 +167,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             label: '',
             name: '',
             defaultValue: '',
-            validations: [],
+            validations: {},
             conditions: {},
         }),
     },
@@ -173,7 +184,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             name: '',
             accept: '', // file types
             maxFileSize: null, // in bytes
-            validations: [],
+            validations: {},
             conditions: {},
         }),
     },
@@ -192,7 +203,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             min: null,
             max: null,
             step: 1,
-            validations: [],
+            validations: {},
             conditions: {},
         }),
     },
@@ -208,7 +219,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             label: '',
             name: '',
             defaultValue: '',
-            validations: [],
+            validations: {},
             minLength: null,
             maxLength: null,
             pattern: '',
@@ -227,7 +238,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             label: '',
             name: '',
             defaultValue: '',
-            validations: [],
+            validations: {},
             rows: 3,
             cols: 30,
             maxLength: null,

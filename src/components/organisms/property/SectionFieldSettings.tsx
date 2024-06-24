@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Form, Switch } from 'antd';
+import { Input, Form, Switch, InputNumber } from 'antd';
 import useSettingsForm from '@hooks/useSettingsForm';
 
 const SectionFieldSettings: React.FC = () => {
@@ -14,11 +14,15 @@ const SectionFieldSettings: React.FC = () => {
                 <Input />
             </Form.Item>
 
-            <Form.Item label="Number of Columns" name="cols">
-                <Input type="number" min={1} max={12} />
-            </Form.Item>
             <Form.Item label="Collapsible" name="isCollapsable">
                 <Switch />
+            </Form.Item>
+
+            <Form.Item label="Grid Columns" name={['grid', 'columns']}>
+                <InputNumber min={1} max={12} />
+            </Form.Item>
+            <Form.Item label="Grid Gap" name={['grid', 'gap']}>
+                <Input />
             </Form.Item>
         </Form>
     );

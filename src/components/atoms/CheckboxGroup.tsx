@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox, CheckboxProps } from 'antd';
+import { Checkbox } from 'antd';
 
 const { Group } = Checkbox;
 
@@ -8,7 +8,7 @@ interface CheckboxOption {
     value: string;
 }
 
-interface CheckboxGroupProps extends CheckboxProps {
+interface CheckboxGroupProps {
     label: string;
     options: CheckboxOption[];
     value?: string[];
