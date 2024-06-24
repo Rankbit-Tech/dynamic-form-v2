@@ -1,7 +1,6 @@
 
 import { useFormStore } from "@store/useFormStore"
 import { Button, Form, Steps } from "antd"
-import StepperComponent from "./StepperComponent"
 import { useState } from "react"
 import INPUT_FIELDS from "@constants/inputFieldConstants"
 import SectionComponent from "./SectionComponent"
@@ -54,13 +53,18 @@ const Preview = ({ data }: PreviewProps) => {
     const prev = () => {
         setCurrent(current - 1);
     };
+
+    const handleFinish = (values: Record<string, any>) => {
+        console.log({ values })
+    }
+
     return (
         <div>
             <div className="w-full h-[50px] p-2 bg-slate-200 flex justify-end">
                 <Button type="primary" onClick={() => setIsPreview(false)}>Builder</Button>
             </div>
             <div className="p-5 m-2 bg-gray-100">
-                <Form form={form} layout="vertical">
+                <Form form={form} layout="vertical" onFinish={handleFinish}>
                     <Steps current={current}>
                         {items.map(item => (
                             <Steps.Step key={item.key} title={item.title} />
@@ -76,7 +80,7 @@ const Preview = ({ data }: PreviewProps) => {
                             </Button>
                         )}
                         {current === items.length - 1 && (
-                            <Button type="primary" onClick={() => form.submit()}>
+                            <Button type="primary" htmlType="submit">
                                 Submit
                             </Button>
                         )}
