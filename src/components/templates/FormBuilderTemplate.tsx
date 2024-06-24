@@ -6,6 +6,7 @@ import { ImCross } from "react-icons/im";
 import DragOverlayContainer from '@components/molecules/DragOverlayContainer';
 import SettingsPanel from '@components/organisms/SettingsPanel';
 import DividerWithHeader from '@components/atoms/Divider';
+import { Button } from 'antd';
 
 
 const FormBuilderTemplate: React.FC = () => {
@@ -17,6 +18,12 @@ const FormBuilderTemplate: React.FC = () => {
     return (
         <div className="flex h-screen">
             <div className="flex-1 bg-white p-4" onClick={handeOutSideClick}>
+                <div className='p-2 flex justify-end'>
+                    <div className='flex items-center gap-2'>
+                        <Button type='primary' ghost>Preview</Button>
+                        <Button type='primary' >Save</Button>
+                    </div>
+                </div>
                 <div className="h-full overflow-y-scroll">
                     <DroppableZone />
                 </div>
