@@ -2,7 +2,6 @@ import React from 'react';
 import FormBuilderTemplate from '@components/templates/FormBuilderTemplate';
 import { DndContext, MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import useFormBuilder from '@hooks/useFormBuilder';
-import DragOverlayContainer from '@components/molecules/DragOverlayContainer';
 
 const FormBuilderPage: React.FC = () => {
 

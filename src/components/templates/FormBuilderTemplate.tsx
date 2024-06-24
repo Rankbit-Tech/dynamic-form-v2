@@ -10,18 +10,24 @@ import { Button } from 'antd';
 
 
 const FormBuilderTemplate: React.FC = () => {
-    const { selectedField, setSelected } = useFormStore();
+    const { selectedField, setSelected, setIsPreview } = useFormStore();
     const handeOutSideClick = (e: React.SyntheticEvent) => {
         e.stopPropagation()
         setSelected(null)
     }
+
+    const handlePreview = (e: React.SyntheticEvent) => {
+        e.stopPropagation()
+        setIsPreview(true)
+    }
+
     return (
         <div className="flex h-screen">
             <div className="flex-1 bg-white p-4" onClick={handeOutSideClick}>
                 <div className='p-2 flex justify-end'>
                     <div className='flex items-center gap-2'>
-                        <Button type='primary' ghost>Preview</Button>
-                        <Button type='primary' >Save</Button>
+                        <Button type='primary' ghost onClick={handlePreview}>Preview</Button>
+                        <Button type='primary' onClick={handlePreview}>Save</Button>
                     </div>
                 </div>
                 <div className="h-full overflow-y-scroll">
