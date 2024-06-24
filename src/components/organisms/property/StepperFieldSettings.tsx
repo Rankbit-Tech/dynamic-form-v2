@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Form, Switch } from 'antd';
+import { Input, Form } from 'antd';
 import useSettingsForm from '@hooks/useSettingsForm';
 
 const StepperFieldSettings: React.FC = () => {
@@ -10,9 +10,6 @@ const StepperFieldSettings: React.FC = () => {
         <Form initialValues={values} layout="vertical" onValuesChange={handleValuesChange}>
             <Form.Item label="Title" name="title">
                 <Input />
-            </Form.Item>
-            <Form.Item label="Collapse" name="isCollapse">
-                <Switch />
             </Form.Item>
         </Form>
     );

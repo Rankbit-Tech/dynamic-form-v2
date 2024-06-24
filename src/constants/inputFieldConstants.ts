@@ -107,7 +107,6 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         variant: VARIANT.STEPPER,
         construct: () => ({
             type: fieldTypes.STEPPER,
-            isCollapse: false,
             title: "Step",
             conditions: {},
         }),
