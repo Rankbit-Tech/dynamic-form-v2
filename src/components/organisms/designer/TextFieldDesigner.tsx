@@ -1,6 +1,6 @@
 import DragAreaSeperator from '@components/atoms/DragAreaSeperator';
 import DragAreaSplitter from '@components/atoms/DragAreaSplitter';
-import InputField from '@components/atoms/Input';
+
 import { fieldTypes } from '@constants/fieldTypes';
 import { useDroppable } from '@dnd-kit/core';
 import { Input } from 'antd';

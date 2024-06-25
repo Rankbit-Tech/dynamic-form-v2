@@ -10,11 +10,13 @@ export const fieldTypes = {
     FILEUPLOAD: "FILEUPLOAD",
     NUMBER: "NUMBER",
     PASSWORD: "PASSWORD",
-    TEXTAREA: "TEXTAREA"
+    TEXTAREA: "TEXTAREA",
+    GRID: "GRID"
 }
 
 export const VARIANT = {
     SECTION: "SECTION",
     STEPPER: "STEPPER",
-    FIELD: "FIELD"
+    FIELD: "FIELD",
+    GRID: "GRID"
 }

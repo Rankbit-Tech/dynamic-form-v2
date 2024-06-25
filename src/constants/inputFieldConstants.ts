@@ -33,10 +33,12 @@ import { FaFileUpload } from 'react-icons/fa';
 import { GoNumber } from 'react-icons/go';
 import { MdOutlinePassword } from 'react-icons/md';
 import { RxDividerVertical } from 'react-icons/rx';
-import { TbSection } from 'react-icons/tb';
+import { TbGridDots, TbSection } from 'react-icons/tb';
 import TextInput from '@components/atoms/Input';
 import SelectInput from '@components/atoms/SelectInput';
 import SectionComponent from '@components/organisms/SectionComponent';
+import GridFieldSettings from '@components/organisms/property/GridFieldSettings';
+import GridFieldDesigner from '@components/organisms/designer/GridFieldDesigner';
 
 export interface InputFieldConfig {
     type: string;
@@ -245,6 +247,21 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             conditions: {},
         }),
     },
+    [fieldTypes.GRID]: {
+        type: fieldTypes.GRID,
+        propertyComponent: GridFieldSettings,
+        designerComponent: GridFieldDesigner,
+        icon: TbGridDots,
+        title: "Grid",
+        variant: VARIANT.GRID,
+        construct: () => ({
+            type: fieldTypes.GRID,
+            cols: 1,
+            conditions: {}
+        })
+    }
+
+
 };
 
 export default INPUT_FIELDS;
