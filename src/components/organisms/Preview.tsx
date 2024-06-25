@@ -36,7 +36,7 @@ const Preview = ({ data }: PreviewProps) => {
     const { setIsPreview } = useFormStore(state => state);
     const [current, setCurrent] = useState(0);
 
-    const items = data.map((step, index) => ({
+    const items = data?.map((step, index) => ({
         key: index.toString(),
         title: step.title,
         content: renderStep(step.children)
@@ -64,33 +64,37 @@ const Preview = ({ data }: PreviewProps) => {
                 <Button type="primary" onClick={() => setIsPreview(false)}>Builder</Button>
             </div>
             <div className="p-5 m-2 bg-gray-100">
-                <Form form={form} layout="vertical" onFinish={handleFinish}>
-                    <Steps current={current}>
-                        {items.map(item => (
-                            <Steps.Step key={item.key} title={item.title} />
-                        ))}
-                    </Steps>
-                    <div style={{ marginTop: 16 }}>
-                        {items[current].content}
-                    </div>
-                    <div style={{ marginTop: 24 }}>
-                        {current < items.length - 1 && (
-                            <Button type="primary" onClick={next}>
-                                Next
-                            </Button>
-                        )}
-                        {current === items.length - 1 && (
-                            <Button type="primary" htmlType="submit">
-                                Submit
-                            </Button>
-                        )}
-                        {current > 0 && (
-                            <Button style={{ margin: '0 8px' }} onClick={prev}>
-                                Previous
-                            </Button>
-                        )}
-                    </div>
-                </Form>
+                {data.length > 0 && (
+                    <Form form={form} layout="vertical" onFinish={handleFinish}>
+                        <Steps current={current}>
+                            {items?.map(item => (
+                                <Steps.Step key={item.key} title={item.title} />
+                            ))}
+                        </Steps>
+                        <div style={{ marginTop: 16 }}>
+                            {items[current].content}
+                        </div>
+                        <div style={{ marginTop: 24 }}>
+                            {current < items.length - 1 && (
+                                <Button type="primary" onClick={next}>
+                                    Next
+                                </Button>
+                            )}
+                            {current === items.length - 1 && (
+                                <Button type="primary" htmlType="submit">
+                                    Submit
+                                </Button>
+                            )}
+                            {current > 0 && (
+                                <Button style={{ margin: '0 8px' }} onClick={prev}>
+                                    Previous
+                                </Button>
+                            )}
+                        </div>
+                    </Form>
+                )}
+
+                {data.length == 0 && (<h1 className="text-center font-semibold text-slate-600">No fields found</h1>)}
             </div>
         </div>
     )

@@ -1,6 +1,9 @@
 import { fieldTypes } from "@constants/fieldTypes";
 
 export const transformData = (data: any) => {
+
+
+    if (data.length == 0) return []
     const itemsById = {} as Record<string, any>;
 
     // Helper function to add items to their parent
