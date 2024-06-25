@@ -47,7 +47,11 @@ const useFormBuilder = () => {
 
 
         if (isDroppingOnCanvas) {
-            addField(activeData);
+            if (overData?.position) {
+                insertFieldAtIndex(overData, activeData, overData?.position);
+            } else {
+                addField(activeData);
+            }
         } else if (isDroppingOnStepper) {
             handlePositionedDrop(overData, activeData);
         } else if (isDroppingOnSection) {
