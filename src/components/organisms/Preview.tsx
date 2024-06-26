@@ -71,10 +71,10 @@ const Preview = ({ data }: PreviewProps) => {
                                 <Steps.Step key={item.key} title={item.title} />
                             ))}
                         </Steps>
-                        <div style={{ marginTop: 16 }}>
+                        <div className="mt-4">
                             {items[current].content}
                         </div>
-                        <div style={{ marginTop: 24 }}>
+                        <div className="mt-6">
                             {current < items.length - 1 && (
                                 <Button type="primary" onClick={next}>
                                     Next
@@ -86,7 +86,7 @@ const Preview = ({ data }: PreviewProps) => {
                                 </Button>
                             )}
                             {current > 0 && (
-                                <Button style={{ margin: '0 8px' }} onClick={prev}>
+                                <Button className="mx-2" onClick={prev}>
                                     Previous
                                 </Button>
                             )}

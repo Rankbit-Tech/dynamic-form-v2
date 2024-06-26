@@ -24,12 +24,6 @@ const FormBuilderTemplate: React.FC = () => {
     return (
         <div className="flex h-screen">
             <div className="flex-1 bg-white p-4" onClick={handeOutSideClick}>
-                <div className='p-2 flex justify-end'>
-                    <div className='flex items-center gap-2'>
-                        <Button type='primary' ghost onClick={handlePreview}>Preview</Button>
-                        <Button type='primary' onClick={handlePreview}>Save</Button>
-                    </div>
-                </div>
                 <div className="h-full overflow-y-scroll">
                     <DroppableZone />
                 </div>
@@ -45,8 +39,16 @@ const FormBuilderTemplate: React.FC = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="w-full bg-white p-4 border-r border-gray-200">
-                        <DraggableFieldList />
+                    <div className="w-full bg-white p-4 border-r flex flex-col justify-between h-full border-gray-200">
+                        <div className='flex-1'>
+                            <DraggableFieldList />
+                        </div>
+                        <div className='p-2 flex justify-end '>
+                            <div className='flex items-center gap-2 w-full'>
+                                <Button type='primary' className='w-full' ghost onClick={handlePreview}>Preview</Button>
+                                <Button type='primary' className='w-full' onClick={handlePreview}>Save</Button>
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>

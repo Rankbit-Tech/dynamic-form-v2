@@ -37,37 +37,36 @@ const useFormBuilder = () => {
         const activeData = active.data.current;
         const overData = over.data.current;
 
-        log(activeData.type == fieldTypes.STEPPER && overData.type != fieldTypes.CANVAS)
         if (activeData.type == fieldTypes.STEPPER && overData.type != fieldTypes.CANVAS) return
 
         const isDroppingOnCanvas = overData.type == fieldTypes.CANVAS && activeData.type === fieldTypes.STEPPER;
         const isDroppingOnStepper = overData.type === fieldTypes.STEPPER && activeData.type !== fieldTypes.STEPPER;
         const isDroppingOnSection = overData.type === fieldTypes.SECTION;
         const isDroppingOnField = overData.type === fieldTypes.TEXT;
+        const isDroppingOnGridColumns = overData.type === fieldTypes.GRID
+
 
 
         if (isDroppingOnCanvas) {
             if (overData?.position) {
-                insertFieldAtIndex(overData, activeData, overData?.position);
+                insertFieldAtIndex(overData, activeData, overData.position);
             } else {
                 addField(activeData);
             }
-        } else if (isDroppingOnStepper) {
-            handlePositionedDrop(overData, activeData);
-        } else if (isDroppingOnSection) {
-            handlePositionedDrop(overData, activeData, overData.parentId);
-        } else if (isDroppingOnField) {
+        } else if (isDroppingOnStepper || isDroppingOnSection || isDroppingOnField || isDroppingOnGridColumns) {
             handlePositionedDrop(overData, activeData, overData.parentId);
         }
     };
 
+
+
     const handlePositionedDrop = (overData: RecordType, activeData: RecordType, parentId: string = overData.id) => {
+
         const { position } = overData;
-        if (position === "top" || position === "bottom") {
-            activeData.parentId = parentId;
+        activeData.parentId = parentId;
+        if (position) {
             insertFieldAtIndex(overData, activeData, position);
         } else {
-            activeData.parentId = overData.id;
             addField(activeData);
         }
     };

@@ -27,7 +27,7 @@ const DraggableInput = ({ type, label, icon: Icon }: DraggableInputProps) => {
             ref={setNodeRef}
             {...listeners}
             {...attributes}
-            className="p-2 border rounded bg-slate-700 shadow cursor-grab text-white flex flex-col items-center"
+            className="p-2 border min-w-[100px] rounded bg-slate-700 shadow cursor-grab text-white flex flex-col items-center"
             style={{ opacity: isDragging ? 0.5 : 1 }}
         >
             <div className='h-6 w-6  rounded-full bg-slate-500 grid place-items-center'>

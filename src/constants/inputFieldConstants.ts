@@ -256,7 +256,8 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         variant: VARIANT.GRID,
         construct: () => ({
             type: fieldTypes.GRID,
-            cols: 1,
+            cols: 2,
+            placement: "",
             conditions: {}
         })
     }
