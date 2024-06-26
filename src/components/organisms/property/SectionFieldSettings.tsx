@@ -17,13 +17,6 @@ const SectionFieldSettings: React.FC = () => {
             <Form.Item label="Collapsible" name="isCollapsable">
                 <Switch />
             </Form.Item>
-
-            <Form.Item label="Grid Columns" name={['grid', 'columns']}>
-                <InputNumber min={1} max={12} />
-            </Form.Item>
-            <Form.Item label="Grid Gap" name={['grid', 'gap']}>
-                <Input />
-            </Form.Item>
         </Form>
     );
 };

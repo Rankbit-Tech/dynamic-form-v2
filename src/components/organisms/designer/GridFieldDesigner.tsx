@@ -1,20 +1,17 @@
-import React, { useMemo } from 'react';
-import { FaDropbox } from "react-icons/fa";
+import React from 'react';
 import { fieldTypes } from '@constants/fieldTypes';
 import { useDroppable } from '@dnd-kit/core';
-import { nanoid } from 'nanoid';
 import { cn } from '@utils/cn';
 
 interface GridFieldDesignerProps {
     id: string
     type: Pick<typeof fieldTypes, "GRID">
-    parentId: string
     children: React.ReactNode
     cols: number
 }
 
 
-const GridFieldDesigner: React.FC<GridFieldDesignerProps> = ({ id, type, children, parentId, cols }) => {
+const GridFieldDesigner: React.FC<GridFieldDesignerProps> = ({ id, type, children, cols }) => {
 
     const { isOver, setNodeRef } = useDroppable({
         id,

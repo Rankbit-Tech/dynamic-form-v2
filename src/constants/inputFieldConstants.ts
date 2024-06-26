@@ -39,6 +39,7 @@ import SelectInput from '@components/atoms/SelectInput';
 import SectionComponent from '@components/organisms/SectionComponent';
 import GridFieldSettings from '@components/organisms/property/GridFieldSettings';
 import GridFieldDesigner from '@components/organisms/designer/GridFieldDesigner';
+import GridComponent from '@components/molecules/GridComponent';
 
 export interface InputFieldConfig {
     type: string;
@@ -251,6 +252,8 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.GRID,
         propertyComponent: GridFieldSettings,
         designerComponent: GridFieldDesigner,
+        renderComponent: GridComponent,
+
         icon: TbGridDots,
         title: "Grid",
         variant: VARIANT.GRID,

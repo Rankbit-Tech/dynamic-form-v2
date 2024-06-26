@@ -3,7 +3,7 @@ import { useFormStore } from "@store/useFormStore"
 import { Button, Form, Steps } from "antd"
 import { useState } from "react"
 import INPUT_FIELDS from "@constants/inputFieldConstants"
-import SectionComponent from "./SectionComponent"
+import { fieldTypes } from "@constants/fieldTypes"
 
 interface PreviewProps {
     data: Record<string, any>[]
@@ -15,10 +15,14 @@ const renderStep = (steps: Record<string, any>[]) => {
         const RenderComponent = INPUT_FIELDS[step.type]?.renderComponent;
 
         if (!RenderComponent) return null;
-
-        if (step.type === 'SECTION') {
+        if (step.type === fieldTypes.SECTION) {
             return (
-                <SectionComponent key={step.id} title={step.title} children={step.children} />
+                <RenderComponent key={step.id} {...step} />
+            );
+        }
+        if (step.type === fieldTypes.GRID) {
+            return (
+                <RenderComponent key={step.id} {...step} />
             );
         }
 
@@ -35,7 +39,6 @@ const renderStep = (steps: Record<string, any>[]) => {
 const Preview = ({ data }: PreviewProps) => {
     const { setIsPreview } = useFormStore(state => state);
     const [current, setCurrent] = useState(0);
-
     const items = data?.map((step, index) => ({
         key: index.toString(),
         title: step.title,
