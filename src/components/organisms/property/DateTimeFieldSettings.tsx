@@ -1,9 +1,11 @@
 import React from 'react';
 import { Input, Form, DatePicker } from 'antd';
+import useSettingsForm from '@hooks/useSettingsForm';
 
 const DateTimeFieldSettings: React.FC = () => {
+    const { handleValuesChange, values } = useSettingsForm();
     return (
-        <Form layout="vertical">
+        <Form initialValues={values} layout="vertical" onValuesChange={handleValuesChange}>
             <Form.Item label="Label">
                 <Input />
             </Form.Item>

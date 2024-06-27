@@ -40,6 +40,10 @@ import SectionComponent from '@components/organisms/SectionComponent';
 import GridFieldSettings from '@components/organisms/property/GridFieldSettings';
 import GridFieldDesigner from '@components/organisms/designer/GridFieldDesigner';
 import GridComponent from '@components/molecules/GridComponent';
+import CustomDatePicker from '@components/atoms/DatePicker';
+import CustomTextArea from '@components/atoms/TextArea';
+import PasswordInput from '@components/atoms/PasswordInput';
+import NumberInput from '@components/atoms/NumberInput';
 
 export interface InputFieldConfig {
     type: string;
@@ -162,6 +166,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.DATETIME,
         propertyComponent: DateTimeFieldSettings,
         designerComponent: DateTimeFieldDesigner,
+        renderComponent: CustomDatePicker,
         icon: BsCalendar2DateFill,
         title: "DateTime",
         variant: VARIANT.FIELD,
@@ -195,6 +200,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.NUMBER,
         propertyComponent: NumberFieldSettings,
         designerComponent: NumberFieldDesigner,
+        renderComponent: NumberInput,
         icon: GoNumber,
         title: "Number",
         variant: VARIANT.FIELD,
@@ -214,6 +220,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.PASSWORD,
         propertyComponent: PasswordFieldSettings,
         designerComponent: PasswordFieldDesigner,
+        renderComponent: PasswordInput,
         icon: MdOutlinePassword,
         title: "Password",
         variant: VARIANT.FIELD,
@@ -233,6 +240,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.TEXTAREA,
         propertyComponent: TextAreaFieldSettings,
         designerComponent: TextAreaFieldDesigner,
+        renderComponent: CustomTextArea,
         icon: BsTextareaT,
         title: "TextArea",
         variant: VARIANT.FIELD,
