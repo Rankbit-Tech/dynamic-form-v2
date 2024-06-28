@@ -1,6 +1,7 @@
 import React from 'react';
-import { Input, Form } from 'antd';
+import { Input, Form, Checkbox, Flex, InputNumber } from 'antd';
 import useSettingsForm from '@hooks/useSettingsForm';
+import DividerWithHeader from '@components/atoms/Divider';
 
 const { TextArea } = Input;
 
@@ -27,10 +28,21 @@ const TextAreaFieldSettings: React.FC = () => {
             <Form.Item label="Cols" name="cols">
                 <Input type="number" min={1} />
             </Form.Item>
-            <Form.Item label="Max Length" name="maxLength">
-                <Input type="number" min={1} />
+
+            <Flex justify='space-between'>
+                <Form.Item label="Min Length" name={['validations', 'minLength']}>
+                    <InputNumber />
+                </Form.Item>
+                <Form.Item label="Max Length" name={['validations', 'maxLength']}>
+                    <InputNumber />
+                </Form.Item>
+            </Flex>
+
+            <DividerWithHeader title='Validations' />
+
+            <Form.Item initialValue={values?.validations.required} name={['validations', 'required']} valuePropName="checked">
+                <Checkbox>Required</Checkbox>
             </Form.Item>
-            {/* Add more settings as needed */}
         </Form>
     );
 };

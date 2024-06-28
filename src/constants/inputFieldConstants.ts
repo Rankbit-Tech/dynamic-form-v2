@@ -42,6 +42,7 @@ import GridFieldDesigner from '@components/organisms/designer/GridFieldDesigner'
 import GridComponent from '@components/molecules/GridComponent';
 import CheckBox from '@components/atoms/Checkbox';
 import CustomDatePicker from '@components/atoms/DatePicker';
+import CustomTextArea from '@components/atoms/TextArea';
 
 export interface InputFieldConfig {
     type: string;
@@ -238,6 +239,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.TEXTAREA,
         propertyComponent: TextAreaFieldSettings,
         designerComponent: TextAreaFieldDesigner,
+        renderComponent: CustomTextArea,
         icon: BsTextareaT,
         title: "TextArea",
         variant: VARIANT.FIELD,
