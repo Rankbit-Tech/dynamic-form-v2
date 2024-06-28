@@ -1,16 +1,49 @@
 import React from 'react';
-import { InputNumber, InputNumberProps } from 'antd';
+import { Form, InputNumber, InputNumberProps } from 'antd';
 
 interface NumberInputProps extends InputNumberProps {
     label: string;
+    name: string
+    placeholder: string
+    defaultValue: number,
+    step: number
+    validations?: {
+        required?: boolean;
+        minValue?: number;
+        maxValue?: number;
+    };
 }
 
-const NumberInput: React.FC<NumberInputProps> = ({ label, ...inputNumberProps }) => {
+const NumberInput: React.FC<NumberInputProps> = ({ label, name, defaultValue, step, placeholder, validations }) => {
+
+    const { required, minValue, maxValue, } = validations || {}
+    const rules = [
+        { required, message: `Please enter ${label}` }
+    ].filter(rule => rule.required);
+
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
+        if (allowedKeys.includes(e.key)) {
+            return;
+        }
+        if (!/^\d*\.?\d*$/.test(e.key)) {
+            e.preventDefault();
+        }
+    };
+
     return (
-        <div className="flex items-center space-x-2">
-            <label className="text-gray-700">{label}</label>
-            <InputNumber {...inputNumberProps} />
-        </div>
+        <Form.Item label={label} name={name} rules={rules}>
+            <InputNumber
+                step={step}
+                min={minValue}
+                max={maxValue}
+                defaultValue={defaultValue}
+                placeholder={placeholder}
+                controls={true}
+                stringMode={false}
+                onKeyDown={handleKeyPress}
+                className='w-full' />
+        </Form.Item>
     );
 };
 

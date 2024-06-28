@@ -43,6 +43,7 @@ import GridComponent from '@components/molecules/GridComponent';
 import CheckBox from '@components/atoms/Checkbox';
 import CustomDatePicker from '@components/atoms/DatePicker';
 import CustomTextArea from '@components/atoms/TextArea';
+import NumberInput from '@components/atoms/NumberInput';
 
 export interface InputFieldConfig {
     type: string;
@@ -201,6 +202,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.NUMBER,
         propertyComponent: NumberFieldSettings,
         designerComponent: NumberFieldDesigner,
+        renderComponent: NumberInput,
         icon: GoNumber,
         title: "Number",
         variant: VARIANT.FIELD,
