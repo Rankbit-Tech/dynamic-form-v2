@@ -1,9 +1,16 @@
 import React from 'react';
 import { Input, Form, InputNumber } from 'antd';
+import useSettingsForm from '@hooks/useSettingsForm';
 
 const PasswordFieldSettings: React.FC = () => {
+    const { handleValuesChange, values } = useSettingsForm();
+
+    if (!values) {
+        return null; 
+    }
+
     return (
-        <Form layout="vertical">
+        <Form layout="vertical" initialValues={values} onValuesChange={handleValuesChange}>
             <Form.Item label="Label" name="label">
                 <Input />
             </Form.Item>
