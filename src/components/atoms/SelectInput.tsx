@@ -18,6 +18,7 @@ const SelectInput: React.FC<SelectInputProps> = ({ label, name, options, default
         { required, message: `Please select ${label || 'any value'}` },
 
     ].filter(rule => rule.required);
+
     return (
         <Form.Item label={label} name={name} rules={rules}>
             <Select

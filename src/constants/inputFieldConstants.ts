@@ -40,6 +40,7 @@ import SectionComponent from '@components/organisms/SectionComponent';
 import GridFieldSettings from '@components/organisms/property/GridFieldSettings';
 import GridFieldDesigner from '@components/organisms/designer/GridFieldDesigner';
 import GridComponent from '@components/molecules/GridComponent';
+import CheckBox from '@components/atoms/Checkbox';
 
 export interface InputFieldConfig {
     type: string;
@@ -147,6 +148,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.CHECKBOX,
         propertyComponent: CheckBoxFieldSettings,
         designerComponent: CheckboxFieldDesigner,
+        renderComponent: CheckBox,
         icon: IoMdCheckbox,
         title: "CheckBox",
         variant: VARIANT.FIELD,
