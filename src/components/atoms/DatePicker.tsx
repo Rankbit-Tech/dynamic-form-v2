@@ -1,16 +1,24 @@
 import React from 'react';
-import { DatePicker, DatePickerProps } from 'antd';
+import { DatePicker, DatePickerProps, Form } from 'antd';
 
 interface CustomDatePickerProps extends DatePickerProps {
     label: string;
+    name: string
+    validations: Record<string, any>
 }
 
-const CustomDatePicker: React.FC<CustomDatePickerProps> = ({ label, ...datePickerProps }) => {
+const CustomDatePicker: React.FC<CustomDatePickerProps> = ({ label, name, validations }) => {
+
+    const { required } = validations || {}
+
+    const rules = [
+        { required, message: `Please select ${label}` }
+    ]
+
     return (
-        <div className="flex flex-col space-y-2">
-            <label className="text-gray-700">{label}</label>
-            <DatePicker {...datePickerProps} />
-        </div>
+        <Form.Item label={label} name={name} rules={rules}>
+            <DatePicker className='w-full' />
+        </Form.Item>
     );
 };
 

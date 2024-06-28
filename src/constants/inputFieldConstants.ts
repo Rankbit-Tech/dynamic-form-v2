@@ -41,6 +41,7 @@ import GridFieldSettings from '@components/organisms/property/GridFieldSettings'
 import GridFieldDesigner from '@components/organisms/designer/GridFieldDesigner';
 import GridComponent from '@components/molecules/GridComponent';
 import CheckBox from '@components/atoms/Checkbox';
+import CustomDatePicker from '@components/atoms/DatePicker';
 
 export interface InputFieldConfig {
     type: string;
@@ -165,6 +166,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.DATETIME,
         propertyComponent: DateTimeFieldSettings,
         designerComponent: DateTimeFieldDesigner,
+        renderComponent: CustomDatePicker,
         icon: BsCalendar2DateFill,
         title: "DateTime",
         variant: VARIANT.FIELD,
