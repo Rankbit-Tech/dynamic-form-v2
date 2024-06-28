@@ -1,11 +1,20 @@
 import React from 'react';
-import { Input, Form, Button, Row, Col } from 'antd';
+import { Input, Form, Button, Row, Col, Select, Checkbox } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import DividerWithHeader from '@components/atoms/Divider';
 import useSettingsForm from '@hooks/useSettingsForm';
 
+
+type OptionType = {
+    label: string
+    value: string
+}[]
+
+
 const SelectFieldSettings: React.FC = () => {
     const { handleValuesChange, values } = useSettingsForm();
+
+    const options = [{ label: 'Select default value', value: '' }, ...values.options as OptionType]
 
     return (
         <Form initialValues={values} layout="vertical" onValuesChange={handleValuesChange}>
@@ -15,7 +24,6 @@ const SelectFieldSettings: React.FC = () => {
             <Form.Item label="Name" name="name">
                 <Input />
             </Form.Item>
-            {/* Add more settings specific to select fields */}
 
             <DividerWithHeader title="Options" />
             <Form.List name="options">
@@ -52,13 +60,26 @@ const SelectFieldSettings: React.FC = () => {
                             </Row>
                         ))}
                         <Form.Item>
-                            <Button type="dashed" onClick={() => add({ label: '', value:`` })} icon={<PlusOutlined />}>
+                            <Button type="dashed" onClick={() => add({ label: '', value: '' })} icon={<PlusOutlined />}>
                                 Add Option
                             </Button>
                         </Form.Item>
                     </>
                 )}
             </Form.List>
+
+            <Form.Item name="defaultValue" label="Default Value">
+                <Select
+                    defaultValue=''
+                    placeholder="Select a default value"
+                    options={options}
+                />
+            </Form.Item>
+
+            <DividerWithHeader title="Validations" />
+            <Form.Item name={['validations', 'required']} valuePropName="checked">
+                <Checkbox>Required</Checkbox>
+            </Form.Item>
         </Form>
     );
 };

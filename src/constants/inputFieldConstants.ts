@@ -89,6 +89,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             label: '',
             name: '',
             options: [],
+            defaultValue: '',
             validations: {},
             conditions: {},
         }),

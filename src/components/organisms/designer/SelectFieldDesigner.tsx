@@ -1,16 +1,26 @@
+import { Select } from 'antd';
 import React from 'react';
 
-const SelectFieldDesigner: React.FC<{ label: string; options: string[] }> = ({ label, options }) => {
+
+interface SelectFieldDesignerProps {
+    label: string
+    options: {
+        label: string
+        value: string | number
+    }[]
+    defaultValue: SelectFieldDesignerProps['options'][number]['value'];
+}
+
+const SelectFieldDesigner: React.FC<SelectFieldDesignerProps> = ({ label, options, defaultValue }) => {
     return (
         <div className="p-2 border rounded bg-white shadow">
-            <label>{label}</label>
-            <select className="mt-1 p-2 border rounded w-full">
-                {options.map((option, index) => (
-                    <option key={index} value={option}>
-                        {option}
-                    </option>
-                ))}
-            </select>
+            <label htmlFor="">{label}</label>
+            <Select
+                defaultValue={defaultValue}
+                className='w-full mt-5'
+                disabled
+                options={options}
+            />
         </div>
     );
 };
