@@ -7,6 +7,7 @@ interface NumberInputProps extends InputNumberProps {
     placeholder: string
     defaultValue: number,
     step: number
+    showControls: boolean
     validations?: {
         required?: boolean;
         minValue?: number;
@@ -14,7 +15,7 @@ interface NumberInputProps extends InputNumberProps {
     };
 }
 
-const NumberInput: React.FC<NumberInputProps> = ({ label, name, defaultValue, step, placeholder, validations }) => {
+const NumberInput: React.FC<NumberInputProps> = ({ label, name, showControls, defaultValue, step, placeholder, validations }) => {
 
     const { required, minValue, maxValue, } = validations || {}
     const rules = [
@@ -32,14 +33,13 @@ const NumberInput: React.FC<NumberInputProps> = ({ label, name, defaultValue, st
     };
 
     return (
-        <Form.Item label={label} name={name} rules={rules}>
+        <Form.Item label={label} name={name} initialValue={defaultValue} rules={rules}>
             <InputNumber
                 step={step}
                 min={minValue}
                 max={maxValue}
-                defaultValue={defaultValue}
                 placeholder={placeholder}
-                controls={true}
+                controls={showControls}
                 stringMode={false}
                 onKeyDown={handleKeyPress}
                 className='w-full' />

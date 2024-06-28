@@ -214,6 +214,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             min: null,
             max: null,
             step: 1,
+            showControls: true,
             validations: {},
             conditions: {},
         }),
