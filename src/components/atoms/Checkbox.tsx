@@ -1,16 +1,26 @@
 import React from 'react';
-import { Checkbox, CheckboxProps } from 'antd';
+import { Checkbox, Form } from 'antd';
+import { Rule } from 'antd/lib/form';
 
-interface CheckBoxProps extends CheckboxProps {
+interface CheckBoxProps {
     label: string;
+    name: string;
+    validations: {
+        required: boolean;
+    };
 }
 
-const CheckBox: React.FC<CheckBoxProps> = ({ label, ...checkboxProps }) => {
+const CheckBox: React.FC<CheckBoxProps> = ({ label, name, validations }) => {
+    const { required } = validations || {};
+
+    const rules: Rule[] = [
+        { required, message: `Please check the ${label}` },
+    ].filter(rule => rule.required);
+
     return (
-        <div className="flex items-center space-x-2">
-            <Checkbox {...checkboxProps} />
-            <label className="text-gray-700">{label}</label>
-        </div>
+        <Form.Item label={label} name={name} rules={rules}>
+            <Checkbox />
+        </Form.Item>
     );
 };
 

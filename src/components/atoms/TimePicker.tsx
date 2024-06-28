@@ -1,16 +1,16 @@
 import React from 'react';
-import { TimePicker, TimePickerProps } from 'antd';
+import { Form, TimePicker } from 'antd';
 
-interface CustomTimePickerProps extends TimePickerProps {
+interface CustomTimePickerProps {
     label: string;
+    name: string;
 }
 
-const CustomTimePicker: React.FC<CustomTimePickerProps> = ({ label, ...timePickerProps }) => {
+const CustomTimePicker: React.FC<CustomTimePickerProps> = ({ label, name }) => {
     return (
-        <div className="flex items-center space-x-2">
-            <label className="text-gray-700">{label}</label>
-            <TimePicker {...timePickerProps} />
-        </div>
+        <Form.Item label={label} name={name} >
+            <TimePicker />
+        </Form.Item>
     );
 };
 
