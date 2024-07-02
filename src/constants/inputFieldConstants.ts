@@ -231,13 +231,19 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             label: '',
             name: '',
             defaultValue: '',
-            validations: {},
+            validations: {
+                requireAlphabet: false,
+                requireNumber: false,
+                requireSpecialCharacter: false,
+            },
             minLength: null,
             maxLength: null,
-            pattern: '',
+            pattern: [],
+            validationPattern: '',
             conditions: {},
         }),
     },
+
     [fieldTypes.TEXTAREA]: {
         type: fieldTypes.TEXTAREA,
         propertyComponent: TextAreaFieldSettings,

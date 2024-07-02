@@ -3,10 +3,10 @@ import { Input, Form, InputNumber, Checkbox } from 'antd';
 import useSettingsForm from '@hooks/useSettingsForm';
 
 const PasswordFieldSettings: React.FC = () => {
-    const { handleValuesChange, values, setValues } = useSettingsForm();
+    const { handleValuesChange, values } = useSettingsForm();
     const [validationPattern, setValidationPattern] = useState('');
 
-    const updateValidationRules = (pattern) => {
+    const updateValidationRules = (pattern: string[]) => {
         let Pattern = '';
         if (pattern.includes('number')) {
             Pattern += '(?=.*[0-9])';
@@ -18,6 +18,7 @@ const PasswordFieldSettings: React.FC = () => {
             Pattern += '(?=.*[!@#$%^&*])';
         }
         setValidationPattern(Pattern);
+        handleValuesChange({ validationPattern: Pattern }, { ...values, validationPattern: Pattern });
     };
 
     useEffect(() => {
