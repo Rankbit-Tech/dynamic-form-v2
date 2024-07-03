@@ -1,5 +1,6 @@
 import DragAreaSeperator from '@components/atoms/DragAreaSeperator'
 import DragAreaSplitter from '@components/atoms/DragAreaSplitter'
+import { VARIANT } from '@constants/fieldTypes';
 import { useDroppable } from '@dnd-kit/core'
 import { cn } from '@utils/cn'
 import type { CollapseProps } from 'antd';
@@ -13,17 +14,15 @@ interface SectionProps {
     children: ReactNode
     parentId: string
     title: string
-    cols: number
 }
 
 const SectionDesigner = ({ id, title, type,
-    isCollapsable, parentId, children, cols }: SectionProps) => {
-
+    isCollapsable, parentId, children }: SectionProps) => {
     const sectionRef = useDroppable({
         id: `section-drag-${id}`,
         data: {
             id: id,
-            type: type
+            type: VARIANT.SECTION
         }
     })
 
@@ -33,7 +32,7 @@ const SectionDesigner = ({ id, title, type,
             id: id,
             parentId,
             position: "top",
-            type: type
+            type: VARIANT.SECTION
         }
 
     });
@@ -43,7 +42,7 @@ const SectionDesigner = ({ id, title, type,
             id: id,
             parentId,
             position: "bottom",
-            type: type
+            type: VARIANT.SECTION
         }
     });
 

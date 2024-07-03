@@ -1,4 +1,4 @@
-import { fieldTypes } from "@constants/fieldTypes";
+import { VARIANT, fieldTypes } from "@constants/fieldTypes";
 import { useDroppable } from "@dnd-kit/core"
 import { cn } from "@utils/cn";
 import { Card } from "antd"
@@ -20,7 +20,7 @@ const StepperDesigner = ({ id, title, children }: StepperDesignerProps) => {
         id: `step-drop-${id}`,
         data: {
             id: id,
-            type: fieldTypes.STEPPER
+            type: VARIANT.STEPPER
         }
 
     });
@@ -30,7 +30,7 @@ const StepperDesigner = ({ id, title, children }: StepperDesignerProps) => {
         data: {
             id: id,
             position: "top",
-            type: fieldTypes.CANVAS
+            type: VARIANT.CANVAS
         }
 
     });
@@ -39,7 +39,7 @@ const StepperDesigner = ({ id, title, children }: StepperDesignerProps) => {
         data: {
             id: id,
             position: "bottom",
-            type: fieldTypes.CANVAS
+            type: VARIANT.CANVAS
         }
     });
 

@@ -1,4 +1,4 @@
-import { fieldTypes } from "@constants/fieldTypes";
+import { VARIANT } from "@constants/fieldTypes";
 import { useFormStore } from "@store/useFormStore";
 
 type RecordType = Record<string, any>;
@@ -37,15 +37,13 @@ const useFormBuilder = () => {
         const activeData = active.data.current;
         const overData = over.data.current;
 
-        if (activeData.type == fieldTypes.STEPPER && overData.type != fieldTypes.CANVAS) return
+        if (activeData.type == VARIANT.STEPPER && overData.type != VARIANT.CANVAS) return
 
-        const isDroppingOnCanvas = overData.type == fieldTypes.CANVAS && activeData.type === fieldTypes.STEPPER;
-        const isDroppingOnStepper = overData.type === fieldTypes.STEPPER && activeData.type !== fieldTypes.STEPPER;
-        const isDroppingOnSection = overData.type === fieldTypes.SECTION;
-        const isDroppingOnField = overData.type === fieldTypes.TEXT;
-        const isDroppingOnGridColumns = overData.type === fieldTypes.GRID
-
-
+        const isDroppingOnCanvas = overData.type == VARIANT.CANVAS && activeData.type === VARIANT.STEPPER;
+        const isDroppingOnStepper = overData.type === VARIANT.STEPPER && activeData.type !== VARIANT.STEPPER;
+        const isDroppingOnSection = overData.type === VARIANT.SECTION;
+        const isDroppingOnField = overData.type === VARIANT.FIELD;
+        const isDroppingOnGridColumns = overData.type === VARIANT.GRID
 
         if (isDroppingOnCanvas) {
             if (overData?.position) {

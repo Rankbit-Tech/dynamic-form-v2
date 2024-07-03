@@ -1,7 +1,7 @@
 import DragAreaSeperator from '@components/atoms/DragAreaSeperator';
 import DragAreaSplitter from '@components/atoms/DragAreaSplitter';
 
-import { fieldTypes } from '@constants/fieldTypes';
+import { VARIANT, fieldTypes } from '@constants/fieldTypes';
 import { useDroppable } from '@dnd-kit/core';
 import { Input } from 'antd';
 
@@ -21,7 +21,7 @@ const TextFieldDesigner = ({ id, parentId, label, placeholder }: TextFieldDesign
             id: id,
             position: "top",
             parentId,
-            type: fieldTypes.TEXT
+            type: VARIANT.FIELD
         }
 
     });
@@ -31,7 +31,7 @@ const TextFieldDesigner = ({ id, parentId, label, placeholder }: TextFieldDesign
             id: id,
             position: "bottom",
             parentId,
-            type: fieldTypes.TEXT
+            type: VARIANT.FIELD
         }
     });
 

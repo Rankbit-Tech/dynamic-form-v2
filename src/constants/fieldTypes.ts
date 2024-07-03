@@ -15,6 +15,7 @@ export const fieldTypes = {
 }
 
 export const VARIANT = {
+    CANVAS: "CANVAS",
     SECTION: "SECTION",
     STEPPER: "STEPPER",
     FIELD: "FIELD",
