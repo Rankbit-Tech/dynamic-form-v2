@@ -9,7 +9,7 @@ const SettingsPanel: React.FC = () => {
     const PropertyComponent = INPUT_FIELDS[selectedField.type].propertyComponent;
 
     return (
-        <div className='mt-2'>
+        <div className='overflow-y-scroll max-h-[90vh] pb-10 scrollbar-hide'>
             <PropertyComponent key={selectedField.id} />
         </div>
     );

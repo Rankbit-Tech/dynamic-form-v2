@@ -5,6 +5,7 @@ interface TextInputProps {
   label: string;
   name: string;
   placeholder?: string;
+  disabled: boolean
   validations: {
     required: boolean
     minLength?: number
@@ -12,7 +13,7 @@ interface TextInputProps {
   }
 }
 
-const InputField: React.FC<TextInputProps> = ({ label, name, placeholder, validations }) => {
+const InputField: React.FC<TextInputProps> = ({ label, name, disabled, placeholder, validations }) => {
   const { required, maxLength, minLength } = validations || {}
 
   const rules = [
@@ -23,7 +24,7 @@ const InputField: React.FC<TextInputProps> = ({ label, name, placeholder, valida
 
   return (
     <Form.Item label={label} name={name} rules={rules}>
-      <Input placeholder={placeholder} />
+      <Input placeholder={placeholder} disabled={disabled} />
     </Form.Item>
   );
 };

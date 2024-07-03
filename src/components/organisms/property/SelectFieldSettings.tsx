@@ -3,6 +3,7 @@ import { Input, Form, Button, Row, Col, Select, Checkbox } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import DividerWithHeader from '@components/atoms/Divider';
 import useSettingsForm from '@hooks/useSettingsForm';
+import QueryBuilderComponent from '@components/molecules/QueryBuilder';
 
 
 type OptionType = {
@@ -12,7 +13,7 @@ type OptionType = {
 
 
 const SelectFieldSettings: React.FC = () => {
-    const { handleValuesChange, values } = useSettingsForm();
+    const { handleValuesChange, values, handleCondition } = useSettingsForm();
 
     const options = [{ label: 'Select default value', value: '' }, ...values.options as OptionType]
 
@@ -80,6 +81,9 @@ const SelectFieldSettings: React.FC = () => {
             <Form.Item name={['validations', 'required']} valuePropName="checked">
                 <Checkbox>Required</Checkbox>
             </Form.Item>
+
+            <DividerWithHeader title='Conditions' />
+            <QueryBuilderComponent handleCondition={handleCondition} conditions={values.conditions} />
         </Form>
     );
 };

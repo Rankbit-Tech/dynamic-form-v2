@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Input, Form, InputNumber, Checkbox } from 'antd';
 import useSettingsForm from '@hooks/useSettingsForm';
+import DividerWithHeader from '@components/atoms/Divider';
+import QueryBuilderComponent from '@components/molecules/QueryBuilder';
 
 const PasswordFieldSettings: React.FC = () => {
-    const { handleValuesChange, values } = useSettingsForm();
+    const { handleValuesChange, values, handleCondition } = useSettingsForm();
     const [validationPattern, setValidationPattern] = useState('');
 
     const updateValidationRules = (pattern: string[]) => {
@@ -73,6 +75,9 @@ const PasswordFieldSettings: React.FC = () => {
                     <Checkbox value="specialCharacter">Special Character</Checkbox>
                 </Checkbox.Group>
             </Form.Item>
+
+            <DividerWithHeader title='Conditions' />
+            <QueryBuilderComponent handleCondition={handleCondition} conditions={values.conditions} />
         </Form>
     );
 };

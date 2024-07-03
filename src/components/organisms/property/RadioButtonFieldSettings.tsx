@@ -4,10 +4,11 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import useSettingsForm from '@hooks/useSettingsForm';
 import DividerWithHeader from '@components/atoms/Divider';
 import { RADIO_DIRECTION } from '@constants/inputFieldConstants';
+import QueryBuilderComponent from '@components/molecules/QueryBuilder';
 
 const RadioButtonFieldSettings: React.FC = () => {
 
-    const { handleValuesChange, values } = useSettingsForm();
+    const { handleValuesChange, values, handleCondition } = useSettingsForm();
 
     return (
         <Form initialValues={values} layout="vertical" onValuesChange={handleValuesChange}>
@@ -93,6 +94,9 @@ const RadioButtonFieldSettings: React.FC = () => {
             <Form.Item name={['validations', 'required']} valuePropName="checked">
                 <Checkbox>Required</Checkbox>
             </Form.Item>
+
+            <DividerWithHeader title='Conditions' />
+            <QueryBuilderComponent handleCondition={handleCondition} conditions={values.conditions} />
         </Form>
     );
 };

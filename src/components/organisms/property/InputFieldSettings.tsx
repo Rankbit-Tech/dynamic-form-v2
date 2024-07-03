@@ -2,10 +2,11 @@ import React from 'react';
 import { Input, Form, Checkbox, InputNumber, Flex } from 'antd';
 import useSettingsForm from '@hooks/useSettingsForm';
 import DividerWithHeader from '@components/atoms/Divider';
+import QueryBuilderComponent from '@components/molecules/QueryBuilder';
 
 const InputFieldSettings: React.FC = () => {
 
-    const { handleValuesChange, values } = useSettingsForm();
+    const { handleValuesChange, values, handleCondition } = useSettingsForm();
 
     return (
         <Form initialValues={values} layout="vertical" onValuesChange={handleValuesChange}>
@@ -37,6 +38,9 @@ const InputFieldSettings: React.FC = () => {
             <Form.Item label="Custom Validation Message" name={['validations', 'message']}>
                 <Input.TextArea rows={3} />
             </Form.Item>
+
+            <DividerWithHeader title='Conditions' />
+            <QueryBuilderComponent handleCondition={handleCondition} conditions={values.conditions} />
         </Form>
     );
 };
