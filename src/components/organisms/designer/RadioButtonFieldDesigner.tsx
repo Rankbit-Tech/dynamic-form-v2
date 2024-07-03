@@ -2,7 +2,8 @@ import DragAreaSeperator from '@components/atoms/DragAreaSeperator';
 import DragAreaSplitter from '@components/atoms/DragAreaSplitter';
 import { VARIANT } from '@constants/fieldTypes';
 import { useDroppable } from '@dnd-kit/core';
-import { Radio, Space } from 'antd';
+import { cn } from '@utils/cn';
+import { Radio } from 'antd';
 import React from 'react';
 
 interface RadioButtonFieldDesigner {
@@ -11,12 +12,11 @@ interface RadioButtonFieldDesigner {
     direction: "horizontal" | "vertical" | undefined
     parentId: string
     options: Array<{ label: string, value: string }>,
-    name: string
     optionType: 'default' | 'button'
     buttonStyle: 'solid' | 'outline'
 }
 
-const RadioButtonFieldDesigner: React.FC<RadioButtonFieldDesigner> = ({ id, optionType, buttonStyle, direction, parentId, label, options, name }) => {
+const RadioButtonFieldDesigner: React.FC<RadioButtonFieldDesigner> = ({ id, optionType, buttonStyle, direction, parentId, label, options }) => {
 
     const topHalf = useDroppable({
         id: `top-field-${id}`,
@@ -46,6 +46,7 @@ const RadioButtonFieldDesigner: React.FC<RadioButtonFieldDesigner> = ({ id, opti
                     <label className='font-semibold mr-2 mb-2'>{label}</label>
                     {options?.length > 0 ? (
                         <Radio.Group
+
                             optionType={optionType}
                             buttonStyle={buttonStyle}
                             options={options} />) : <h2 className='font-semibold text-slate-600 text-center'>Radio Field</h2>}
