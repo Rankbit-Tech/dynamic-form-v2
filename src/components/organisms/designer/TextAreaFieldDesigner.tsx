@@ -33,7 +33,7 @@ const TextAreaFieldDesigner: React.FC<TextAreaFieldDesigner> = ({ label, id, par
         }
     });
     return (
-        <div className=" border rounded bg-white shadow">
+        <div className=" border rounded bg-white shadow mt-1">
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
             <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
 

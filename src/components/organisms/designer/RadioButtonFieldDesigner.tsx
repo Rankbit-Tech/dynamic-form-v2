@@ -38,7 +38,7 @@ const RadioButtonFieldDesigner: React.FC<RadioButtonFieldDesigner> = ({ id, opti
         }
     });
     return (
-        <div className="py-2 mt-2 border rounded bg-white shadow">
+        <div className="py-2 mt-1 border rounded bg-white shadow">
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
             <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
 

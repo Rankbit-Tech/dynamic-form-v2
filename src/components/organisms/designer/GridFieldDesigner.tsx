@@ -49,8 +49,8 @@ const GridFieldDesigner: React.FC<GridFieldDesignerProps> = ({ id, type, childre
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
             <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
 
-                <div className='mt-2 p-2'>
-                    <div ref={setNodeRef} className={cn(`p-5 w-full mt-4 grid grid-cols-2 gap-2`, {
+                <div ref={setNodeRef} className='mt-2 p-2 w-full'>
+                    <div className={cn(`p-5 w-full mt-4 grid grid-cols-2 gap-2`, {
                         'bg-blue-200': isOver
                     })} style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
                         {children}

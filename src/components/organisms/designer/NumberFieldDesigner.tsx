@@ -36,7 +36,7 @@ const NumberFieldDesigner: React.FC<NumberFieldDesigner> = ({ label, placeholder
         }
     });
     return (
-        <div className=" border rounded bg-white shadow">
+        <div className=" border rounded bg-white shadow mt-1">
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
             <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
 

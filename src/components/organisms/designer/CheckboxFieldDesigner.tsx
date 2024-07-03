@@ -36,7 +36,7 @@ const CheckboxFieldDesigner: React.FC<CheckboxFieldDesignerProps> = ({ label, op
     });
 
     return (
-        <div className=" py-4 border rounded bg-white shadow">
+        <div className=" py-4 border rounded bg-white shadow mt-1">
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
             <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
                 <div className='mt-2 p-2'>
