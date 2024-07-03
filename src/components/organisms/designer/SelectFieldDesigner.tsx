@@ -38,6 +38,7 @@ const SelectFieldDesigner: React.FC<SelectFieldDesignerProps> = ({ id, label, pa
             type: VARIANT.FIELD
         }
     });
+
     return (
         <div className="relative border rounded bg-white shadow my-2">
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
