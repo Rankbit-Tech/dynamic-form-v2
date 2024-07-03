@@ -1,134 +1,26 @@
 
 import { useFormStore } from "@store/useFormStore"
 import { Button, Form, Steps } from "antd"
-import { useState } from "react"
-import INPUT_FIELDS from "@constants/inputFieldConstants"
-import { fieldTypes } from "@constants/fieldTypes"
-import { useForm, useWatch } from "antd/es/form/Form"
+import { useForm } from "antd/es/form/Form"
+import usePreview, { Step } from "@hooks/usePreview"
 
 interface PreviewProps {
     data: Record<string, any>[]
 }
 
-interface Rule {
-    field: string
-    operator: string
-    value: string
-    source: string
+interface Item {
+    key: string
+    title: string
+    content: (step: Step, formValues: Record<string, any>) => void
 }
-
-interface Conditions {
-    combinator: string
-    rules: Rule[]
-}
-
-const evaluateConditions = (conditions: Conditions, formValues: Record<string, any>) => {
-    const { combinator, rules } = conditions;
-
-    const evaluateRule = (rule: Rule) => {
-        const fieldValue = formValues?.[rule.field] ?? '';
-        switch (rule.operator) {
-            case 'isEmpty':
-                return !fieldValue;
-            case 'isNotEmpty':
-                return !!fieldValue;
-            case 'equals':
-                return fieldValue === rule.value;
-            case 'notEquals':
-                return fieldValue !== rule.value;
-            default:
-                return true;
-        }
-    };
-
-    if (rules.length === 0) {
-        return { hide: false, disable: false }; // No conditions, do not hide or disable by default
-    }
-
-
-    let shouldHide = false;
-    let shouldDisable = false;
-
-    if (combinator === 'and') {
-        shouldHide = rules.every(evaluateRule);
-        shouldDisable = rules.every(evaluateRule);
-    } else if (combinator === 'or') {
-        shouldHide = rules.some(evaluateRule);
-        shouldDisable = rules.some(evaluateRule);
-    }
-
-    return {
-        hide: shouldHide,
-        disable: shouldDisable,
-    };
-};
-
-
-const renderStep = (steps: Record<string, any>[], formValues: any) => {
-    return steps.map(step => {
-        const RenderComponent = INPUT_FIELDS[step.type]?.renderComponent;
-
-        if (!RenderComponent) return null;
-
-        let shouldHide = false;
-        let isDisabled = false;
-
-        if (step.conditions && step.conditions.rules.length > 0) {
-            const { hide, disable } = evaluateConditions(step.conditions, formValues);
-            shouldHide = hide && step.conditions.rules.some((rule: Rule) => rule.value === 'hide');
-            isDisabled = disable && step.conditions.rules.some((rule: Rule) => rule.value === 'disable');
-        }
-
-        if (shouldHide) {
-            return null;
-        }
-
-        if (step.type === fieldTypes.SECTION) {
-            return (
-                <RenderComponent key={step.id} {...step} />
-            );
-        }
-        if (step.type === fieldTypes.GRID) {
-            return (
-                <RenderComponent key={step.id} {...step} />
-            );
-        }
-
-        return (
-            <div key={step.id}>
-                {step.children && step.children.length > 0
-                    ? renderStep(step.children, formValues)
-                    : <RenderComponent {...step} disabled={isDisabled} />}
-            </div>
-        );
-    });
-};
-
-
 
 
 const Preview = ({ data }: PreviewProps) => {
     const { setIsPreview } = useFormStore(state => state);
-    const [current, setCurrent] = useState(0);
 
     const [form] = useForm();
-    const formValues = useWatch([], form) || {}
 
-    const items = data?.map((step, index) => ({
-        key: index.toString(),
-        title: step.title,
-        content: renderStep(step.children, formValues)
-    }));
-
-    const next = () => {
-        form.validateFields().then(() => {
-            setCurrent(current + 1);
-        })
-    };
-
-    const prev = () => {
-        setCurrent(current - 1);
-    };
+    const { current, next, prev, items } = usePreview(form, data)
 
     const handleFinish = (values: Record<string, any>) => {
         console.log({ values })
@@ -143,7 +35,7 @@ const Preview = ({ data }: PreviewProps) => {
                 {data.length > 0 && (
                     <Form form={form} layout="vertical" onFinish={handleFinish}>
                         <Steps current={current}>
-                            {items?.map(item => (
+                            {items?.map((item: Item) => (
                                 <Steps.Step key={item.key} title={item.title} />
                             ))}
                         </Steps>
