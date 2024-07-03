@@ -2,7 +2,7 @@ import React from 'react';
 import { Input, Form, InputNumber, Row, Col, Checkbox } from 'antd';
 import useSettingsForm from '@hooks/useSettingsForm';
 import DividerWithHeader from '@components/atoms/Divider';
-import QueryBuilderComponent from '@components/molecules/Conditions';
+import QueryBuilderComponent from '@components/molecules/QueryBuilder';
 
 
 const NumberFieldSettings: React.FC = () => {

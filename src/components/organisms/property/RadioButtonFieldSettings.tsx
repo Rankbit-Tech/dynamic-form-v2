@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Row, Col, Checkbox, Select } from 'antd';
+import { Form, Input, Button, Row, Col, Checkbox, Select, Radio } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import useSettingsForm from '@hooks/useSettingsForm';
 import DividerWithHeader from '@components/atoms/Divider';
@@ -31,6 +31,19 @@ const RadioButtonFieldSettings: React.FC = () => {
                         ]
                     }
                 />
+            </Form.Item>
+            <Form.Item initialValue={'default'} name="optionType">
+                <Radio.Group>
+                    <Radio value='default'>Default</Radio>
+                    <Radio value='button'>Button</Radio>
+                </Radio.Group>
+            </Form.Item>
+
+            <Form.Item initialValue={'solid'} name="buttonStyle">
+                <Radio.Group>
+                    <Radio value='solid'>Solid</Radio>
+                    <Radio value='outline'>Outline</Radio>
+                </Radio.Group>
             </Form.Item>
 
             <DividerWithHeader title="Options" />

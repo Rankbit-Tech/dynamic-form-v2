@@ -44,6 +44,7 @@ import CheckBox from '@components/atoms/Checkbox';
 import CustomDatePicker from '@components/atoms/DatePicker';
 import CustomTextArea from '@components/atoms/TextArea';
 import NumberInput from '@components/atoms/NumberInput';
+import RadioInput from '@components/atoms/RadioInput';
 
 export interface InputFieldConfig {
     type: string;
@@ -61,6 +62,8 @@ export const RADIO_DIRECTION = {
     HORIZONTAL: "horizontal"
 }
 
+
+
 const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
     [fieldTypes.TEXT]: {
         type: fieldTypes.TEXT,
@@ -77,7 +80,10 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             name: 'name',
             placeholder: 'Placeholder',
             validations: {},
-            conditions: {},
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            },
         }),
     },
     [fieldTypes.SELECT]: {
@@ -92,12 +98,15 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         construct: () => ({
             type: fieldTypes.SELECT,
             variant: VARIANT.FIELD,
-            label: '',
+            label: 'Select Label',
             name: '',
             options: [],
             defaultValue: '',
             validations: {},
-            conditions: {},
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            },
         }),
     },
     [fieldTypes.SECTION]: {
@@ -113,11 +122,10 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             variant: VARIANT.SECTION,
             title: "section 1",
             isCollapsable: true,
-            grid: {
-                columns: 1,
-                gap: "16px",
+            conditions: {
+                combinator: 'and',
+                rules: [],
             },
-            conditions: {},
         }),
     },
     [fieldTypes.STEPPER]: {
@@ -131,25 +139,31 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             type: fieldTypes.STEPPER,
             variant: VARIANT.STEPPER,
             title: "Step",
-            conditions: {},
+
         }),
     },
     [fieldTypes.RADIO]: {
         type: fieldTypes.RADIO,
         propertyComponent: RadioButtonFieldSettings,
         designerComponent: RadioButtonFieldDesigner,
+        renderComponent: RadioInput,
         icon: IoMdRadioButtonOn,
         title: "Radio",
         variant: VARIANT.FIELD,
         construct: () => ({
             type: fieldTypes.RADIO,
             variant: VARIANT.FIELD,
-            label: '',
+            label: 'Radio Label',
             name: '',
             direction: RADIO_DIRECTION.VERTICAL,
             options: [],
             validations: {},
-            conditions: {},
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            },
+            optionType: 'default',
+            buttonStyle: 'solid'
         }),
     },
     [fieldTypes.CHECKBOX]: {
@@ -163,11 +177,14 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         construct: () => ({
             type: fieldTypes.CHECKBOX,
             variant: VARIANT.FIELD,
-            label: '',
+            label: 'Checkbox Label',
             name: '',
             options: [],
             validations: {},
-            conditions: {},
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            },
         }),
     },
     [fieldTypes.DATETIME]: {
@@ -181,11 +198,14 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         construct: () => ({
             type: fieldTypes.DATETIME,
             variant: VARIANT.FIELD,
-            label: '',
+            label: 'DateTime label',
             name: '',
             defaultValue: '',
             validations: {},
-            conditions: {},
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            },
         }),
     },
     [fieldTypes.FILEUPLOAD]: {
@@ -198,12 +218,15 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         construct: () => ({
             type: fieldTypes.FILEUPLOAD,
             variant: VARIANT.FIELD,
-            label: '',
+            label: 'File Upload Label',
             name: '',
             accept: '', // file types
             maxFileSize: null, // in bytes
             validations: {},
-            conditions: {},
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            },
         }),
     },
     [fieldTypes.NUMBER]: {
@@ -217,7 +240,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         construct: () => ({
             type: fieldTypes.NUMBER,
             variant: VARIANT.FIELD,
-            label: '',
+            label: 'Number Label',
             name: '',
             defaultValue: null,
             min: null,
@@ -225,7 +248,10 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             step: 1,
             showControls: true,
             validations: {},
-            conditions: {},
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            },
         }),
     },
     [fieldTypes.PASSWORD]: {
@@ -238,7 +264,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         construct: () => ({
             type: fieldTypes.PASSWORD,
             variant: VARIANT.FIELD,
-            label: '',
+            label: 'Password Label',
             name: '',
             defaultValue: '',
             validations: {
@@ -250,7 +276,10 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             maxLength: null,
             pattern: [],
             validationPattern: '',
-            conditions: {},
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            },
         }),
     },
 
@@ -265,14 +294,17 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         construct: () => ({
             type: fieldTypes.TEXTAREA,
             variant: VARIANT.FIELD,
-            label: '',
+            label: 'Text Area Label',
             name: '',
             defaultValue: '',
             validations: {},
             rows: 3,
             cols: 30,
             maxLength: null,
-            conditions: {},
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            },
         }),
     },
     [fieldTypes.GRID]: {
@@ -289,7 +321,10 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             variant: VARIANT.GRID,
             cols: 2,
             placement: "",
-            conditions: {}
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            }
         })
     }
 

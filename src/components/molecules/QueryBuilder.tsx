@@ -5,12 +5,6 @@ import { Button, Select, Input, DatePicker } from 'antd';
 import { useFormStore } from '@store/useFormStore';
 import { VARIANT } from '@constants/fieldTypes';
 
-// const fields: Field[] = [
-//     { name: 'username', label: 'Username' },
-//     { name: 'email', label: 'Email' },
-//     { name: 'age', label: 'Age' },
-//     { name: 'condition', label: 'Condition' },
-// ];
 
 const operators = [
     { name: 'equals', label: 'equals' },
@@ -104,13 +98,13 @@ const QueryBuilderComponent: React.FC<QueryBuilderComponentProps> = ({ handleCon
             { name: field.name, label: field.label }
         ))
     })
-
     const handleQueryChange = (newQuery: RuleGroupType) => {
         setQuery(newQuery);
         const query = formatQuery(newQuery, 'json_without_ids')
         handleCondition({ conditions: query },);
 
     };
+
 
     return (
         <div>

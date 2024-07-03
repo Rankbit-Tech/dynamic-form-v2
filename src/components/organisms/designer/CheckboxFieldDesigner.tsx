@@ -8,7 +8,6 @@ interface CheckboxFieldDesignerProps {
 
 const CheckboxFieldDesigner: React.FC<CheckboxFieldDesignerProps> = ({ label, options }) => {
 
-    console.log({ label })
     return (
         <div className="p-2 py-4 border rounded bg-white shadow">
             <label>{label}</label>

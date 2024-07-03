@@ -3,7 +3,8 @@ import { Input, Form, Checkbox, Row, Col, Button } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import DividerWithHeader from '@components/atoms/Divider';
 import useSettingsForm from '@hooks/useSettingsForm';
-import Conditions from '@components/molecules/Conditions';
+import QueryBuilderComponent from '@components/molecules/QueryBuilder';
+
 
 const CheckboxFieldSettings: React.FC = () => {
 
@@ -66,7 +67,7 @@ const CheckboxFieldSettings: React.FC = () => {
                 <Checkbox>Required</Checkbox>
             </Form.Item>
             <DividerWithHeader title='Conditions' />
-            <Conditions handleCondition={handleCondition} conditions={values.conditions} />
+            <QueryBuilderComponent handleCondition={handleCondition} conditions={values.conditions} />
         </Form>
     );
 };
