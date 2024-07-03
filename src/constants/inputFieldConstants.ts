@@ -1,7 +1,5 @@
 import React from 'react';
-import TextFieldSettings from '@components/organisms/property/TextFieldSettings';
 import SelectFieldSettings from '@components/organisms/property/SelectFieldSettings';
-import TextFieldDesigner from '@components/organisms/designer/TextFieldDesigner';
 import SelectFieldDesigner from '@components/organisms/designer/SelectFieldDesigner';
 import RadioButtonFieldDesigner from '@components/organisms/designer/RadioButtonFieldDesigner';
 import RadioButtonFieldSettings from '@components/organisms/property/RadioButtonFieldSettings';
@@ -34,7 +32,6 @@ import { GoNumber } from 'react-icons/go';
 import { MdOutlinePassword } from 'react-icons/md';
 import { RxDividerVertical } from 'react-icons/rx';
 import { TbGridDots, TbSection } from 'react-icons/tb';
-import TextInput from '@components/atoms/Input';
 import SelectInput from '@components/atoms/SelectInput';
 import SectionComponent from '@components/organisms/SectionComponent';
 import GridFieldSettings from '@components/organisms/property/GridFieldSettings';
@@ -45,6 +42,9 @@ import CustomDatePicker from '@components/atoms/DatePicker';
 import CustomTextArea from '@components/atoms/TextArea';
 import NumberInput from '@components/atoms/NumberInput';
 import RadioInput from '@components/atoms/RadioInput';
+import InputFieldSettings from '@components/organisms/property/InputFieldSettings';
+import InputFieldDesigner from '@components/organisms/designer/InputFieldDesigner';
+import InputField from '@components/atoms/Input';
 
 export interface InputFieldConfig {
     type: string;
@@ -62,19 +62,17 @@ export const RADIO_DIRECTION = {
     HORIZONTAL: "horizontal"
 }
 
-
-
 const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
-    [fieldTypes.TEXT]: {
-        type: fieldTypes.TEXT,
-        propertyComponent: TextFieldSettings,
-        designerComponent: TextFieldDesigner,
-        renderComponent: TextInput,
+    [fieldTypes.INPUT]: {
+        type: fieldTypes.INPUT,
+        propertyComponent: InputFieldSettings,
+        designerComponent: InputFieldDesigner,
+        renderComponent: InputField,
         icon: CiText,
         title: "Input",
         variant: VARIANT.FIELD,
         construct: () => ({
-            type: fieldTypes.TEXT,
+            type: fieldTypes.INPUT,
             variant: VARIANT.FIELD,
             label: 'Label',
             name: 'name',

@@ -12,7 +12,7 @@ interface TextInputProps {
   }
 }
 
-const TextInput: React.FC<TextInputProps> = ({ label, name, placeholder, validations }) => {
+const InputField: React.FC<TextInputProps> = ({ label, name, placeholder, validations }) => {
   const { required, maxLength, minLength } = validations || {}
 
   const rules = [
@@ -28,4 +28,4 @@ const TextInput: React.FC<TextInputProps> = ({ label, name, placeholder, validat
   );
 };
 
-export default TextInput;
+export default InputField;

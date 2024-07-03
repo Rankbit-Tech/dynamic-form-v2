@@ -3,7 +3,7 @@ import { Input, Form, Checkbox, InputNumber, Flex } from 'antd';
 import useSettingsForm from '@hooks/useSettingsForm';
 import DividerWithHeader from '@components/atoms/Divider';
 
-const TextFieldSettings: React.FC = () => {
+const InputFieldSettings: React.FC = () => {
 
     const { handleValuesChange, values } = useSettingsForm();
 
@@ -41,4 +41,4 @@ const TextFieldSettings: React.FC = () => {
     );
 };
 
-export default TextFieldSettings;
+export default InputFieldSettings;

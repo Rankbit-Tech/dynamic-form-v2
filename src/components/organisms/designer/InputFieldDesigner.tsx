@@ -13,7 +13,7 @@ interface TextFieldDesignerProps {
     parentId: string
 }
 
-const TextFieldDesigner = ({ id, parentId, label, placeholder }: TextFieldDesignerProps) => {
+const InputFieldDesigner = ({ id, parentId, label, placeholder }: TextFieldDesignerProps) => {
 
     const topHalf = useDroppable({
         id: `top-field-${id}`,
@@ -48,4 +48,4 @@ const TextFieldDesigner = ({ id, parentId, label, placeholder }: TextFieldDesign
     );
 };
 
-export default TextFieldDesigner;
+export default InputFieldDesigner;

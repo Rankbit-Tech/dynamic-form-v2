@@ -1,4 +1,5 @@
 export const fieldTypes = {
+    INPUT: "INPUT",
     TEXT: "TEXT",
     SELECT: "SELECT",
     SECTION: "SECTION",
