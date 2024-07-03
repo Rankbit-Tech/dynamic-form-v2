@@ -1,13 +1,14 @@
 import React from 'react';
-import { Input, Form, InputNumber, Flex, Row, Col, Checkbox } from 'antd';
+import { Input, Form, InputNumber, Row, Col, Checkbox } from 'antd';
 import useSettingsForm from '@hooks/useSettingsForm';
 import DividerWithHeader from '@components/atoms/Divider';
+import QueryBuilderComponent from '@components/molecules/Conditions';
+
 
 const NumberFieldSettings: React.FC = () => {
 
-    const { handleValuesChange, values } = useSettingsForm();
+    const { handleValuesChange, values, handleCondition } = useSettingsForm();
 
-    console.log(values?.validations.showControls)
     return (
         <Form layout="vertical" initialValues={values} onValuesChange={handleValuesChange}>
             <Form.Item label="Label" name="label">
@@ -56,7 +57,8 @@ const NumberFieldSettings: React.FC = () => {
                 </Col>
             </Row>
 
-            {/* Add more settings as needed */}
+            <DividerWithHeader title='Conditions' />
+            <QueryBuilderComponent handleCondition={handleCondition} conditions={values.conditions} />
         </Form>
     );
 };

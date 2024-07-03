@@ -72,6 +72,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         variant: VARIANT.FIELD,
         construct: () => ({
             type: fieldTypes.TEXT,
+            variant: VARIANT.FIELD,
             label: 'Label',
             name: 'name',
             placeholder: 'Placeholder',
@@ -90,6 +91,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         variant: VARIANT.FIELD,
         construct: () => ({
             type: fieldTypes.SELECT,
+            variant: VARIANT.FIELD,
             label: '',
             name: '',
             options: [],
@@ -108,6 +110,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         variant: VARIANT.SECTION,
         construct: () => ({
             type: fieldTypes.SECTION,
+            variant: VARIANT.SECTION,
             title: "section 1",
             isCollapsable: true,
             grid: {
@@ -126,6 +129,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         variant: VARIANT.STEPPER,
         construct: () => ({
             type: fieldTypes.STEPPER,
+            variant: VARIANT.STEPPER,
             title: "Step",
             conditions: {},
         }),
@@ -139,6 +143,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         variant: VARIANT.FIELD,
         construct: () => ({
             type: fieldTypes.RADIO,
+            variant: VARIANT.FIELD,
             label: '',
             name: '',
             direction: RADIO_DIRECTION.VERTICAL,
@@ -157,6 +162,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         variant: VARIANT.FIELD,
         construct: () => ({
             type: fieldTypes.CHECKBOX,
+            variant: VARIANT.FIELD,
             label: '',
             name: '',
             options: [],
@@ -174,6 +180,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         variant: VARIANT.FIELD,
         construct: () => ({
             type: fieldTypes.DATETIME,
+            variant: VARIANT.FIELD,
             label: '',
             name: '',
             defaultValue: '',
@@ -190,6 +197,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         variant: VARIANT.FIELD,
         construct: () => ({
             type: fieldTypes.FILEUPLOAD,
+            variant: VARIANT.FIELD,
             label: '',
             name: '',
             accept: '', // file types
@@ -208,6 +216,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         variant: VARIANT.FIELD,
         construct: () => ({
             type: fieldTypes.NUMBER,
+            variant: VARIANT.FIELD,
             label: '',
             name: '',
             defaultValue: null,
@@ -228,6 +237,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         variant: VARIANT.FIELD,
         construct: () => ({
             type: fieldTypes.PASSWORD,
+            variant: VARIANT.FIELD,
             label: '',
             name: '',
             defaultValue: '',
@@ -254,6 +264,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         variant: VARIANT.FIELD,
         construct: () => ({
             type: fieldTypes.TEXTAREA,
+            variant: VARIANT.FIELD,
             label: '',
             name: '',
             defaultValue: '',
@@ -275,6 +286,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         variant: VARIANT.GRID,
         construct: () => ({
             type: fieldTypes.GRID,
+            variant: VARIANT.GRID,
             cols: 2,
             placement: "",
             conditions: {}

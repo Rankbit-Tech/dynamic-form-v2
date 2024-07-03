@@ -17,6 +17,7 @@ interface FieldType {
 type UseSettingsFormReturnType = {
     handleValuesChange: (changedValues: Record<string, any>, allValues: Record<string, any>) => void;
     values: FieldType;
+    handleCondition: (values: Record<string, any>) => void
 };
 
 const useSettingsForm = (): UseSettingsFormReturnType => {
@@ -27,6 +28,9 @@ const useSettingsForm = (): UseSettingsFormReturnType => {
     if (values && values?.options === null) {
         values.options = [];
     }
+
+
+
     const handleValuesChange = (changedValues: Record<string, any>, allValues: Record<string, any>) => {
         setFields((fields: FieldType[]) => {
             const elements = [...fields];
@@ -51,8 +55,10 @@ const useSettingsForm = (): UseSettingsFormReturnType => {
             return elements;
         });
     };
-
-    return { handleValuesChange, values };
+    const handleCondition = (values: Record<string, any>) => {
+        handleValuesChange({ conditions: JSON.parse(values.conditions) }, { ...values, conditions: values })
+    }
+    return { handleValuesChange, values, handleCondition };
 };
 
 export default useSettingsForm;
