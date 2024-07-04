@@ -32,6 +32,7 @@ import { GoNumber } from 'react-icons/go';
 import { MdOutlinePassword } from 'react-icons/md';
 import { RxDividerVertical } from 'react-icons/rx';
 import { TbGridDots, TbSection } from 'react-icons/tb';
+import { FaParagraph } from "react-icons/fa";
 import SelectInput from '@components/atoms/SelectInput';
 import SectionComponent from '@components/organisms/SectionComponent';
 import GridFieldSettings from '@components/organisms/property/GridFieldSettings';
@@ -47,6 +48,10 @@ import InputFieldDesigner from '@components/organisms/designer/InputFieldDesigne
 import InputField from '@components/atoms/Input';
 import PasswordInput from '@components/atoms/PasswordInput';
 import FileUpload from '@components/atoms/FileUpload ';
+import TextField from '@components/atoms/TextField';
+import TextFieldSettings from '@components/organisms/property/TextFieldSettings';
+import TextFieldDesigner from '@components/organisms/designer/TextFieldDesigner';
+
 
 export interface InputFieldConfig {
     type: string;
@@ -328,7 +333,28 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
                 rules: [],
             }
         })
-    }
+    },
+    [fieldTypes.TEXT]: {
+        type: fieldTypes.TEXT,
+        propertyComponent: TextFieldSettings,
+        designerComponent: TextFieldDesigner,
+        renderComponent: TextField,
+        icon: FaParagraph,
+        title: "Text",
+        variant: VARIANT.FIELD,
+        construct: () => ({
+            type: fieldTypes.TEXT,
+            variant: VARIANT.FIELD,
+            label: 'Label',
+            name: 'name',
+            placeholder: 'Placeholder',
+            validations: {},
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            },
+        }),
+    },
 
 
 };
