@@ -7,12 +7,12 @@ import React from 'react';
 interface TextFieldDesigner {
     id: string
     label: string
-
+    paragraph: string
     parentId: string
-
+    fontSize: string
 }
 
-const TextFieldDesigner: React.FC<TextFieldDesigner> = ({ label, id, parentId }) => {
+const TextFieldDesigner: React.FC<TextFieldDesigner> = ({ label, id, paragraph, fontSize, parentId }) => {
     const topHalf = useDroppable({
         id: `top-field-${id}`,
         data: {
@@ -37,9 +37,9 @@ const TextFieldDesigner: React.FC<TextFieldDesigner> = ({ label, id, parentId })
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
             <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
                 <div className='mt-2 p-2'>
-                    <label>{label}</label>
+                    <label className='font-semibold'>{label}</label>
                     <div className="mt-1">
-                        <p className="border p-1 rounded w-full"></p>
+                        <p className=" p-1 rounded w-full" style={{ fontSize: `${fontSize}px` }}>{paragraph}</p>
                     </div>
                 </div>
             </DragAreaSeperator>

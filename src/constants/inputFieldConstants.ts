@@ -346,7 +346,8 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             type: fieldTypes.TEXT,
             variant: VARIANT.FIELD,
             label: 'Label',
-            name: 'name',
+            fontSize: 16,
+            paragraph: "",
             placeholder: 'Placeholder',
             validations: {},
             conditions: {

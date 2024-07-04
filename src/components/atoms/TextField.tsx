@@ -3,17 +3,17 @@ import { Form, Input } from 'antd';
 
 interface CustomTextFieldProps {
     label: string;
-    name: string
-    validations: Record<string, any>
-    placeholder: string
+    fontSize: number
+    paragraph: string
 }
 
-const CustomTextField: React.FC<CustomTextFieldProps> = ({ label, name, placeholder }) => {
+const CustomTextField: React.FC<CustomTextFieldProps> = ({ label, paragraph, fontSize }) => {
 
-    return (
-        <Form.Item label={label} name={name}>
-            <Input.TextArea />
+    return (<>
+        <Form.Item label={label}>
+            <p style={{ fontSize: `${fontSize}px` }}>{paragraph}</p>
         </Form.Item>
+    </>
     );
 };
 
