@@ -40,7 +40,7 @@ const CheckboxFieldDesigner: React.FC<CheckboxFieldDesignerProps> = ({ label, op
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
             <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
                 <div className='mt-2 p-2'>
-                    <label>{label}</label>
+                    <label className='mr-2'>{label}</label>
                     <Checkbox.Group
                         options={options}
                     />

@@ -221,8 +221,8 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             variant: VARIANT.FIELD,
             label: 'File Upload Label',
             name: '',
-            accept: '', // file types
-            maxFileSize: null, // in bytes
+            accept: '',
+            maxFileSize: null,
             validations: {},
             conditions: {
                 combinator: 'and',
