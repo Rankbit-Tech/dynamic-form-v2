@@ -40,7 +40,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ label, name, validations }) => 
     return (
         <Form.Item label={label} name={name} valuePropName="fileList" getValueFromEvent={e => e?.fileList} rules={rules}>
             <Upload >
-                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                <Button icon={<UploadOutlined />}>Upload Image</Button>
             </Upload>
         </Form.Item>
     );
