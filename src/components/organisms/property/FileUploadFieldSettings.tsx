@@ -15,13 +15,13 @@ const { handleValuesChange, values } = useSettingsForm();
                 <Input />
             </Form.Item>
 
-            <Form.Item label="Accepted File Types" name="accepted file types">
+            <Form.Item label="Accepted File Types" name="acceptedfiletypes">
                 <Input placeholder="e.g., .jpg, .png, .pdf" />
             </Form.Item>
-            <Form.Item label="Max File Size (MB)">
+            <Form.Item label="MaxFileSize">
                 <Input type="number" placeholder="e.g., 5" />
             </Form.Item>
-            <Form.Item label="Default File" name="default file">
+            <Form.Item label="Default File" name="defaultfile">
                 <Upload>
                     <Button icon={<UploadOutlined />}>Upload</Button>
                 </Upload>
