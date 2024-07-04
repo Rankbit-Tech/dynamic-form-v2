@@ -18,7 +18,7 @@ const { handleValuesChange, values } = useSettingsForm();
             <Form.Item label="Accepted File Types" name="acceptedfiletypes">
                 <Input placeholder="e.g., .jpg, .png, .pdf" />
             </Form.Item>
-            <Form.Item label="MaxFileSize">
+            <Form.Item label="Max File Size (MB)">
                 <Input type="number" placeholder="e.g., 5" />
             </Form.Item>
             <Form.Item label="Default File" name="defaultfile">
