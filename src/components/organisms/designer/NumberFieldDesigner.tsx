@@ -40,11 +40,9 @@ const NumberFieldDesigner: React.FC<NumberFieldDesigner> = ({ label, placeholder
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
             <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
 
-                <div className='mt-2 p-2'>
-                    <div className="mt-5">
-                        <label>{label}</label>
-                        <InputNumber placeholder={placeholder} className="border p-1 rounded w-full" />
-                    </div>
+                <div className='p-2'>
+                    <label>{label}</label>
+                    <InputNumber placeholder={placeholder} className="border p-1 m-1 rounded w-full" />
                 </div>
             </DragAreaSeperator>
         </div>
