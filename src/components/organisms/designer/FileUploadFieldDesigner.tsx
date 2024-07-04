@@ -1,8 +1,11 @@
+import React from 'react';
+import { useDroppable } from '@dnd-kit/core';
+import { Button, Upload } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 import DragAreaSeperator from '@components/atoms/DragAreaSeperator';
 import DragAreaSplitter from '@components/atoms/DragAreaSplitter';
 import { VARIANT } from '@constants/fieldTypes';
-import { useDroppable } from '@dnd-kit/core';
-import React from 'react';
+
 
 interface FileUploadFieldDesigner {
     id: string
@@ -41,7 +44,9 @@ const FileUploadFieldDesigner: React.FC<FileUploadFieldDesigner> = ({ label, id,
                 <div className='mt-2 p-2'>
                     <label>{label}</label>
                     <div className="mt-1">
-                        <input type="file" className="border p-1 rounded w-full" />
+                        <Upload >
+                            <Button icon={<UploadOutlined />}>Upload Image</Button>
+                        </Upload>
                     </div>
                 </div>
             </DragAreaSeperator>

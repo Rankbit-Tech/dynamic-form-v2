@@ -46,6 +46,7 @@ import InputFieldSettings from '@components/organisms/property/InputFieldSetting
 import InputFieldDesigner from '@components/organisms/designer/InputFieldDesigner';
 import InputField from '@components/atoms/Input';
 import PasswordInput from '@components/atoms/PasswordInput';
+import FileUpload from '@components/atoms/FileUpload ';
 
 export interface InputFieldConfig {
     type: string;
@@ -211,8 +212,9 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.FILEUPLOAD,
         propertyComponent: FileUploadFieldSettings,
         designerComponent: FileUploadFieldDesigner,
+        renderComponent: FileUpload,
         icon: FaFileUpload,
-        title: "FileUpload",
+        title: "File Upload",
         variant: VARIANT.FIELD,
         construct: () => ({
             type: fieldTypes.FILEUPLOAD,
