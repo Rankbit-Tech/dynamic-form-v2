@@ -20,7 +20,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({ label, options, name, validations }
     ]
 
     return (
-        <Form.Item label={label} name={name} rules={rules} valuePropName="checked">
+        <Form.Item label={label || '\u00A0'} name={name} rules={rules} valuePropName="checked">
             <Checkbox.Group
                 options={options}
             />

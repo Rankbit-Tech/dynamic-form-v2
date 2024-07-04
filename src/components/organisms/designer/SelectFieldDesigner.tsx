@@ -46,7 +46,6 @@ const SelectFieldDesigner: React.FC<SelectFieldDesignerProps> = ({ id, label, pa
                 <div className='mt-2 p-2'>
                     <label htmlFor="">{label || "Label"}</label>
                     <Select
-                        defaultValue={defaultValue}
                         className='w-full'
                         disabled
                         options={options}

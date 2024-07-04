@@ -20,9 +20,8 @@ const SelectInput: React.FC<SelectInputProps> = ({ label, name, options, default
     ].filter(rule => rule.required);
 
     return (
-        <Form.Item label={label} name={name} rules={rules}>
+        <Form.Item label={label} initialValue={defaultValue} name={name} rules={rules}>
             <Select
-                defaultValue={defaultValue}
                 options={transformOptions}
             />
         </Form.Item>

@@ -22,7 +22,7 @@ type UseSettingsFormReturnType = {
 
 const useSettingsForm = (): UseSettingsFormReturnType => {
     const { selectedField, setFields, fields } = useFormStore(state => state);
-    // if (!selectedField) return null
+
     const values = fields.find(item => item.id == selectedField?.id) as FieldType
 
     if (values && values?.options === null) {
@@ -30,11 +30,11 @@ const useSettingsForm = (): UseSettingsFormReturnType => {
     }
 
 
-
     const handleValuesChange = (changedValues: Record<string, any>, allValues: Record<string, any>) => {
         setFields((fields: FieldType[]) => {
             const elements = [...fields];
             const index = elements.findIndex((item: FieldType) => item.id === selectedField?.id);
+
 
             if (index !== -1) {
                 elements[index] = {
@@ -44,7 +44,7 @@ const useSettingsForm = (): UseSettingsFormReturnType => {
                         ...elements[index].validations,
                         ...changedValues.validations,
                     },
-                    options: allValues.options || [],
+                    options: allValues?.options ? allValues.options : values.options,
                     conditions: {
                         ...elements[index].conditions,
                         ...changedValues.conditions,
@@ -58,6 +58,7 @@ const useSettingsForm = (): UseSettingsFormReturnType => {
     const handleCondition = (values: Record<string, any>) => {
         handleValuesChange({ conditions: JSON.parse(values.conditions) }, { ...values, conditions: values })
     }
+
     return { handleValuesChange, values, handleCondition };
 };
 

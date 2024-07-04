@@ -23,7 +23,6 @@ const RadioButtonFieldSettings: React.FC = () => {
 
             <Form.Item name="direction">
                 <Select
-                    defaultValue={RADIO_DIRECTION.VERTICAL}
                     style={{ width: 120 }}
                     options={
                         [
@@ -33,14 +32,14 @@ const RadioButtonFieldSettings: React.FC = () => {
                     }
                 />
             </Form.Item>
-            <Form.Item initialValue={'default'} name="optionType">
+            <Form.Item name="optionType">
                 <Radio.Group>
                     <Radio value='default'>Default</Radio>
                     <Radio value='button'>Button</Radio>
                 </Radio.Group>
             </Form.Item>
 
-            <Form.Item initialValue={'solid'} name="buttonStyle">
+            <Form.Item name="buttonStyle">
                 <Radio.Group>
                     <Radio value='solid'>Solid</Radio>
                     <Radio value='outline'>Outline</Radio>
