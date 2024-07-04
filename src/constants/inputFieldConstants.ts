@@ -214,7 +214,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         designerComponent: FileUploadFieldDesigner,
         renderComponent: FileUpload,
         icon: FaFileUpload,
-        title: "FileUpload",
+        title: "File Upload",
         variant: VARIANT.FIELD,
         construct: () => ({
             type: fieldTypes.FILEUPLOAD,

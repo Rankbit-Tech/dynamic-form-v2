@@ -20,7 +20,7 @@ const FileUploadFieldSettings: React.FC = () => {
             <Form.Item initialValue={values?.validations.required} name={['validations', 'required']} valuePropName="checked">
                 <Checkbox>Required</Checkbox>
             </Form.Item>
-            <Form.Item label="Accepted File Types" name={['validations', 'reqacceptedFileuired']}>
+            <Form.Item label="Accepted File Types" name={['validations', 'acceptedFiles']}>
                 <Input placeholder="e.g., .jpg, .png, .pdf" />
             </Form.Item>
             <Form.Item label="Max File Size (MB)" name={['validations', 'maxSize']}>
