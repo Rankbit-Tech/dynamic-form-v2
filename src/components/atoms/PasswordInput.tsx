@@ -1,45 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Form, Input } from 'antd';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
 interface PasswordInputProps {
     label: string;
     name: string;
-    validations?: {
-        requireAlphabet?: boolean;
-        requireNumber?: boolean;
-        requireSpecialCharacter?: boolean;
+    validations: {
+        required: boolean;
+        passwordRule?: boolean;
     };
 }
 
 const PasswordInput: React.FC<PasswordInputProps> = ({ label, name, validations }) => {
-    const [validationPattern, setValidationPattern] = useState('');
-
-    useEffect(() => {
-        let pattern = '';
-        if (validations?.requireAlphabet) {
-            pattern += '(?=.*[a-zA-Z])';
-        }
-        if (validations?.requireNumber) {
-            pattern += '(?=.*[0-9])';
-        }
-        if (validations?.requireSpecialCharacter) {
-            pattern += '(?=.*[!@#$%^&*])';
-        }
-        setValidationPattern(pattern);
-    }, [validations]);
+    const { required, passwordRule } = validations || {};
 
     const rules = [
-        {
-            pattern: new RegExp(validationPattern),
-            message: `Password must include ${validations?.requireAlphabet ? 'an alphabet, ' : ''
-                }${validations?.requireNumber ? 'a number, ' : ''}${validations?.requireSpecialCharacter ? 'a special character, ' : ''
-                }`.slice(0, -2),
-        },
-    ];
+        { required, message: `Please enter your ${label}` },
+        ...(passwordRule ? [{
+            pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+            message: 'Password must be at least 8 characters long and contain both letters and numbers'
+        }] : [])
+    ].filter(rule => rule.required || rule.pattern)
 
     return (
         <Form.Item label={label} name={name} rules={rules}>
-            <Input.Password />
+            <Input.Password
+                iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+            />
         </Form.Item>
     );
 };

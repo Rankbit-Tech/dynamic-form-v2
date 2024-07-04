@@ -1,7 +1,7 @@
 import React from 'react';
-import { Checkbox, CheckboxProps, Form } from 'antd';
+import { Checkbox, Form } from 'antd';
 
-interface CheckBoxProps extends CheckboxProps {
+interface CheckBoxProps {
     label: string;
     name: string
     options: {

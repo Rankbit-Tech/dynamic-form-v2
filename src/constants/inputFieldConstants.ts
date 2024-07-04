@@ -45,6 +45,7 @@ import RadioInput from '@components/atoms/RadioInput';
 import InputFieldSettings from '@components/organisms/property/InputFieldSettings';
 import InputFieldDesigner from '@components/organisms/designer/InputFieldDesigner';
 import InputField from '@components/atoms/Input';
+import PasswordInput from '@components/atoms/PasswordInput';
 
 export interface InputFieldConfig {
     type: string;
@@ -256,6 +257,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.PASSWORD,
         propertyComponent: PasswordFieldSettings,
         designerComponent: PasswordFieldDesigner,
+        renderComponent: PasswordInput,
         icon: MdOutlinePassword,
         title: "Password",
         variant: VARIANT.FIELD,

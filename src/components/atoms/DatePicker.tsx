@@ -22,4 +22,4 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({ label, name, valida
     );
 };
 
-export default CustomDatePicker;
+export default CustomDatePicker

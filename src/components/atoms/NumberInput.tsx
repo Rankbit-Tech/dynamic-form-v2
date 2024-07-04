@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, InputNumber, InputNumberProps } from 'antd';
 
-interface NumberInputProps extends InputNumberProps {
+interface NumberInputProps {
     label: string;
     name: string
     placeholder: string
