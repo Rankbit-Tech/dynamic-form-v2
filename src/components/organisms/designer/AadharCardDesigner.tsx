@@ -37,13 +37,13 @@ const AadharCardDesigner = ({ id, parentId }: AadharCardDesignerProps) => {
         <div className="relative border rounded bg-white shadow mt-1">
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
             <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
-                <div className='p-2'>
+                <div className='p-2 w-1/3'>
                     <div className='flex items-center gap-2 mt-5 justify-center'>
-                        <Input />
+                        <Input placeholder="Enter Aadhar Number" />
                         <Button type='primary'>Send OTP</Button>
                     </div>
                     <div className='flex items-center gap-2 mt-5'>
-                        <Input />
+                        <Input placeholder='Enter OTP' />
                         <Button type='primary'>Verify OTP</Button>
                     </div>
                 </div>
