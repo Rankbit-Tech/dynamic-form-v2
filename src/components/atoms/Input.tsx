@@ -2,10 +2,10 @@ import React from 'react';
 import { Form, Input } from 'antd';
 
 interface TextInputProps {
-  label: string;
+  label?: string;
   name: string;
   placeholder?: string;
-  disabled: boolean
+  disabled?: boolean
   validations: {
     required: boolean
     minLength?: number

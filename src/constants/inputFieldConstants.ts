@@ -33,6 +33,8 @@ import { MdOutlinePassword } from 'react-icons/md';
 import { RxDividerVertical } from 'react-icons/rx';
 import { TbGridDots, TbSection } from 'react-icons/tb';
 import { FaParagraph } from "react-icons/fa";
+import { FaAddressCard } from "react-icons/fa";
+
 import SelectInput from '@components/atoms/SelectInput';
 import SectionComponent from '@components/organisms/SectionComponent';
 import GridFieldSettings from '@components/organisms/property/GridFieldSettings';
@@ -51,6 +53,8 @@ import FileUpload from '@components/atoms/FileUpload ';
 import TextField from '@components/atoms/TextField';
 import TextFieldSettings from '@components/organisms/property/TextFieldSettings';
 import TextFieldDesigner from '@components/organisms/designer/TextFieldDesigner';
+import AadharCardSettings from '@components/organisms/property/AadharCardSettings';
+import AadharCardDesigner from '@components/organisms/designer/AadharCardDesigner';
 
 
 export interface InputFieldConfig {
@@ -327,7 +331,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             type: fieldTypes.GRID,
             variant: VARIANT.GRID,
             cols: 2,
-            placement: "",
+            placement: "start",
             conditions: {
                 combinator: 'and',
                 rules: [],
@@ -349,6 +353,25 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             fontSize: 16,
             paragraph: "",
             placeholder: 'Placeholder',
+            validations: {},
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            },
+        }),
+    },
+    [fieldTypes.AADHAR]: {
+        type: fieldTypes.AADHAR,
+        propertyComponent: AadharCardSettings,
+        designerComponent: AadharCardDesigner,
+        renderComponent: TextField,
+        icon: FaAddressCard,
+        title: "Aadhar Details",
+        variant: VARIANT.FIELD,
+        construct: () => ({
+            type: fieldTypes.AADHAR,
+            variant: VARIANT.FIELD,
+            label: 'Label',
             validations: {},
             conditions: {
                 combinator: 'and',
