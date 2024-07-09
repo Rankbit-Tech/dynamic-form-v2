@@ -28,7 +28,22 @@ const Preview = ({ data }: PreviewProps) => {
     }
 
     const handleFinish = (values: Record<string, any>) => {
-        console.log({ values })
+        const formData = new FormData();
+
+        Object.entries(values).forEach(([key, value]: any[]) => {
+            if (value instanceof FileList) {
+                Array.from(value).forEach((file) => {
+                    formData.append(key, file);
+                });
+            } else {
+                formData.append(key, value);
+            }
+        });
+
+        for (const [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
+
     }
 
     return (
