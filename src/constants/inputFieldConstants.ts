@@ -34,6 +34,8 @@ import { RxDividerVertical } from 'react-icons/rx';
 import { TbGridDots, TbSection } from 'react-icons/tb';
 import { FaParagraph } from "react-icons/fa";
 import { FaAddressCard } from "react-icons/fa";
+import { BsTextParagraph } from "react-icons/bs";
+
 
 import SelectInput from '@components/atoms/SelectInput';
 import SectionComponent from '@components/organisms/SectionComponent';
@@ -55,6 +57,9 @@ import TextFieldSettings from '@components/organisms/property/TextFieldSettings'
 import TextFieldDesigner from '@components/organisms/designer/TextFieldDesigner';
 import AadharCardSettings from '@components/organisms/property/AadharCardSettings';
 import AadharCardDesigner from '@components/organisms/designer/AadharCardDesigner';
+import Summary from '@components/molecules/Summary';
+import SummarySettings from '@components/organisms/property/SummarySettings';
+import SummaryDesigner from '@components/organisms/designer/SummaryDesigner';
 
 
 export interface InputFieldConfig {
@@ -371,6 +376,25 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         construct: () => ({
             type: fieldTypes.AADHAR,
             variant: VARIANT.FIELD,
+            label: 'Label',
+            validations: {},
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            },
+        }),
+    },
+    [fieldTypes.SUMMARY]: {
+        type: fieldTypes.SUMMARY,
+        propertyComponent: SummarySettings,
+        designerComponent: SummaryDesigner,
+        renderComponent: Summary,
+        icon: BsTextParagraph,
+        title: "Summary",
+        variant: VARIANT.SUMMARY,
+        construct: () => ({
+            type: fieldTypes.SUMMARY,
+            variant: VARIANT.SUMMARY,
             label: 'Label',
             validations: {},
             conditions: {

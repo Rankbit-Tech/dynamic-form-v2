@@ -13,7 +13,8 @@ export const fieldTypes = {
     NUMBER: "NUMBER",
     PASSWORD: "PASSWORD",
     TEXTAREA: "TEXTAREA",
-    GRID: "GRID"
+    GRID: "GRID",
+    SUMMARY: "SUMMARY"
 }
 
 export const VARIANT = {
@@ -21,5 +22,6 @@ export const VARIANT = {
     SECTION: "SECTION",
     STEPPER: "STEPPER",
     FIELD: "FIELD",
-    GRID: "GRID"
+    GRID: "GRID",
+    SUMMARY: "SUMMARY"
 }

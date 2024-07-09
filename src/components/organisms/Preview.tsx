@@ -3,6 +3,7 @@ import { useFormStore } from "@store/useFormStore"
 import { Button, Form, Steps } from "antd"
 import { useForm } from "antd/es/form/Form"
 import usePreview, { Step } from "@hooks/usePreview"
+import { useEffect } from "react"
 
 interface PreviewProps {
     data: Record<string, any>[]
@@ -16,11 +17,15 @@ interface Item {
 
 
 const Preview = ({ data }: PreviewProps) => {
-    const { setIsPreview } = useFormStore(state => state);
+    const { setIsPreview, setFormValues } = useFormStore(state => state);
 
     const [form] = useForm();
 
     const { current, next, prev, items } = usePreview(form, data)
+
+    const handleValueChange = (_: any, allValues: any) => {
+        setFormValues(allValues)
+    }
 
     const handleFinish = (values: Record<string, any>) => {
         console.log({ values })
@@ -33,7 +38,7 @@ const Preview = ({ data }: PreviewProps) => {
             </div>
             <div className="p-5 m-2 bg-gray-100">
                 {data.length > 0 && (
-                    <Form form={form} layout="vertical" onFinish={handleFinish}>
+                    <Form form={form} layout="vertical" onFinish={handleFinish} onValuesChange={handleValueChange}>
                         <Steps current={current}>
                             {items?.map((item: Item) => (
                                 <Steps.Step key={item.key} title={item.title} />

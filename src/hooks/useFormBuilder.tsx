@@ -42,7 +42,7 @@ const useFormBuilder = () => {
         const isDroppingOnCanvas = overData.type == VARIANT.CANVAS && activeData.type === VARIANT.STEPPER;
         const isDroppingOnStepper = overData.type === VARIANT.STEPPER && activeData.type !== VARIANT.STEPPER;
         const isDroppingOnSection = overData.type === VARIANT.SECTION;
-        const isDroppingOnField = overData.type === VARIANT.FIELD;
+        const isDroppingOnField = overData.type === VARIANT.FIELD || overData.type == VARIANT.SUMMARY;
         const isDroppingOnGridColumns = overData.type === VARIANT.GRID
 
         if (isDroppingOnCanvas) {
