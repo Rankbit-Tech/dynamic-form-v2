@@ -65,10 +65,10 @@ import SummaryDesigner from '@components/organisms/designer/SummaryDesigner';
 import ImageSettings from '@components/organisms/property/ImageSettings';
 import ImageDesigner from '@components/organisms/designer/ImageDesigner';
 import Image from '@components/atoms/Image';
-import SameAsAbove from '@components/organisms/designer/SameAsAboveDesigner';
 
 import SameAsAboveDesigner from '@components/organisms/designer/SameAsAboveDesigner';
 import SameAsAboveFieldSetting from '@components/organisms/property/SameAsAboveFieldSetting';
+import SameAsAbove from '@components/molecules/SameAsAbove';
 
 
 export interface InputFieldConfig {

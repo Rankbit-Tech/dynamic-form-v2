@@ -7,6 +7,73 @@ type RecordType = Record<string, any>;
 type recordArray = Record<string, any>[];
 
 
+const test = [
+    {
+        id: 'jgWVOhKqxZI67LpaMEU_L',
+        type: 'STEPPER',
+        variant: 'STEPPER',
+        title: 'Step'
+    },
+    {
+        id: 'Yic9YeWZGDR7o-roaOW-u',
+        type: 'INPUT',
+        variant: 'FIELD',
+        label: 'Username - 1',
+        name: 'username1',
+        placeholder: 'Placeholder',
+        validations: {},
+        conditions: {
+            combinator: 'and',
+            rules: []
+        },
+        parentId: 'jgWVOhKqxZI67LpaMEU_L'
+    },
+    {
+        id: 'U5z-lQeMVeFOrlgdbk4YF',
+        type: 'SECTION',
+        variant: 'SECTION',
+        title: 'section 1',
+        isCollapsable: true,
+        conditions: {
+            combinator: 'and',
+            rules: []
+        },
+        parentId: 'jgWVOhKqxZI67LpaMEU_L'
+    },
+    {
+        id: 'uLak9uqM--af3q1vckNJ2',
+        type: 'SAMEASABOVE',
+        variant: 'FIELD',
+        label: 'Same As Above',
+        validations: {},
+        conditions: {
+            combinator: 'and',
+            rules: []
+        },
+        parentId: 'U5z-lQeMVeFOrlgdbk4YF',
+        options: [
+            {
+                label: 'username1',
+                value: 'username2'
+            }
+        ]
+    },
+    {
+        id: '6xvxpg-4LAevx-qSDAmg9',
+        type: 'INPUT',
+        variant: 'FIELD',
+        label: 'Username - 2',
+        name: 'username2',
+        placeholder: 'Placeholder',
+        validations: {},
+        conditions: {
+            combinator: 'and',
+            rules: []
+        },
+        parentId: 'U5z-lQeMVeFOrlgdbk4YF'
+    }
+];
+
 interface Field {
     label: string;
     value: string;
@@ -33,7 +100,7 @@ interface FormState {
 export const useFormStore = create<FormState>()(
     devtools(
         immer((set, get) => ({
-            fields: [],
+            fields: test,
             isPreview: false,
             selectedField: null,
             formValues: {},

@@ -24,6 +24,8 @@ const Preview = ({ data }: PreviewProps) => {
     const { current, next, prev, items } = usePreview(form, data)
 
     const handleValueChange = (_: any, allValues: any) => {
+
+        console.log(allValues)
         setFormValues(allValues)
     }
 

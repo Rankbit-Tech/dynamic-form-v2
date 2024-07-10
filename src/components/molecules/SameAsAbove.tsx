@@ -9,31 +9,15 @@ interface SameAsAboveProps {
     onChange: (value: string) => void;
 }
 
-const SameAsAbove: React.FC<SameAsAboveProps> = ({ label, onChange }) => {
-    const [checked, setChecked] = useState(false);
-
-    useEffect(() => {
-        if (checked) {
-            onChange(label);
-        }
-    }, [checked, label, onChange]);
-
-    const handleCheckboxChange = (e: CheckboxChangeEvent) => {
-        setChecked(e.target.checked);
-        if (!e.target.checked) {
-            onChange('');
-        }
-    };
+const SameAsAbove: React.FC<SameAsAboveProps> = ({ label }) => {
 
     return (
-        <div className="same-as-above-molecule relative border rounded bg-white shadow mt-1">
-            <Form.Item label="Same As Above">
-                <Checkbox checked={checked} onChange={handleCheckboxChange}>
-                    Same As Above
-                </Checkbox>
-            </Form.Item>
+        <Form.Item label="Same As Above" name="sameAsAbove" valuePropName='checked'>
+            <Checkbox>
+                Same As Above
+            </Checkbox>
+        </Form.Item>
 
-        </div>
     );
 };
 

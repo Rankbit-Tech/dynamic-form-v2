@@ -3,6 +3,7 @@ import { FormInstance, useWatch } from 'antd/es/form/Form';
 import { Rule, evaluateConditions } from "@lib/condition"
 import INPUT_FIELDS from '@constants/inputFieldConstants';
 import { fieldTypes } from '@constants/fieldTypes';
+import { useFormStore } from '@store/useFormStore';
 
 export type Step = {
     title: string
@@ -12,7 +13,6 @@ export type Step = {
 const renderStep = (steps: Record<string, any>[], formValues: any) => {
     return steps.map(step => {
         const RenderComponent = INPUT_FIELDS[step.type]?.renderComponent;
-        console.log(RenderComponent, "RenderComponent")
         if (!RenderComponent) return null;
 
         let shouldHide = false;
@@ -63,6 +63,21 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
         title: step.title,
         content: renderStep(step.children, formValues)
     }));
+
+    const saveAsAboveOptions = useFormStore(state => {
+        return state.fields.find(field => field.type == fieldTypes.SAMEASABOVE)?.options
+    })
+
+    saveAsAboveOptions.map(({ label, value }: { label: string, value: string }) => {
+        if (form.getFieldValue("sameAsAbove")) {
+            const originalValue = form.getFieldValue(label);
+            form.setFieldValue(value, originalValue)
+        } else {
+            form.setFieldValue(value, '')
+
+        }
+    })
+
 
     const next = () => {
         form.validateFields().then(() => {
