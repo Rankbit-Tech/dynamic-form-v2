@@ -35,6 +35,8 @@ import { TbGridDots, TbSection } from 'react-icons/tb';
 import { FaParagraph } from "react-icons/fa";
 import { FaAddressCard } from "react-icons/fa";
 import { BsTextParagraph } from "react-icons/bs";
+import { FaFileImage } from "react-icons/fa";
+
 
 
 import SelectInput from '@components/atoms/SelectInput';
@@ -60,6 +62,9 @@ import AadharCardDesigner from '@components/organisms/designer/AadharCardDesigne
 import Summary from '@components/molecules/Summary';
 import SummarySettings from '@components/organisms/property/SummarySettings';
 import SummaryDesigner from '@components/organisms/designer/SummaryDesigner';
+import ImageSettings from '@components/organisms/property/ImageSettings';
+import ImageDesigner from '@components/organisms/designer/ImageDesigner';
+import Image from '@components/atoms/Image';
 
 
 export interface InputFieldConfig {
@@ -396,6 +401,28 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             type: fieldTypes.SUMMARY,
             variant: VARIANT.SUMMARY,
             label: 'Label',
+            validations: {},
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            },
+        }),
+    },
+    [fieldTypes.IMAGE]: {
+        type: fieldTypes.IMAGE,
+        propertyComponent: ImageSettings,
+        designerComponent: ImageDesigner,
+        renderComponent: Image,
+        icon: FaFileImage,
+        title: "Image",
+        variant: VARIANT.IMAGE,
+        construct: () => ({
+            type: fieldTypes.IMAGE,
+            variant: VARIANT.IMAGE,
+            label: 'Label',
+            src: "",
+            height: '',
+            width: 60,
             validations: {},
             conditions: {
                 combinator: 'and',

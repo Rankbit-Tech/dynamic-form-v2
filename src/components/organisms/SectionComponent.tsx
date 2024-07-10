@@ -5,23 +5,17 @@ import INPUT_FIELDS from '@constants/inputFieldConstants';
 interface SectionProps {
     id: string
     title: string;
-    children: any[];
+    childrenComponent: any[];
     isCollapsable: boolean
 }
 
-const SectionComponent: React.FC<SectionProps> = ({ id, title, children, isCollapsable }) => {
+const SectionComponent: React.FC<SectionProps> = ({ id, title, childrenComponent, isCollapsable }) => {
 
     const items: CollapseProps['items'] = [
         {
             key: id,
             label: title,
-            children: children.map(field => {
-                const fieldConfig = INPUT_FIELDS[field.type];
-                const RenderComponent = fieldConfig?.renderComponent;
-                return RenderComponent ? (
-                    <RenderComponent key={field.id} {...field} />
-                ) : null;
-            })
+            children: childrenComponent
         },
 
     ];

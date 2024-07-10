@@ -12,12 +12,11 @@ export type Step = {
 const renderStep = (steps: Record<string, any>[], formValues: any) => {
     return steps.map(step => {
         const RenderComponent = INPUT_FIELDS[step.type]?.renderComponent;
-
+        console.log(RenderComponent, "RenderComponent")
         if (!RenderComponent) return null;
 
         let shouldHide = false;
         let isDisabled = false;
-
         if (step.conditions && step.conditions.rules.length > 0) {
             const { hide, disable } = evaluateConditions(step.conditions, formValues);
             shouldHide = hide && step.conditions.rules.some((rule: Rule) => rule.value === 'hide');
@@ -29,13 +28,16 @@ const renderStep = (steps: Record<string, any>[], formValues: any) => {
         }
 
         if (step.type === fieldTypes.SECTION) {
+            const children = renderStep(step.children, formValues);
             return (
-                <RenderComponent key={step.id} {...step} />
+                <RenderComponent childrenComponent={children} key={step.id} {...step} />
             );
         }
         if (step.type === fieldTypes.GRID) {
+            const children = renderStep(step.children, formValues);
+
             return (
-                <RenderComponent key={step.id} {...step} />
+                <RenderComponent childrenComponent={children} key={step.id} {...step} />
             );
         }
 
@@ -43,7 +45,7 @@ const renderStep = (steps: Record<string, any>[], formValues: any) => {
             <div key={step.id}>
                 {step.children && step.children.length > 0
                     ? renderStep(step.children, formValues)
-                    : <RenderComponent {...step} disabled={isDisabled} />}
+                    : <RenderComponent key={step.id} {...step} disabled={isDisabled} />}
             </div>
         );
     });

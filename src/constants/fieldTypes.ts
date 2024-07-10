@@ -14,7 +14,8 @@ export const fieldTypes = {
     PASSWORD: "PASSWORD",
     TEXTAREA: "TEXTAREA",
     GRID: "GRID",
-    SUMMARY: "SUMMARY"
+    SUMMARY: "SUMMARY",
+    IMAGE: "IMAGE"
 }
 
 export const VARIANT = {
@@ -23,5 +24,6 @@ export const VARIANT = {
     STEPPER: "STEPPER",
     FIELD: "FIELD",
     GRID: "GRID",
-    SUMMARY: "SUMMARY"
+    SUMMARY: "SUMMARY",
+    IMAGE: "IMAGE"
 }

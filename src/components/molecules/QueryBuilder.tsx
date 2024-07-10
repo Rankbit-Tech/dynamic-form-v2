@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { QueryBuilder, RuleGroupType, Field, formatQuery } from 'react-querybuilder';
 import 'react-querybuilder/dist/query-builder.css';
 import { Button, Select, Input, DatePicker } from 'antd';
@@ -63,10 +63,10 @@ const AntdControlElements = {
         if (field === 'date') {
             return <DatePicker value={value as any} onChange={(date) => handleOnChange(date)} />;
         }
-        return <Select value={value} onChange={(e) => handleOnChange(e)} placeholder="Please select options" className='min-w-[100px]'>
-            {actions.map((option: any) => (
-                <Select.Option key={option.name} value={option.name}>
-                    {option.label}
+        return <Select value={value} onChange={(e) => handleOnChange(e)} placeholder="Please select options" className='min-w-[50px]'>
+            {actions.map((action: any) => (
+                <Select.Option key={action.name} value={action.name}>
+                    {action.label}
                 </Select.Option>
             ))}
         </Select>
@@ -94,15 +94,17 @@ const QueryBuilderComponent: React.FC<QueryBuilderComponentProps> = ({ handleCon
     });
 
     const fields: Field[] = useFormStore(state => {
-        return state.fields.filter(field => field.variant == VARIANT.FIELD && (field.name && field.label)).map(field => (
-            { name: field.name, label: field.label }
-        ))
-    })
+        return state.fields.filter(field => field.variant === VARIANT.FIELD && field.name && field.label).map(field => ({
+            name: field.name,
+            label: field.label
+        }));
+    });
+
+
     const handleQueryChange = (newQuery: RuleGroupType) => {
         setQuery(newQuery);
         const query = formatQuery(newQuery, 'json_without_ids')
         handleCondition({ conditions: query },);
-
     };
 
 
