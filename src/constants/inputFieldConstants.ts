@@ -27,7 +27,7 @@ import { CiText } from "react-icons/ci";
 import { LuBoxSelect } from 'react-icons/lu';
 import { IoMdCheckbox, IoMdRadioButtonOn } from 'react-icons/io';
 import { BsCalendar2DateFill, BsTextareaT } from 'react-icons/bs';
-import { FaFileUpload } from 'react-icons/fa';
+import { FaCopy, FaFileUpload } from 'react-icons/fa';
 import { GoNumber } from 'react-icons/go';
 import { MdOutlinePassword } from 'react-icons/md';
 import { RxDividerVertical } from 'react-icons/rx';
@@ -65,6 +65,10 @@ import SummaryDesigner from '@components/organisms/designer/SummaryDesigner';
 import ImageSettings from '@components/organisms/property/ImageSettings';
 import ImageDesigner from '@components/organisms/designer/ImageDesigner';
 import Image from '@components/atoms/Image';
+import SameAsAbove from '@components/organisms/designer/SameAsAboveDesigner';
+
+import SameAsAboveDesigner from '@components/organisms/designer/SameAsAboveDesigner';
+import SameAsAboveFieldSetting from '@components/organisms/property/SameAsAboveFieldSetting';
 
 
 export interface InputFieldConfig {
@@ -423,6 +427,20 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             src: "",
             height: '',
             width: 60,
+        })
+    },
+    [fieldTypes.SAMEASABOVE]: {
+        type: fieldTypes.SAMEASABOVE,
+        propertyComponent: SameAsAboveFieldSetting,
+        designerComponent: SameAsAboveDesigner,
+        renderComponent: SameAsAbove,
+        icon: FaCopy,
+        title: "Same As Above",
+        variant: VARIANT.FIELD,
+        construct: () => ({
+            type: fieldTypes.SAMEASABOVE,
+            variant: VARIANT.FIELD,
+            label: 'Same As Above',
             validations: {},
             conditions: {
                 combinator: 'and',
@@ -430,7 +448,6 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             },
         }),
     },
-
 
 };
 
