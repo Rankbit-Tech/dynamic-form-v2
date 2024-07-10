@@ -69,13 +69,8 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
     })
 
     saveAsAboveOptions?.map(({ label, value }: { label: string, value: string }) => {
-        if (form.getFieldValue("sameAsAbove")) {
-            const originalValue = form.getFieldValue(label);
-            form.setFieldValue(value, originalValue)
-        } else {
-            form.setFieldValue(value, '')
-
-        }
+        const saveAsAbove = form.getFieldValue("sameAsAbove")
+        form.setFieldValue(value, saveAsAbove ? form.getFieldValue(label) : '')
     })
 
 
