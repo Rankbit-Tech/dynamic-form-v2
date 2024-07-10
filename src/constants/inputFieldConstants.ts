@@ -27,7 +27,7 @@ import { CiText } from "react-icons/ci";
 import { LuBoxSelect } from 'react-icons/lu';
 import { IoMdCheckbox, IoMdRadioButtonOn } from 'react-icons/io';
 import { BsCalendar2DateFill, BsTextareaT } from 'react-icons/bs';
-import { FaFileUpload } from 'react-icons/fa';
+import { FaCopy, FaFileUpload } from 'react-icons/fa';
 import { GoNumber } from 'react-icons/go';
 import { MdOutlinePassword } from 'react-icons/md';
 import { RxDividerVertical } from 'react-icons/rx';
@@ -55,6 +55,10 @@ import TextFieldSettings from '@components/organisms/property/TextFieldSettings'
 import TextFieldDesigner from '@components/organisms/designer/TextFieldDesigner';
 import AadharCardSettings from '@components/organisms/property/AadharCardSettings';
 import AadharCardDesigner from '@components/organisms/designer/AadharCardDesigner';
+import SameAsAbove from '@components/organisms/designer/SameAsAboveDesigner';
+
+import SameAsAboveDesigner from '@components/organisms/designer/SameAsAboveDesigner';
+import SameAsAboveFieldSetting from '@components/organisms/property/SameAsAboveFieldSetting';
 
 
 export interface InputFieldConfig {
@@ -379,6 +383,28 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             },
         }),
     },
+    [fieldTypes.SAMEASABOVE]: {
+        type: fieldTypes.SAMEASABOVE,
+        propertyComponent: SameAsAboveFieldSetting,
+        designerComponent: SameAsAboveDesigner,
+        renderComponent: SameAsAbove,
+        icon: FaCopy,
+        title: "Same As Above",
+        variant: VARIANT.FIELD,
+        construct: () => ({
+            type: fieldTypes.SAMEASABOVE,
+            variant: VARIANT.FIELD,
+            label: 'Same As Above',
+            validations: {},
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            },
+        }),
+    },
+
+
+
 
 
 };

@@ -1,7 +1,10 @@
+
+
 export const fieldTypes = {
     INPUT: "INPUT",
     TEXT: "TEXT",
     AADHAR: "AADHAR",
+    SAMEASABOVE: "SAMEASABOVE",
     SELECT: "SELECT",
     SECTION: "SECTION",
     STEPPER: "STEPPER",
