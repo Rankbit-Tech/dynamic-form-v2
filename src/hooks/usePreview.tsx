@@ -65,10 +65,10 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
     }));
 
     const saveAsAboveOptions = useFormStore(state => {
-        return state.fields.find(field => field.type == fieldTypes.SAMEASABOVE)?.options
+        return state.fields?.find(field => field.type == fieldTypes.SAMEASABOVE)?.options || []
     })
 
-    saveAsAboveOptions.map(({ label, value }: { label: string, value: string }) => {
+    saveAsAboveOptions?.map(({ label, value }: { label: string, value: string }) => {
         if (form.getFieldValue("sameAsAbove")) {
             const originalValue = form.getFieldValue(label);
             form.setFieldValue(value, originalValue)
