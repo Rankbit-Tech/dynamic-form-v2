@@ -12,7 +12,7 @@ export interface Conditions {
 
 export const evaluateConditions = (conditions: Conditions, formValues: Record<string, any>) => {
     const { combinator, rules } = conditions;
-    console.log(rules, "rules")
+
     const evaluateRule = (rule: Rule) => {
         const fieldValue = formValues?.[rule.field] ?? '';
         switch (rule.operator) {
