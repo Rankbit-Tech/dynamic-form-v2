@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FormInstance, useWatch } from 'antd/es/form/Form';
 import { Rule, evaluateConditions } from "@lib/condition"
 import INPUT_FIELDS from '@constants/inputFieldConstants';
@@ -68,10 +68,22 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
         return state.fields?.find(field => field.type == fieldTypes.SAMEASABOVE)?.options || []
     })
 
-    saveAsAboveOptions?.map(({ label, value }: { label: string, value: string }) => {
-        const saveAsAbove = form.getFieldValue("sameAsAbove")
-        form.setFieldValue(value, saveAsAbove ? form.getFieldValue(label) : '')
-    })
+    const saveAsAbove = form.getFieldValue("sameAsAbove");
+    useEffect(() => {
+        if (saveAsAbove) {
+            saveAsAboveOptions?.forEach(({ label, value }: { label: string, value: string }) => {
+                form.setFieldValue(value, form.getFieldValue(label));
+            });
+        } else {
+            saveAsAboveOptions?.forEach(({ value }: { value: string }) => {
+                form.setFieldValue(value, '');
+            });
+        }
+    }, [saveAsAbove, saveAsAboveOptions, form]);
+
+
+
+
 
 
     const next = () => {
