@@ -1,0 +1,39 @@
+export const aadharData = {
+    "data": {
+        "client_id": "aadhaar_v1_wka25IGT0zwBA1I2xoW6",
+        "full_name": "Rameshbhai Pachanbhai Rabari",
+        "aadhaar_number": "272273936625",
+        "dob": "1998-01-20",
+        "gender": "M",
+        "address": {
+            "country": "India",
+            "dist": "Patan",
+            "state": "Gujarat",
+            "po": "Arjansar",
+            "loc": "arajanasar",
+            "vtc": "Arjansar",
+            "subdist": "Radhanpur",
+            "street": "",
+            "house": "",
+            "landmark": ""
+        },
+        "face_status": false,
+        "face_score": -1,
+        "zip": "385340",
+        "profile_image": "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",
+        "has_image": true,
+        "email_hash": "4de7db3a506d1944ac3abc0938073abd1321b06c6128550cb1cc62fb9c3b64e1",
+        "mobile_hash": "697d8b26a77937d5610de852f73073aec30433fbe102410b264da9939fd5d1c3",
+        "zip_data": "https://preproduction-persist.signzy.tech/api/files/41544300/download/0d589604da6c4f1aab24d095a84af4d90d921738d8e94848ae8514d623c8f945.zip",
+        "raw_xml": "https://preproduction-persist.signzy.tech/api/files/41544301/download/4d9ee2a3d6d84648931b1b1307a475d39d5defae362d4a70a6f14c9807a4f882.xml",
+        "care_of": null,
+        "share_code": "1234",
+        "mobile_verified": false,
+        "reference_id": "662520240704130848888",
+        "aadhaar_pdf": null,
+        "status": "success_aadhaar",
+        "uniqueness_id": ""
+    },
+    "statusCode": 200,
+    "message": null
+}

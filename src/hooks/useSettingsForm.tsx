@@ -29,12 +29,10 @@ const useSettingsForm = (): UseSettingsFormReturnType => {
         values.options = [];
     }
 
-
     const handleValuesChange = (changedValues: Record<string, any>, allValues: Record<string, any>) => {
         setFields((fields: FieldType[]) => {
             const elements = [...fields];
             const index = elements.findIndex((item: FieldType) => item.id === selectedField?.id);
-
 
             if (index !== -1) {
                 elements[index] = {

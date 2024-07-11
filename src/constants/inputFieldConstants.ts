@@ -69,6 +69,7 @@ import Image from '@components/atoms/Image';
 import SameAsAboveDesigner from '@components/organisms/designer/SameAsAboveDesigner';
 import SameAsAboveFieldSetting from '@components/organisms/property/SameAsAboveFieldSetting';
 import SameAsAbove from '@components/molecules/SameAsAbove';
+import AadharCard from '@components/molecules/AdharCard';
 
 
 export interface InputFieldConfig {
@@ -378,7 +379,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         type: fieldTypes.AADHAR,
         propertyComponent: AadharCardSettings,
         designerComponent: AadharCardDesigner,
-        renderComponent: TextField,
+        renderComponent: AadharCard,
         icon: FaAddressCard,
         title: "Aadhar Details",
         variant: VARIANT.FIELD,
