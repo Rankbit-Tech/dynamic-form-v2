@@ -36,10 +36,9 @@ const AadharCard: React.FC = () => {
         const middle_name = name[1];
         const last_name = name[2];
 
-
         Object.entries(mapping).forEach((item) => {
             const [key, value]: [string, any] = item || []
-            switch (value) {
+            switch (key) {
                 case "first_name":
                     mappedData[value] = fistName;
                     break;
