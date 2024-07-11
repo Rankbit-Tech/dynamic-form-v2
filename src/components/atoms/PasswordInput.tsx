@@ -7,20 +7,38 @@ interface PasswordInputProps {
     name: string;
     validations: {
         required: boolean;
-        passwordRule?: boolean;
+        pattern?: string[];
+        minLength?: number;
+        maxLength?: number;
     };
+}
+interface patternRulesType {
+    number: string;
+    alphabet: string;
+    specialCharacter: string;
+}
+enum patternRules {
+    number="(?=.*[0-9])",
+    alphabet="(?=.*[a-zA-Z])",
+    specialCharacter="(?=.*[!@#$%^&*])"
 }
 
 const PasswordInput: React.FC<PasswordInputProps> = ({ label, name, validations }) => {
-    const { required, passwordRule } = validations || {};
+    const { required, pattern, minLength, maxLength } = validations || {};
+    let regExpression = "" as string;
+    pattern?.forEach((p:string) => {
+        regExpression += patternRules[p as keyof patternRulesType];
+    })
 
     const rules = [
         { required, message: `Please enter your ${label}` },
-        ...(passwordRule ? [{
-            pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-            message: 'Password must be at least 8 characters long and contain both letters and numbers'
-        }] : [])
-    ].filter(rule => rule.required || rule.pattern)
+        ...(pattern ? [{
+            pattern: new RegExp(regExpression),
+            message: 'Password does not meet the required criteria',
+        }] : []),
+        { min: minLength, message: `Minimum length is should be ${minLength}` },
+        { max: maxLength, message: `Maximun length is should be ${maxLength}` }
+    ].filter(rule => rule.required || rule.pattern !== undefined || rule.min !== undefined || rule.max !== undefined);
 
     return (
         <Form.Item label={label} name={name} rules={rules}>

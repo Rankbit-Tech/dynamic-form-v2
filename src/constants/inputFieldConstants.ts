@@ -291,16 +291,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             variant: VARIANT.FIELD,
             label: 'Password Label',
             name: '',
-            defaultValue: '',
-            validations: {
-                requireAlphabet: false,
-                requireNumber: false,
-                requireSpecialCharacter: false,
-            },
-            minLength: null,
-            maxLength: null,
-            pattern: [],
-            validationPattern: '',
+            validations: {},
             conditions: {
                 combinator: 'and',
                 rules: [],
