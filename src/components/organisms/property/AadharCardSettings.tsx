@@ -3,7 +3,7 @@ import { Form, Select, Checkbox } from 'antd';
 import DividerWithHeader from '@components/atoms/Divider';
 import { useFormStore } from '@store/useFormStore';
 import { VARIANT } from '@constants/fieldTypes';
-
+import useSettingsForm from '@hooks/useSettingsForm';
 
 
 const AadharCardSettings: React.FC = () => {
@@ -12,28 +12,31 @@ const AadharCardSettings: React.FC = () => {
     )
 
     const labels = [
-        "Aadhaar Number",
-        "Name",
-        "Long Name",
-        "Last Name",
-        "Middle Name",
-        "Date of Birth",
-        "Address",
-        "Gender",
-        "Age",
-        "Father Name"
+        { key: "aadhaar_number", value: "Aadhaar Number" },
+        { key: "name", value: "Name" },
+        { key: "long_name", value: "Long Name" },
+        { key: "last_name", value: "Last Name" },
+        { key: "middle_name", value: "Middle Name" },
+        { key: "date_of_birth", value: "Date of Birth" },
+        { key: "address", value: "Address" },
+        { key: "gender", value: "Gender" },
+        { key: "age", value: "Age" },
+        { key: "father's_name", value: "Father's Name" }
+
     ];
 
-    return (
-        <Form layout="vertical" className="max-w-xs mx-auto">
+    const { handleValuesChange, values } = useSettingsForm();
 
-            {labels.map((label, index) => (
+    return (
+        <Form layout="vertical" className="max-w-xs mx-auto" initialValues={values} onValuesChange={handleValuesChange}>
+
+            {labels.map(({ key, value }: { key: string, value: string }, index) => (
                 <div key={index} className="flex items-center mb-2">
                     <div className="w-1/2">
-                        <span>{label}</span>
+                        <span>{value}</span>
                     </div>
                     <div className="w-1/2">
-                        <Form.Item name={label.toLowerCase().replace(/ /g, '')} className="mb-0">
+                        <Form.Item name={["mapFields", key]} className="mb-0">
                             <Select
                                 options={options}
                             />

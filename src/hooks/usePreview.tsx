@@ -83,9 +83,6 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
 
 
 
-
-
-
     const next = () => {
         form.validateFields().then(() => {
             setCurrent(current + 1);
