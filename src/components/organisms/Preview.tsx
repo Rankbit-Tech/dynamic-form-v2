@@ -4,6 +4,7 @@ import { Button, Form, Steps } from "antd"
 import { useForm } from "antd/es/form/Form"
 import usePreview, { Step } from "@hooks/usePreview"
 import { useEffect } from "react"
+import useEventBus from "@hooks/useEventBus"
 
 interface PreviewProps {
     data: Record<string, any>[]
@@ -18,6 +19,7 @@ interface Item {
 
 const Preview = ({ data }: PreviewProps) => {
     const { setIsPreview, setFormValues } = useFormStore(state => state);
+    const { subscribe } = useEventBus()
 
     const [form] = useForm();
 
@@ -43,8 +45,12 @@ const Preview = ({ data }: PreviewProps) => {
         for (const [key, value] of formData.entries()) {
             console.log(key, value);
         }
-
     }
+
+    subscribe("sendAdharData", (data) => {
+        form.setFieldsValue(data)
+    })
+
 
     return (
         <div>

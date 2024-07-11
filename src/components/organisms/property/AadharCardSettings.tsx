@@ -13,15 +13,15 @@ const AadharCardSettings: React.FC = () => {
 
     const labels = [
         { key: "aadhaar_number", value: "Aadhaar Number" },
-        { key: "name", value: "Name" },
+        { key: "first_name", value: "Fist Name" },
         { key: "long_name", value: "Long Name" },
         { key: "last_name", value: "Last Name" },
         { key: "middle_name", value: "Middle Name" },
-        { key: "date_of_birth", value: "Date of Birth" },
+        { key: "dob", value: "Date of Birth" },
         { key: "address", value: "Address" },
         { key: "gender", value: "Gender" },
         { key: "age", value: "Age" },
-        { key: "father's_name", value: "Father's Name" }
+        { key: "father_name", value: "Father's Name" }
 
     ];
 

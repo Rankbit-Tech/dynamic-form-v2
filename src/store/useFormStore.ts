@@ -41,6 +41,21 @@ const test = [
         parentId: 'jgWVOhKqxZI67LpaMEU_L'
     },
     {
+        id: 'lEvaweJhx7qNKSIijxjgK',
+        type: 'AADHAR',
+        variant: 'FIELD',
+        label: 'Label',
+        validations: {},
+        conditions: {
+            combinator: 'and',
+            rules: []
+        },
+        parentId: 'jgWVOhKqxZI67LpaMEU_L',
+        mapFields: {
+            aadhaar_number: 'username1'
+        }
+    },
+    {
         id: 'uLak9uqM--af3q1vckNJ2',
         type: 'SAMEASABOVE',
         variant: 'FIELD',
@@ -72,7 +87,7 @@ const test = [
         },
         parentId: 'U5z-lQeMVeFOrlgdbk4YF'
     }
-];
+]
 
 interface Field {
     label: string;

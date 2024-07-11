@@ -388,6 +388,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             variant: VARIANT.FIELD,
             label: 'Label',
             validations: {},
+            mapFields: {},
             conditions: {
                 combinator: 'and',
                 rules: [],
