@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Input, Form, InputNumber, Checkbox } from 'antd';
 import useSettingsForm from '@hooks/useSettingsForm';
 import DividerWithHeader from '@components/atoms/Divider';
@@ -6,43 +6,13 @@ import QueryBuilderComponent from '@components/molecules/QueryBuilder';
 
 const PasswordFieldSettings: React.FC = () => {
     const { handleValuesChange, values, handleCondition } = useSettingsForm();
-    const [validationPattern, setValidationPattern] = useState('');
-
-    const updateValidationRules = (pattern: string[]) => {
-        let Pattern = '';
-        if (pattern.includes('number')) {
-            Pattern += '(?=.*[0-9])';
-        }
-        if (pattern.includes('alphabet')) {
-            Pattern += '(?=.*[a-zA-Z])';
-        }
-        if (pattern.includes('specialCharacter')) {
-            Pattern += '(?=.*[!@#$%^&*])';
-        }
-        setValidationPattern(Pattern);
-        handleValuesChange({ validationPattern: Pattern }, { ...values, validationPattern: Pattern });
-    };
-
-    useEffect(() => {
-        if (values.pattern) {
-            updateValidationRules(values.pattern);
-        }
-    }, [values.pattern]);
-
-    if (!values) {
-        return null;
-    }
+    
 
     return (
         <Form
             layout="vertical"
             initialValues={values}
-            onValuesChange={(changedValues, allValues) => {
-                handleValuesChange(changedValues, allValues);
-                if (changedValues.pattern) {
-                    updateValidationRules(changedValues.pattern);
-                }
-            }}
+            onValuesChange={handleValuesChange}
         >
             <Form.Item label="Label" name="label">
                 <Input />
@@ -50,25 +20,14 @@ const PasswordFieldSettings: React.FC = () => {
             <Form.Item label="Name" name="name">
                 <Input />
             </Form.Item>
-            <Form.Item
-                label="Default Value"
-                name="defaultValue"
-                rules={[
-                    {
-                        pattern: new RegExp(validationPattern),
-                        message: 'Password does not meet the required criteria',
-                    },
-                ]}
-            >
-                <Input.Password />
+            
+            <Form.Item label="Min Length" name={['validations', 'minLength']}>
+                <InputNumber min={1} />
             </Form.Item>
-            <Form.Item label="Min Length" name="minLength">
-                <InputNumber min={0} />
+            <Form.Item label="Max Length" name={['validations', 'maxLength']}>
+                <InputNumber min={1} />
             </Form.Item>
-            <Form.Item label="Max Length" name="maxLength">
-                <InputNumber min={0} />
-            </Form.Item>
-            <Form.Item label="Pattern" name="pattern">
+            <Form.Item label="Pattern" name={['validations', 'pattern']}>
                 <Checkbox.Group>
                     <Checkbox value="number">Number</Checkbox>
                     <Checkbox value="alphabet">Alphabet</Checkbox>
