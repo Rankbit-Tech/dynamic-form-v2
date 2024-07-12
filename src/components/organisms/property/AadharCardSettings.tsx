@@ -8,7 +8,7 @@ import useSettingsForm from '@hooks/useSettingsForm';
 
 const AadharCardSettings: React.FC = () => {
 
-    const options = useFormStore(state => state.fields.filter(field => field.variant === VARIANT.FIELD).map((item) => ({ label: item.label, value: item.name }))
+    const options = useFormStore(state => state.fields.filter(field => field.variant === VARIANT.FIELD || field.variant === VARIANT.IMAGE).map((item) => ({ label: item.label, value: item.name }))
     )
 
     const labels = [
@@ -28,7 +28,6 @@ const AadharCardSettings: React.FC = () => {
         { key: "dist", value: "District" },
         { key: "state", value: "State" },
         { key: "father_name", value: "Father's Name" },
-        { key: "profile_image", value: "Aadhaar Photo" }
 
 
     ];

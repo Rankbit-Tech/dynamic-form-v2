@@ -1,18 +1,29 @@
-import { Form, Image as ImagePreview, Input } from "antd"
+import useEventBus from "@hooks/useEventBus"
+import { Image as ImagePreview } from "antd"
+import { useState } from "react"
 
 interface ImageProps {
     label: string
     src: string
     width: number
     height: number
-    name: string
 }
 
-const Image = ({ label, src, name, width, height }: ImageProps) => {
+const Image = ({ label, src, width, height }: ImageProps) => {
+    const [source, setSource] = useState(src)
+    const { subscribe } = useEventBus()
+    subscribe("sendAadharProfile", (data) => {
+        setSource(data)
+    })
     return (
-        <Form.Item name={name} label={label}>
-            <input type="image" height={`${height}px`} value={src} width={`${width}px`} src={src} alt="" />
-        </Form.Item>
+        <div className="flex flex-col gap-y-2 my-2">
+            <label>{label}</label>
+            <ImagePreview
+                width={width}
+                height={height}
+                src={source}
+            />
+        </div>
     )
 }
 

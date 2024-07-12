@@ -22,6 +22,7 @@ const AadharCard: React.FC = () => {
     const handleAadharData = () => {
         const data = aadharData.data as any;
         const mapping = AdharCardOptions;
+        emitEvent("sendAadharProfile", `data:image/png;base64, ${data?.profile_image}`)
 
         const mappedData: any = {};
         const name = data.full_name.split(" ");
