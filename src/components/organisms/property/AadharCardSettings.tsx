@@ -21,7 +21,15 @@ const AadharCardSettings: React.FC = () => {
         { key: "address", value: "Address" },
         { key: "gender", value: "Gender" },
         { key: "age", value: "Age" },
-        { key: "father_name", value: "Father's Name" }
+        { key: "vtc", value: "Village" },
+        { key: "city", value: "City" },
+        { key: "po", value: "Taluka" },
+        { key: "country", value: "Country" },
+        { key: "dist", value: "District" },
+        { key: "state", value: "State" },
+        { key: "father_name", value: "Father's Name" },
+        { key: "profile_image", value: "Aadhaar Photo" }
+
 
     ];
 

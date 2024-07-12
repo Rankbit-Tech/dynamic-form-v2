@@ -3,63 +3,57 @@ import { aadharData } from "./data"
 import { useFormStore } from '@store/useFormStore';
 import { fieldTypes } from '@constants/fieldTypes';
 import useEventBus from '@hooks/useEventBus';
+import findValue from '@lib/findValue';
 
+const formatAddress = (address: any) => {
+    const addressFields = ['house', 'street', 'landmark', 'loc', 'vtc', 'po', 'subdist', 'dist', 'state', 'country'];
+    return addressFields
+        .filter(field => address[field])
+        .map(field => address[field])
+        .join(', ');
+}
 
 const AadharCard: React.FC = () => {
-
     const { emitEvent } = useEventBus()
-
     const AdharCardOptions = useFormStore(state => {
         return state.fields?.find(field => field.type == fieldTypes.AADHAR)?.mapFields || {}
-
     })
-    // const labels = [
-    //     { key: "aadhaar_number", value: "Aadhaar Number" },
-    //     { key: "name", value: "Name" },
-    //     { key: "long_name", value: "Long Name" },
-    //     { key: "last_name", value: "Last Name" },
-    //     { key: "middle_name", value: "Middle Name" },
-    //     { key: "date_of_birth", value: "Date of Birth" },
-    //     { key: "address", value: "Address" },
-    //     { key: "gender", value: "Gender" },
-    //     { key: "age", value: "Age" },
-    //     { key: "father_name", value: "Father's Name" }
 
-    // ];
     const handleAadharData = () => {
         const data = aadharData.data as any;
         const mapping = AdharCardOptions;
 
         const mappedData: any = {};
         const name = data.full_name.split(" ");
-        const fistName = name[0];
-        const middle_name = name[1];
-        const last_name = name[2];
+        const firstName = name[0];
+        const middleName = name.length > 2 ? name[1] : '';
+        const lastName = name.length > 2 ? name[2] : name[1];
 
         Object.entries(mapping).forEach((item) => {
             const [key, value]: [string, any] = item || []
             switch (key) {
                 case "first_name":
-                    mappedData[value] = fistName;
+                    mappedData[value] = firstName;
                     break;
                 case "middle_name":
-                    mappedData[value] = middle_name;
+                    mappedData[value] = middleName;
                     break;
                 case "last_name":
-                    mappedData[value] = last_name;
+                    mappedData[value] = lastName;
+                    break;
+                case "address":
+                    mappedData[value] = formatAddress(data.address);
                     break;
                 default:
-                    mappedData[value] = data[key];
+                    mappedData[value] = findValue(data, key);
             }
         })
 
         emitEvent("sendAdharData", mappedData)
-
     }
 
-
     return (
-        <div className="relative border rounded bg-white shadow ">
+        <div className="relative  border rounded bg-white shadow  ">
             <div className='p-3 w-1/3'>
                 <div className='flex items-center gap-2 mt-5 justify-center'>
                     <Input placeholder="Enter Aadhar Number" />
