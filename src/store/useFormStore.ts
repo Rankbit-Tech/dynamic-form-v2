@@ -115,7 +115,7 @@ interface FormState {
 export const useFormStore = create<FormState>()(
     devtools(
         immer((set, get) => ({
-            fields: test,
+            fields: [],
             isPreview: false,
             selectedField: null,
             formValues: {},

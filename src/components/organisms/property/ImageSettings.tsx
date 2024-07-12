@@ -14,6 +14,9 @@ const ImageSettings = () => {
             <Form.Item label="Default Source" name="src">
                 <Input />
             </Form.Item>
+            <Form.Item label="Name" name="name">
+                <Input />
+            </Form.Item>
 
             <Flex justify='space-between'>
                 <Form.Item label="Width" name="width">
