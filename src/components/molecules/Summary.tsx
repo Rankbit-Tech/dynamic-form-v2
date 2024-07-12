@@ -46,7 +46,6 @@ const Summary = () => {
                                     <div className="flex">
                                         <span className="min-w-[250px] font-bold">{field.label}</span>
                                         <span> : &nbsp;{field.value}</span>
-
                                     </div>
                                 )
                             })}

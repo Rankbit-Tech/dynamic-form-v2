@@ -1,17 +1,20 @@
-import INPUT_FIELDS from "@constants/inputFieldConstants"
+import useMediaQuery from "@hooks/useMediaQuery"
 
 interface GridComponentProps {
     cols: number
     childrenComponent: React.ReactNode
-    type: string
 }
 
 
 const GridComponent = ({ cols, childrenComponent }: GridComponentProps) => {
+    const { isMobile, isTablet } = useMediaQuery();
+
+    const gridClassName = isMobile ? 'p-2 grid gap-2 grid-cols-1' : `p-2 grid gap-2 grid-cols-${isTablet ? 2 : cols}`;
+
     return (
-        <div className="p-2 gap-2" style={{ display: "grid", gridTemplateColumns: `repeat(${cols},1fr)` }}>
+        <div className={gridClassName}>
             {childrenComponent}
-        </div>
+        </div >
     )
 }
 
