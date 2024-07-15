@@ -8,6 +8,7 @@ import useEventBus from "@hooks/useEventBus"
 
 interface PreviewProps {
     data: Record<string, any>[]
+    onSubmit: (formData: FormData) => void
 }
 
 interface Item {
@@ -17,7 +18,7 @@ interface Item {
 }
 
 
-const Preview = ({ data }: PreviewProps) => {
+const Preview = ({ data, onSubmit }: PreviewProps) => {
     const { setIsPreview, setFormValues } = useFormStore(state => state);
     const { subscribe } = useEventBus()
 
@@ -42,9 +43,10 @@ const Preview = ({ data }: PreviewProps) => {
             }
         });
 
-        for (const [key, value] of formData.entries()) {
-            console.log(key, value);
-        }
+        // for (const [key, value] of formData.entries()) {
+        //     console.log(key, value);
+        // }
+        onSubmit(formData)
     }
 
     subscribe("sendAdharData", (data) => {

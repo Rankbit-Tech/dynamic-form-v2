@@ -7,12 +7,14 @@ interface ImageProps {
     src: string
     width: number
     height: number
+    name: string
 }
 
-const Image = ({ label, src, width, height }: ImageProps) => {
+const Image = ({ label, src, width, height, name }: ImageProps) => {
     const [source, setSource] = useState(src)
+
     const { subscribe } = useEventBus()
-    subscribe("sendAadharProfile", (data) => {
+    subscribe(`sendAadharProfile-${name}`, (data) => {
         setSource(data)
     })
     return (

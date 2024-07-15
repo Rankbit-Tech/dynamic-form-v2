@@ -6,8 +6,11 @@ const Renderer = () => {
 
     const formData = useFormStore(state => transformData(state.fields))
 
+    const onFormSubmit = (formData: FormData) => {
+        console.log({ formData })
+    }
     return (
-        <Preview data={formData} />
+        <Preview data={formData} onSubmit={onFormSubmit} />
     )
 }
 
