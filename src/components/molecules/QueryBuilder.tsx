@@ -106,7 +106,7 @@ const QueryBuilderComponent: React.FC<QueryBuilderComponentProps> = ({ handleCon
     const handleQueryChange = (newQuery: RuleGroupType) => {
         setQuery(newQuery);
         const query = formatQuery(newQuery, 'json_without_ids')
-        handleCondition({ conditions: query },);
+        handleCondition({ conditions: query });
     };
 
 
