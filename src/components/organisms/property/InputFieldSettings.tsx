@@ -21,10 +21,15 @@ const InputFieldSettings: React.FC = () => {
             </Form.Item>
             {/* Validation settings */}
             <DividerWithHeader title='Validations' />
+            <Flex justify='space-between'>
+                <Form.Item initialValue={values?.validations.required} name={['validations', 'required']} valuePropName="checked">
+                    <Checkbox>Required</Checkbox>
+                </Form.Item>
+                <Form.Item initialValue={values?.validations.disabled} name={['validations', 'disabled']} valuePropName="checked">
+                    <Checkbox>Disable</Checkbox>
+                </Form.Item>
+            </Flex>
 
-            <Form.Item initialValue={values?.validations.required} name={['validations', 'required']} valuePropName="checked">
-                <Checkbox>Required</Checkbox>
-            </Form.Item>
 
             <Flex justify='space-between'>
                 <Form.Item label="Min Length" name={['validations', 'minLength']}>
