@@ -23,10 +23,10 @@ const AntdControlElements = {
     addGroupAction: ({ handleOnClick }: any) => <Button onClick={handleOnClick}>+ Group</Button>,
     addRuleAction: ({ handleOnClick }: any) => <Button onClick={handleOnClick}>+ Rule</Button>,
     combinatorSelector: ({ value, handleOnChange, options }: any) => (
-        <Select value={value} onChange={handleOnChange} >
+        <Select value={value} onChange={handleOnChange} className="min-w-[100px]">
             {options.map((option: any) => (
                 <Select.Option key={option.name} value={option.name}>
-                    {option.label || option.name}
+                    {option.label}
                 </Select.Option>
             ))}
         </Select>
@@ -35,15 +35,16 @@ const AntdControlElements = {
         <Select value={value} onChange={handleOnChange}>
             {options.map((option: any) => (
                 <Select.Option key={option.name} value={option.name}>
-                    {option.label}
+                    {option?.label}
                 </Select.Option>
-            ))}
+            )
+            )}
         </Select>
     ),
     operatorSelector: ({ value, handleOnChange, options }: any) => (
-        <Select value={value} onChange={handleOnChange}>
+        <Select value={value} onChange={handleOnChange} className="min-w-[100px]">
             {options.map((option: any) => (
-                <Select.Option key={option.name} value={option.name}>
+                <Select.Option key={option.name} value={option.name} >
                     {option.label}
                 </Select.Option>
             ))}
@@ -63,18 +64,19 @@ const AntdControlElements = {
         if (field === 'date') {
             return <DatePicker value={value as any} onChange={(date) => handleOnChange(date)} />;
         }
-        return <Select value={value} onChange={(e) => handleOnChange(e)} placeholder="Please select options" className='min-w-[50px]'>
+        return <Select value={value} onChange={(e) => handleOnChange(e)} defaultValue={'hide'} placeholder="Please select options" className='min-w-[70px]'>
             {actions.map((action: any) => (
                 <Select.Option key={action.name} value={action.name}>
                     {action.label}
                 </Select.Option>
-            ))}
+            )
+            )}
         </Select>
     },
     actionSelector: ({ value, handleOnChange }: any) => (
-        <Select value={value} onChange={handleOnChange}>
+        <Select value={value} onChange={handleOnChange} className="min-w-[100px]">
             {actions.map((action: any) => (
-                <Select.Option key={action.name} value={action.name}>
+                <Select.Option key={action.name} value={action.name} >
                     {action.label}
                 </Select.Option>
             ))}
@@ -94,9 +96,9 @@ const QueryBuilderComponent: React.FC<QueryBuilderComponentProps> = ({ handleCon
     });
 
     const fields: Field[] = useFormStore(state => {
-        return state.fields.filter(field => field.variant === VARIANT.FIELD && field.name && field.label).map(field => ({
+        return state.fields.filter(field => field.variant === VARIANT.FIELD && field.name).map(field => ({
             name: field.name,
-            label: field.label
+            label: field.label || field.name
         }));
     });
 
@@ -104,7 +106,7 @@ const QueryBuilderComponent: React.FC<QueryBuilderComponentProps> = ({ handleCon
     const handleQueryChange = (newQuery: RuleGroupType) => {
         setQuery(newQuery);
         const query = formatQuery(newQuery, 'json_without_ids')
-        handleCondition({ conditions: query },);
+        handleCondition({ conditions: query });
     };
 
 

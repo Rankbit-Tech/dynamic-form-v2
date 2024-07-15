@@ -41,10 +41,6 @@ const Preview = ({ data, onSubmit }: PreviewProps) => {
                 formData.append(key, value);
             }
         });
-
-        // for (const [key, value] of formData.entries()) {
-        //     console.log(key, value);
-        // }
         onSubmit(formData)
     }
 
