@@ -3,7 +3,6 @@ import { useFormStore } from "@store/useFormStore"
 import { Button, Form, Steps } from "antd"
 import { useForm } from "antd/es/form/Form"
 import usePreview, { Step } from "@hooks/usePreview"
-import { useEffect } from "react"
 import useEventBus from "@hooks/useEventBus"
 
 interface PreviewProps {
@@ -59,7 +58,7 @@ const Preview = ({ data, onSubmit }: PreviewProps) => {
             <div className="w-full h-[50px] p-2 bg-slate-200 flex justify-end">
                 <Button type="primary" onClick={() => setIsPreview(false)}>Builder</Button>
             </div>
-            <div className="p-5 m-2 bg-gray-100">
+            <div className="p-5 m-2">
                 {data.length > 0 && (
                     <Form form={form} layout="vertical" onFinish={handleFinish} onValuesChange={handleValueChange}>
                         <Steps current={current}>

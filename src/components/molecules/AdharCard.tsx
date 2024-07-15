@@ -57,8 +57,8 @@ const AadharCard: React.FC = () => {
     }
 
     return (
-        <div className="relative  border rounded bg-white shadow  ">
-            <div className='p-3 w-1/3'>
+        <div className="relative rounded">
+            <div className='p-3 w-full md:w-1/2 lg:w-1/3'>
                 <div className='flex items-center gap-2 mt-5 justify-center'>
                     <Input placeholder="Enter Aadhar Number" />
                     <Button type='primary'>Send OTP</Button>

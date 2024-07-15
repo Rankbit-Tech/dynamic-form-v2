@@ -4,6 +4,7 @@ import DividerWithHeader from '@components/atoms/Divider';
 import { useFormStore } from '@store/useFormStore';
 import { VARIANT } from '@constants/fieldTypes';
 import useSettingsForm from '@hooks/useSettingsForm';
+import QueryBuilderComponent from '@components/molecules/QueryBuilder';
 
 
 const AadharCardSettings: React.FC = () => {
@@ -30,10 +31,9 @@ const AadharCardSettings: React.FC = () => {
         { key: "state", value: "State" },
         { key: "father_name", value: "Father's Name" },
 
-
     ];
 
-    const { handleValuesChange, values } = useSettingsForm();
+    const { handleValuesChange, values, handleCondition } = useSettingsForm();
 
     return (
         <Form layout="vertical" className="max-w-xs mx-auto" initialValues={values} onValuesChange={handleValuesChange}>
@@ -60,6 +60,9 @@ const AadharCardSettings: React.FC = () => {
             </Form.Item>
 
             <DividerWithHeader title='Conditions' />
+            <QueryBuilderComponent handleCondition={handleCondition} conditions={values.conditions} />
+
+
         </Form>
     );
 }

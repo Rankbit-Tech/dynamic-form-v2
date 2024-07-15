@@ -14,7 +14,11 @@ export const evaluateConditions = (conditions: Conditions, formValues: Record<st
     const { combinator, rules } = conditions;
 
     const evaluateRule = (rule: Rule) => {
-        const fieldValue = formValues?.[rule.field] ?? '';
+        let fieldValue = formValues?.[rule.field] ?? '';
+
+        if (Array.isArray(fieldValue)) {
+            fieldValue = fieldValue[0];
+        }
         switch (rule.operator) {
             case 'isEmpty':
                 return !fieldValue;

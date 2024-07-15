@@ -26,7 +26,7 @@ const AntdControlElements = {
         <Select value={value} onChange={handleOnChange} >
             {options.map((option: any) => (
                 <Select.Option key={option.name} value={option.name}>
-                    {option.label}
+                    {option.label || option.name}
                 </Select.Option>
             ))}
         </Select>
