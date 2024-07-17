@@ -30,6 +30,7 @@ const AadharCardSettings: React.FC = () => {
         { key: "dist", value: "District" },
         { key: "state", value: "State" },
         { key: "father_name", value: "Father's Name" },
+        { key: "zip", value: "Pincode" },
 
     ];
 
