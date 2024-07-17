@@ -44,8 +44,6 @@ const useAadharVerify = () => {
         if (value.length == 12) {
             aadharInputRef?.current?.blur()
         }
-
-
         setAadharNumber(value)
     }
 
@@ -61,11 +59,11 @@ const useAadharVerify = () => {
     const handleSendOTP = async () => {
 
         try {
-            if (!aadharNumber || aadharNumber.length !== 12 || typeof aadharNumber !== "number") return
-            const res = await sendOTP(Number(aadharNumber));
+            if (!aadharNumber || aadharNumber.length !== 12) return
+            const res = await sendOTP(aadharNumber);
 
             if (res.status == 200) {
-                setOtpData(res.data);
+                setOtpData(res.data.data);
                 setAadharValid(true)
             }
         } catch (error) {
@@ -81,45 +79,48 @@ const useAadharVerify = () => {
     })
 
     const handleAadharData = async () => {
-        if (!otpData.requestId || !otp) return
+        try {
+            if (!otpData.requestId || !otp) return
 
-        const data1 = await verifyOTP(otpData.requestId, otp)
+            const response = await verifyOTP(otpData.requestId, otp)
+            console.log(response)
+            const data = response?.data?.data as any;
+            const mapping = AdharCardOptions;
 
-        const data = aadharData.data as any;
-        const mapping = AdharCardOptions;
+            const mappedData: any = {};
+            const name = data.full_name.split(" ");
+            const firstName = name[0];
+            const middleName = name.length > 2 ? name[1] : '';
+            const lastName = name.length > 2 ? name[2] : name[1];
 
+            Object.entries(mapping).forEach((item) => {
+                const [key, value]: [string, any] = item || []
 
-        const mappedData: any = {};
-        const name = data.full_name.split(" ");
-        const firstName = name[0];
-        const middleName = name.length > 2 ? name[1] : '';
-        const lastName = name.length > 2 ? name[2] : name[1];
+                switch (key) {
+                    case "first_name":
+                        mappedData[value] = firstName;
+                        break;
+                    case "middle_name":
+                        mappedData[value] = middleName;
+                        break;
+                    case "last_name":
+                        mappedData[value] = lastName;
+                        break;
+                    case "address":
+                        mappedData[value] = formatAddress(data.address);
+                        break;
+                    case "aadhar_image":
+                        emitEvent(`sendAadharProfile-${value}`, `data:image/png;base64, ${data?.profile_image}`)
+                        break;
+                    default:
+                        mappedData[value] = findValue(data, key);
+                }
+            })
 
-        Object.entries(mapping).forEach((item) => {
-            const [key, value]: [string, any] = item || []
+            emitEvent("sendAdharData", mappedData)
+        } catch (error) {
 
-            switch (key) {
-                case "first_name":
-                    mappedData[value] = firstName;
-                    break;
-                case "middle_name":
-                    mappedData[value] = middleName;
-                    break;
-                case "last_name":
-                    mappedData[value] = lastName;
-                    break;
-                case "address":
-                    mappedData[value] = formatAddress(data.address);
-                    break;
-                case "aadhar_image":
-                    emitEvent(`sendAadharProfile-${value}`, `data:image/png;base64, ${data?.profile_image}`)
-                    break;
-                default:
-                    mappedData[value] = findValue(data, key);
-            }
-        })
-
-        emitEvent("sendAdharData", mappedData)
+        }
     }
     return {
         loading,

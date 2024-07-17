@@ -12,7 +12,7 @@ export async function checkAadhar(aadharNumber: number) {
     return response
 }
 
-export async function sendOTP(aadharNumber: number) {
+export async function sendOTP(aadharNumber: string) {
     const response = await instance.post("/api/newSendOtp", {
         aadhaarNumber: aadharNumber
     })
