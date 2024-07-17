@@ -41,6 +41,9 @@
       ],
       "@constants/*": [
         "./constants/*"
+      ],
+      "@api/*": [
+        "./api/*"
       ]
     }
   },
