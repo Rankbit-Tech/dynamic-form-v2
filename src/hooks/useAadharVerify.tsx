@@ -61,6 +61,7 @@ const useAadharVerify = () => {
     const handleSendOTP = async () => {
 
         try {
+            if (!aadharNumber || aadharNumber.length !== 12 || typeof aadharNumber !== "number") return
             const res = await sendOTP(Number(aadharNumber));
 
             if (res.status == 200) {
