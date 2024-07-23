@@ -6,7 +6,7 @@ export default function findValue(obj: Obj, key: string) {
         // Check if the current object is indeed an object
         if (obj !== null && typeof obj === 'object') {
             // Iterate through each property in the object
-            for (let prop in obj) {
+            for (const prop in obj) {
                 // If the property matches the key, return its value
                 if (prop === key) {
                     return obj[prop];
