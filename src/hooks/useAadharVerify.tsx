@@ -5,6 +5,7 @@ import React, { useRef, useState } from 'react'
 import useEventBus from './useEventBus';
 import { fieldTypes } from '@constants/fieldTypes';
 import findValue from '@lib/findValue';
+import { transformAadharData } from '@utils/tranformAadharData';
 
 
 
@@ -16,13 +17,7 @@ interface OtpTypes {
     status: string
 }
 
-const formatAddress = (address: any) => {
-    const addressFields = ['house', 'street', 'landmark', 'loc', 'vtc', 'po', 'subdist', 'dist', 'state', 'country'];
-    return addressFields
-        .filter(field => address[field])
-        .map(field => address[field])
-        .join(', ');
-}
+
 
 const useAadharVerify = () => {
 
@@ -83,41 +78,12 @@ const useAadharVerify = () => {
             if (!otpData.requestId || !otp) return
 
             const response = await verifyOTP(otpData.requestId, otp)
-            console.log(response)
             const data = response?.data?.data as any;
             const mapping = AdharCardOptions;
 
-            const mappedData: any = {};
-            const name = data.full_name.split(" ");
-            const firstName = name[0];
-            const middleName = name.length > 2 ? name[1] : '';
-            const lastName = name.length > 2 ? name[2] : name[1];
+            const mapData = await transformAadharData(data, mapping, emitEvent);
 
-            Object.entries(mapping).forEach((item) => {
-                const [key, value]: [string, any] = item || []
-
-                switch (key) {
-                    case "first_name":
-                        mappedData[value] = firstName;
-                        break;
-                    case "middle_name":
-                        mappedData[value] = middleName;
-                        break;
-                    case "last_name":
-                        mappedData[value] = lastName;
-                        break;
-                    case "address":
-                        mappedData[value] = formatAddress(data.address);
-                        break;
-                    case "aadhar_image":
-                        emitEvent(`sendAadharProfile-${value}`, `data:image/png;base64, ${data?.profile_image}`)
-                        break;
-                    default:
-                        mappedData[value] = findValue(data, key);
-                }
-            })
-
-            emitEvent("sendAdharData", mappedData)
+            emitEvent("sendAdharData", mapData)
         } catch (error) {
 
         }
