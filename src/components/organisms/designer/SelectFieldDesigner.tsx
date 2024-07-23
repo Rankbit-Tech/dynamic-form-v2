@@ -1,6 +1,6 @@
 import DragAreaSeperator from '@components/atoms/DragAreaSeperator';
 import DragAreaSplitter from '@components/atoms/DragAreaSplitter';
-import { VARIANT, fieldTypes } from '@constants/fieldTypes';
+import { VARIANT } from '@constants/fieldTypes';
 import { useDroppable } from '@dnd-kit/core';
 import { Select } from 'antd';
 import React from 'react';
@@ -17,7 +17,7 @@ interface SelectFieldDesignerProps {
     defaultValue: SelectFieldDesignerProps['options'][number]['value'];
 }
 
-const SelectFieldDesigner: React.FC<SelectFieldDesignerProps> = ({ id, label, parentId, options, defaultValue }) => {
+const SelectFieldDesigner: React.FC<SelectFieldDesignerProps> = ({ id, label, parentId, options }) => {
 
     const topHalf = useDroppable({
         id: `top-field-${id}`,

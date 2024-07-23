@@ -16,7 +16,7 @@ interface SectionProps {
     title: string
 }
 
-const SectionDesigner = ({ id, title, type,
+const SectionDesigner = ({ id, title,
     isCollapsable, parentId, children }: SectionProps) => {
     const sectionRef = useDroppable({
         id: `section-drag-${id}`,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, InputNumber, InputNumberProps } from 'antd';
+import { Form, InputNumber } from 'antd';
 
 interface NumberInputProps {
     label: string;

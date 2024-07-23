@@ -1,7 +1,7 @@
-import { VARIANT } from '@constants/fieldTypes';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+
 
 type RecordType = Record<string, any>;
 type recordArray = Record<string, any>[];

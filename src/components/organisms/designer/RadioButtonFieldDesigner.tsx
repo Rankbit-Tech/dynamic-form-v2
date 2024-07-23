@@ -2,7 +2,7 @@ import DragAreaSeperator from '@components/atoms/DragAreaSeperator';
 import DragAreaSplitter from '@components/atoms/DragAreaSplitter';
 import { VARIANT } from '@constants/fieldTypes';
 import { useDroppable } from '@dnd-kit/core';
-import { cn } from '@utils/cn';
+
 import { Radio } from 'antd';
 import React from 'react';
 
@@ -16,7 +16,7 @@ interface RadioButtonFieldDesigner {
     buttonStyle: 'solid' | 'outline'
 }
 
-const RadioButtonFieldDesigner: React.FC<RadioButtonFieldDesigner> = ({ id, optionType, buttonStyle, direction, parentId, label, options }) => {
+const RadioButtonFieldDesigner: React.FC<RadioButtonFieldDesigner> = ({ id, optionType, buttonStyle, parentId, label, options }) => {
 
     const topHalf = useDroppable({
         id: `top-field-${id}`,

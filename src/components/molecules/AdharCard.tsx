@@ -4,7 +4,7 @@ import { onlyNumberInput } from '@utils/index';
 
 const AadharCard: React.FC = () => {
 
-    const { aadharInputRef, handleSendOTP, otpInputRef, isAadharValid, handleAadharChange, handleAadharData, handleOtpChange, loading } = useAadharVerify();
+    const { aadharInputRef, handleSendOTP, otpInputRef, isAadharValid, handleAadharChange, handleAadharData, handleOtpChange } = useAadharVerify();
 
     return (
         <div className="relative rounded">

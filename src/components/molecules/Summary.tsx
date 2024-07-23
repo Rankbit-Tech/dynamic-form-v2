@@ -1,7 +1,5 @@
-import { VARIANT } from "@constants/fieldTypes"
 import { useFormStore } from "@store/useFormStore"
-import { Table } from "antd";
-import { useEffect } from "react";
+
 
 
 
@@ -17,22 +15,11 @@ interface Step {
 
 const Summary = () => {
 
-    const { getSummary, setFormValues } = useFormStore(state => state)
+    const { getSummary } = useFormStore(state => state)
 
 
 
-    const columns = [
-        {
-            title: 'Label',
-            dataIndex: 'label',
-            key: 'label',
-        },
-        {
-            title: 'Value',
-            dataIndex: 'value',
-            key: 'value',
-        },
-    ];
+
     const summary: Step[] = getSummary();
     return (
         <div className="border p-2 bg-white shadow" >

@@ -1,4 +1,4 @@
-import { VARIANT, fieldTypes } from "@constants/fieldTypes";
+import { VARIANT } from "@constants/fieldTypes";
 import { useDroppable } from "@dnd-kit/core"
 import { cn } from "@utils/cn";
 import { Card } from "antd"

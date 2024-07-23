@@ -16,9 +16,9 @@ interface FileUploadProps {
 const FileUpload: React.FC<FileUploadProps> = ({ label, name, validations }) => {
 
     const [fileList, setFileList] = useState<UploadFile[]>([]);
-    const [uploading, setUploading] = useState(false);
 
-    const { required, acceptedFiles, maxSize } = validations || {};
+
+    const { required } = validations || {};
 
     const rules = [
         { required, message: `Please upload your ${label}` },

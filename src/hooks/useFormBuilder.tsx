@@ -6,7 +6,7 @@ type RecordArray = Record<string, any>[];
 
 //remove below line
 
-const log = console.log
+
 
 const useFormBuilder = () => {
     const { setFields } = useFormStore((state) => state);

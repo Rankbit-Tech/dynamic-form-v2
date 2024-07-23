@@ -1,11 +1,11 @@
-import { checkAadhar, sendOTP, verifyOTP } from '@api/aadhardata';
-import { aadharData } from '@components/molecules/data';
+import { sendOTP, verifyOTP } from '@api/aadhardata';
 import { useFormStore } from '@store/useFormStore';
 import { InputRef } from 'antd';
 import React, { useRef, useState } from 'react'
 import useEventBus from './useEventBus';
 import { fieldTypes } from '@constants/fieldTypes';
 import findValue from '@lib/findValue';
+
 
 
 interface OtpTypes {
@@ -26,7 +26,7 @@ const formatAddress = (address: any) => {
 
 const useAadharVerify = () => {
 
-    const [loading, setLoading] = useState<boolean>(false)
+    const [loading] = useState<boolean>(false)
     const [isAadharValid, setAadharValid] = useState(false)
     const [aadharNumber, setAadharNumber] = useState("")
     const [otp, setOtp] = useState<number | null>(null)

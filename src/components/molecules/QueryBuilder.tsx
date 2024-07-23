@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { QueryBuilder, RuleGroupType, Field, formatQuery } from 'react-querybuilder';
 import 'react-querybuilder/dist/query-builder.css';
 import { Button, Select, Input, DatePicker } from 'antd';

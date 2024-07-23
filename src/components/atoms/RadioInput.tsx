@@ -1,4 +1,4 @@
-import { Form, Radio, Space } from 'antd'
+import { Form, Radio } from 'antd'
 
 interface RadioInputProps {
     name: string
@@ -14,7 +14,7 @@ interface RadioInputProps {
     buttonStyle: 'solid' | 'outline'
 }
 
-const RadioInput = ({ name, label, options, direction, optionType, validations, buttonStyle }: RadioInputProps) => {
+const RadioInput = ({ name, label, options, optionType, validations, buttonStyle }: RadioInputProps) => {
     const { required } = validations || {}
 
     const rules = [

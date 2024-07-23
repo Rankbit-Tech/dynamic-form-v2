@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import { Checkbox, Form } from 'antd';
-import type { CheckboxChangeEvent } from 'antd/es/checkbox';
+
 
 interface SameAsAboveProps {
 
@@ -9,7 +8,7 @@ interface SameAsAboveProps {
     onChange: (value: string) => void;
 }
 
-const SameAsAbove: React.FC<SameAsAboveProps> = ({ label }) => {
+const SameAsAbove: React.FC<SameAsAboveProps> = () => {
 
     return (
         <Form.Item label="Same As Above" name="sameAsAbove" valuePropName='checked'>

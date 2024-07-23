@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, Collapse, CollapseProps, Form } from 'antd';
-import INPUT_FIELDS from '@constants/inputFieldConstants';
+import { Collapse, CollapseProps } from 'antd';
+
 
 interface SectionProps {
     id: string
