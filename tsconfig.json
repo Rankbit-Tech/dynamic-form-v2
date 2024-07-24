@@ -53,6 +53,9 @@
   "include": [
     "src"
   ],
+  "exclude": [
+    "dist"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"
