@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES5",
+    "module": "ESNext",
     "useDefineForClassFields": true,
     "lib": [
       "DOM",
@@ -8,12 +9,9 @@
       "ESNext"
     ],
     "outDir": "./dist",
-    "module": "ESNext",
     "allowJs": true,
-    "declaration": true,
-    "declarationMap": true,
     "skipLibCheck": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
