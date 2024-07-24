@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": [
       "DOM",
@@ -14,7 +14,6 @@
     "declarationMap": true,
     "skipLibCheck": true,
     "moduleResolution": "node",
-    // "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -25,6 +24,9 @@
     "noFallthroughCasesInSwitch": true,
     "composite": true,
     "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
     "baseUrl": "./src",
     "paths": {
       "@components/*": [
@@ -55,5 +57,9 @@
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
   ]
 }

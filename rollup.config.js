@@ -1,48 +1,37 @@
-import peerDepsExternal from "rollup-plugin-peer-deps-external"
-import commonjs from "@rollup/plugin-commonjs"
-import typescript from "@rollup/plugin-typescript"
-import { terser } from "rollup-plugin-terser"
-import resolve from "@rollup/plugin-node-resolve"
-import postcss from "rollup-plugin-postcss"
+import { terser } from "rollup-plugin-terser";
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import typescript from 'rollup-plugin-typescript2';
 import json from "@rollup/plugin-json"
+import postcss from "rollup-plugin-postcss"
 
-import packageJson from "./package.json"
 export default [
     {
         input: "src/index.ts",
-        output: [
-            {
-                file: packageJson.main,
-                format: 'cjs',
-                sourcemap: true
-            },
-            {
-                file: packageJson.module,
-                format: 'esm',
-                sourcemap: true
-            }
-        ],
+        output: {
+            file: "dist/index.js",
+            format: "es",
+        },
         plugins: [
-            peerDepsExternal(),
-            resolve(),
+            resolve({
+                mainFields: ['browser', 'module', 'main']
+            }),
             commonjs(),
-            typescript({ tsconfig: './tsconfig.json' }),
-            terser(),
-            json(),
-            postcss({
-                extract: true,
-                minimize: true,
-            })
-        ],
-        external: ['react', 'react-dom']
-    },
-    {
-        input: "src/index.ts",
-        output: [
-            {
-                file: packageJson.types
-            }
-        ],
-        external: [/\.css/]
+            typescript({
+                tsconfig: './tsconfig.json',
+                useTsconfigDeclarationDir: true
+            }),
+            terser({
+                ecma: 2020,
+                mangle: { toplevel: true },
+                compress: {
+                    module: true,
+                    toplevel: true
+                },
+                output: { quote_style: 1 }
+            }),
+            postcss(),
+            json()
+        ]
     }
 ]
