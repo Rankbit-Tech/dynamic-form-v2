@@ -3,7 +3,7 @@ import { Form, Input, Button, Row, Col, Checkbox, Select, Radio } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import useSettingsForm from '@hooks/useSettingsForm';
 import DividerWithHeader from '@components/atoms/Divider';
-import { RADIO_DIRECTION } from '@constants/inputFieldConstants';
+import { RADIO_DIRECTION } from '@constants/fieldTypes';
 import QueryBuilderComponent from '@components/molecules/QueryBuilder';
 
 const RadioButtonFieldSettings: React.FC = () => {

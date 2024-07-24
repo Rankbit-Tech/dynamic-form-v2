@@ -30,3 +30,8 @@ export const VARIANT = {
     SUMMARY: "SUMMARY",
     IMAGE: "IMAGE"
 }
+
+export const RADIO_DIRECTION = {
+    VERTICAL: "vertical",
+    HORIZONTAL: "horizontal"
+}
