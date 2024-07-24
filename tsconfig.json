@@ -15,6 +15,9 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "typeRoots": [
+      "./dist/index.d.ts"
+    ],
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
