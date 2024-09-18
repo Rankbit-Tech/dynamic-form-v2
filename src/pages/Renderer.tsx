@@ -1,17 +1,35 @@
-import Preview from "@components/organisms/Preview"
-import { useFormStore } from "@store/useFormStore"
-import { transformData } from "@utils/transform"
+import Preview from "@components/organisms/Preview";
+import { FormConfig, useFormStore } from "@store/useFormStore";
+import { transformData } from "@utils/transform";
+import { startTransition, useEffect, useState } from "react";
 
-const Renderer = () => {
+type RendererProps = {
+  formConfig?: FormConfig;
+  onFormSubmit?: (formData: FormData) => void
+};
 
-    const formData = useFormStore(state => transformData(state.fields))
+const Renderer = ({ formConfig, onFormSubmit }: RendererProps) => {
+  const [isConfigured, setConfigured] = useState(false);
+  const [formData, setFormConfig] = useFormStore((state) => [
+    transformData(state.fields),
+    state.setFormConfig,
+  ]);
 
-    const onFormSubmit = (formData: FormData) => {
-        console.log({ formData })
-    }
-    return (
-        <Preview data={formData} onSubmit={onFormSubmit} />
-    )
-}
+  useEffect(() => {
+    setFormConfig(formConfig);
+    startTransition(() => {
+      setConfigured(true);
+    });
 
-export default Renderer
+
+  }, [formConfig, setFormConfig]);
+
+
+  if (!isConfigured) {
+    return null;
+  }
+
+  return <Preview data={formData} onSubmit={onFormSubmit} />;
+};
+
+export default Renderer;

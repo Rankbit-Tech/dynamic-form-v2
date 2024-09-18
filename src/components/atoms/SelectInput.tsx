@@ -1,31 +1,26 @@
-import React from 'react';
-import { Form, Select } from 'antd';
+import React from "react";
+import { Form, Select } from "antd";
+import { SelectInputProps, useSelectOptions } from "@hooks/useSelectOptions";
 
-interface SelectInputProps {
-    label: string;
-    name: string;
-    options: { label: string; value: string }[];
-    defaultValue: SelectInputProps['options'][number]['value']
-    validations: Record<string, any>
-}
+const SelectInput: React.FC<SelectInputProps> = (props) => {
+  const { label, name, defaultValue, validations } = props;
+  const { options, loading } = useSelectOptions(props);
 
-const SelectInput: React.FC<SelectInputProps> = ({ label, name, options, defaultValue, validations }) => {
+  const { required } = validations || {};
+  const rules = [
+    { required, message: `Please select ${label || "any value"}` },
+  ].filter((rule) => rule.required);
 
-    const transformOptions = [{ label: `Select ${label}`, value: '' }, ...options]
-
-    const { required } = validations || {}
-    const rules = [
-        { required, message: `Please select ${label || 'any value'}` },
-
-    ].filter(rule => rule.required);
-
-    return (
-        <Form.Item label={label} initialValue={defaultValue} name={name} rules={rules}>
-            <Select
-                options={transformOptions}
-            />
-        </Form.Item>
-    );
+  return (
+    <Form.Item
+      label={label}
+      initialValue={defaultValue}
+      name={name}
+      rules={rules}
+    >
+      <Select loading={loading} options={options} />
+    </Form.Item>
+  );
 };
 
 export default SelectInput;

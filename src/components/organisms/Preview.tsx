@@ -7,7 +7,7 @@ import useEventBus from "@hooks/useEventBus"
 
 interface PreviewProps {
     data: Record<string, any>[]
-    onSubmit: (formData: FormData) => void
+    onSubmit?: (formData: FormData) => void
 }
 
 interface Item {
@@ -41,7 +41,7 @@ const Preview = ({ data, onSubmit }: PreviewProps) => {
                 formData.append(key, value);
             }
         });
-        onSubmit(formData)
+        onSubmit?.(formData)
     }
 
     subscribe("sendAdharData", (data) => {
