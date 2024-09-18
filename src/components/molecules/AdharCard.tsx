@@ -2,9 +2,9 @@ import { Button, Input } from 'antd';
 import useAadharVerify from '@hooks/useAadharVerify';
 import { onlyNumberInput } from '@utils/index';
 
-const AadharCard: React.FC = () => {
+const AadharCard: React.FC = (config) => {
 
-    const { aadharInputRef, handleSendOTP, otpInputRef, isAadharValid, handleAadharChange, handleAadharData, handleOtpChange } = useAadharVerify();
+    const { aadharInputRef, handleSendOTP, otpInputRef, isAadharValid, handleAadharChange, handleAadharData, handleOtpChange } = useAadharVerify(config);
 
     return (
         <div className="relative rounded">
