@@ -12,10 +12,12 @@ export const onlyNumberInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
 };
 
 export const resolveExpression = (
-  expression: string | null,
+  _expression: string | null,
   formValues?: any,
   context?: any,
 ) => {
+
+  const expression = _expression?.trim();
   if (
     !expression ||
     !expression.startsWith("{{") ||
@@ -24,12 +26,9 @@ export const resolveExpression = (
     return expression;
   }
 
-  const dataPath = expression.slice(2, -2)?.trim();
-  const [key, ...path] = dataPath.split(".");
+  const dataPath = expression?.trim()?.slice(2, -2);
+  const [key, ...path] = dataPath.split(".").map(v => v.trim());
 
-  if (!path.length) {
-    return get(context, key);
-  }
   if (key === "context") {
     return get(context, path.join("."));
   } else {

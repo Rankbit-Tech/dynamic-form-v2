@@ -33,7 +33,6 @@ const useAadharVerify = (configuration: Record<string, any>) => {
         configHeaders[key] = resolveExpression(value, null, formConfig.context)
     });
 
-
     const aadharManager = new AadharManager(configHeaders, urls)
 
     const handleAadharChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
