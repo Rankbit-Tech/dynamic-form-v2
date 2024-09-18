@@ -25,9 +25,11 @@ export const resolveExpression = (
   }
 
   const dataPath = expression.slice(2, -2)?.trim();
-
   const [key, ...path] = dataPath.split(".");
 
+  if (!path.length) {
+    return get(context, key);
+  }
   if (key === "context") {
     return get(context, path.join("."));
   } else {

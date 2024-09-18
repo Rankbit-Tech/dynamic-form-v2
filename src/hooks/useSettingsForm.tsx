@@ -66,6 +66,11 @@ const useSettingsForm = (): UseSettingsFormReturnType => {
             ...elements[index].mapFields,
             ...changedValues.mapFields,
           },
+          config: {
+            ...elements[index].config,
+            ...changedValues.config,
+
+          }
         };
       }
 

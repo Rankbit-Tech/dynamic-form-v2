@@ -5,9 +5,10 @@ import { startTransition, useEffect, useState } from "react";
 
 type RendererProps = {
   formConfig: FormConfig;
+  onFormSubmit: (formData: FormData) => void
 };
 
-const Renderer = ({ formConfig }: RendererProps) => {
+const Renderer = ({ formConfig, onFormSubmit }: RendererProps) => {
   const [isConfigured, setConfigured] = useState(false);
   const [formData, setFormConfig] = useFormStore((state) => [
     transformData(state.fields),
@@ -21,9 +22,6 @@ const Renderer = ({ formConfig }: RendererProps) => {
     });
   }, [formConfig, setFormConfig]);
 
-  const onFormSubmit = (formData: FormData) => {
-    console.log({ formData });
-  };
 
   if (!isConfigured) {
     return null;

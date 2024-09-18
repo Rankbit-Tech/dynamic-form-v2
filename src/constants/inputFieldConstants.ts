@@ -384,6 +384,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
                 combinator: 'and',
                 rules: [],
             },
+            config: {}
         }),
     },
     [fieldTypes.SUMMARY]: {

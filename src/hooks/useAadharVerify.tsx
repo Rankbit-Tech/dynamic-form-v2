@@ -1,11 +1,11 @@
-import { sendOTP, verifyOTP } from '@api/aadhardata';
+import { AadharManager } from '@api/aadhardata';
 import { useFormStore } from '@store/useFormStore';
 import { InputRef } from 'antd';
 import React, { useRef, useState } from 'react'
 import useEventBus from './useEventBus';
 import { fieldTypes } from '@constants/fieldTypes';
 import { transformAadharData } from '@utils/tranformAadharData';
-
+import { resolveExpression } from '@utils/index';
 
 
 interface OtpTypes {
@@ -16,9 +16,7 @@ interface OtpTypes {
     status: string
 }
 
-
-
-const useAadharVerify = () => {
+const useAadharVerify = (configuration: Record<string, any>) => {
 
     const [loading] = useState<boolean>(false)
     const [isAadharValid, setAadharValid] = useState(false)
@@ -26,10 +24,17 @@ const useAadharVerify = () => {
     const [otp, setOtp] = useState<number | null>(null)
 
     const [otpData, setOtpData] = useState<OtpTypes | Record<string, any>>({});
-
-
     const aadharInputRef = useRef<InputRef | null>(null)
     const otpInputRef = useRef<InputRef | null>(null)
+    const { config: urls, headers, formConfig } = configuration || {}
+
+    let configHeaders: Record<string, any> = {}
+    headers.forEach(({ key, value }: { key: string, value: string }) => {
+        configHeaders[key] = resolveExpression(value, null, formConfig.context)
+    });
+
+
+    const aadharManager = new AadharManager(configHeaders, urls)
 
     const handleAadharChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target
@@ -54,7 +59,7 @@ const useAadharVerify = () => {
 
         try {
             if (!aadharNumber || aadharNumber.length !== 12) return
-            const res = await sendOTP(aadharNumber);
+            const res = await aadharManager.sendOTP(aadharNumber);
 
             if (res.status == 200) {
                 setOtpData(res.data.data);
@@ -76,7 +81,7 @@ const useAadharVerify = () => {
         try {
             if (!otpData.requestId || !otp) return
 
-            const response = await verifyOTP(otpData.requestId, otp)
+            const response = await aadharManager.verifyOTP(otpData.requestId, otp)
             const data = response?.data?.data as any;
             const mapping = AdharCardOptions;
 
@@ -84,7 +89,7 @@ const useAadharVerify = () => {
 
             emitEvent("sendAdharData", mapData)
         } catch (error) {
-
+            console.log(error)
         }
     }
     return {

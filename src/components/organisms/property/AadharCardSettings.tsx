@@ -1,5 +1,7 @@
 import React from 'react';
-import { Form, Select, Checkbox } from 'antd';
+import { Form, Select, Checkbox, Input, Row, Col, Button } from 'antd';
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+
 import DividerWithHeader from '@components/atoms/Divider';
 import { useFormStore } from '@store/useFormStore';
 import { VARIANT } from '@constants/fieldTypes';
@@ -59,6 +61,65 @@ const AadharCardSettings: React.FC = () => {
             <Form.Item name={['validations', 'required']} valuePropName="checked">
                 <Checkbox>Required</Checkbox>
             </Form.Item>
+
+            <DividerWithHeader title="API config" />
+            <Form.Item name={['config', 'aadhar_verify']} label="Aadhar verify endpoint">
+                <Input />
+            </Form.Item>
+            <Form.Item name={['config', 'otp_verify']} label="OTP verify endpoint">
+                <Input />
+            </Form.Item>
+
+            <h3>Headers</h3>
+            <Form.List name="headers">
+                {(fields, { add, remove }) => (
+                    <>
+                        {fields.map(({ key, name, ...restField }) => (
+                            <Row gutter={16} key={key} align="middle">
+                                <Col span={10}>
+                                    <Form.Item
+                                        {...restField}
+                                        name={[name, "key"]}
+                                        label="Key"
+                                        rules={[
+                                            { required: true, message: "Missing header key" },
+                                        ]}
+                                    >
+                                        <Input placeholder="Key" />
+                                    </Form.Item>
+                                </Col>
+                                <Col span={10}>
+                                    <Form.Item
+                                        {...restField}
+                                        name={[name, "value"]}
+                                        label="Value"
+                                        rules={[
+                                            { required: true, message: "Missing header value" },
+                                        ]}
+                                    >
+                                        <Input placeholder="Value" />
+                                    </Form.Item>
+                                </Col>
+                                <Col span={4}>
+                                    <MinusCircleOutlined
+                                        onClick={() => remove(name)}
+                                        style={{ fontSize: "24px", color: "red" }}
+                                    />
+                                </Col>
+                            </Row>
+                        ))}
+                        <Form.Item>
+                            <Button
+                                type="dashed"
+                                onClick={() => add({ key: "", value: "" })}
+                                icon={<PlusOutlined />}
+                            >
+                                Add Header
+                            </Button>
+                        </Form.Item>
+                    </>
+                )}
+            </Form.List>
 
             <DividerWithHeader title='Conditions' />
             <QueryBuilderComponent handleCondition={handleCondition} conditions={values.conditions} />

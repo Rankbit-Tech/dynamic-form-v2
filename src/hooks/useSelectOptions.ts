@@ -94,8 +94,11 @@ export const useSelectOptions = (props: SelectInputProps) => {
         }
         setOptions(
           opts.map((item: Record<string, any>) => ({
-            label: item[resolveExpression(props.labelKey, formValues, context)],
-            value: item[resolveExpression(props.valueKey, formValues, context)],
+            // label: item[resolveExpression(props.labelKey, formValues, context)],
+            // value: item[resolveExpression(props.valueKey, formValues, context)],
+
+            label: get(item, resolveExpression(props.labelKey, formValues, context)),
+            value: get(item, resolveExpression(props.valueKey, formValues, context)),
           })),
         );
       };
