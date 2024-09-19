@@ -1,7 +1,8 @@
 import { FormConfig } from "@store/useFormStore";
 import { resolveExpression } from "@utils/index";
+import { message } from "antd";
 import { get } from "lodash";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 
 interface SelectApiProps {
   optionSource: "api";
@@ -45,66 +46,204 @@ export const useSelectOptions = (props: SelectInputProps) => {
     ];
   });
 
-  useEffect(() => {
-    const { formConfig } = props;
+  const { formConfig, formValues } = props;
+  const { context } = formConfig || {};
 
+  const getValuesOfFields = useCallback(
+    (fieldsToKeepTrack: string) => {
+      const result: any = {};
+
+      fieldsToKeepTrack?.split("||")?.forEach((field) => {
+        result[field] = get(formValues, field);
+      });
+      return result;
+    },
+    [formValues],
+  );
+
+  const { fieldsToKeepTrack, allFields } = useMemo(() => {
     if (props.optionSource === "api") {
       const {
         endpoint: rawEndpoint,
-        headers: rawHeaders,
-        requestType,
-        formValues,
-        queryParams,
+        headers: rawHeaders = [],
+
+        queryParams = [],
       } = props;
-      const { context } = formConfig || {};
 
-      const endpoint = resolveExpression(rawEndpoint, formValues, context);
+      const usedVariable = [
+        rawEndpoint,
+        rawHeaders?.map((header: any) => header.value).join(", "),
+        queryParams?.map((param: any) => param.value).join(", "),
+      ]
+        .join(", ")
+        .match(/{{([a-zA-Z0-9._]+)}}/gm);
 
-      const headers = (rawHeaders || []).reduce((acc, header) => {
-        acc[header.key] = resolveExpression(header.value, formValues, context);
-        return acc;
-      }, {});
-
-      const body = props.requestBody?.reduce((acc, body) => {
-        acc[body.key] = resolveExpression(body.value, formValues, context);
-        return acc;
-      }, {});
-
-      const url = new URL(endpoint);
-
-      queryParams?.forEach((param) => {
-        url.searchParams.append(
-          param.key,
-          resolveExpression(param.value, formValues, context),
-        );
-      });
-
-      const getData = async () => {
-        setLoading(true);
-        const response = await fetch(url.toString(), {
-          method: requestType,
-          headers: headers,
-          body: JSON.stringify(body),
-        });
-        const data = await response.json();
-        setLoading(false);
-        let opts = data;
-        if (props.dataPath?.trim()) {
-          opts = get(data, props.dataPath);
-        }
-        setOptions(
-          opts.map((item: Record<string, any>) => ({
-            // label: item[resolveExpression(props.labelKey, formValues, context)],
-            // value: item[resolveExpression(props.valueKey, formValues, context)],
-
-            label: get(item, resolveExpression(props.labelKey, formValues, context)),
-            value: get(item, resolveExpression(props.valueKey, formValues, context)),
-          })),
-        );
+      const formFieldsInVariable = usedVariable
+        ?.filter((variable) => {
+          return variable.includes("formValues");
+        })
+        .map((variable) =>
+          variable
+            .replace("{{", "")
+            .replace("}}", "")
+            .replace("formValues.", ""),
+        )
+        .join("||");
+      return {
+        fieldsToKeepTrack: formFieldsInVariable || "",
+        allFields: usedVariable?.join("||") || "",
       };
-      getData();
     }
+    return {
+      fieldsToKeepTrack: "",
+      allFields: "",
+    };
   }, [props]);
+
+  const valuesOfFields = useMemo(() => {
+    return getValuesOfFields(fieldsToKeepTrack || "");
+  }, [fieldsToKeepTrack, getValuesOfFields]);
+
+  const fieldsToKeepTrackFromContext = useMemo(() => {
+    const usedVariable = allFields.split("||");
+    const variables = usedVariable
+      ?.filter((variable) => variable.includes("context"))
+      ?.map((variable) =>
+        variable.replace("{{", "").replace("}}", "").replace("formValues.", ""),
+      );
+
+    const resolvedValues = variables?.map((variable) => {
+      return resolveExpression(`{{${variable}}}`, formValues, context);
+    });
+
+    const formFieldVariables = resolvedValues
+      .join(", ")
+      .match(/{{([a-zA-Z0-9._]+)}}/gm)
+      ?.filter((variable) => {
+        return variable.includes("formValues");
+      })
+      ?.map((variable) =>
+        variable.replace("{{", "").replace("}}", "").replace("formValues.", ""),
+      );
+
+    return formFieldVariables?.join("||") || "";
+  }, [allFields, context, formValues]);
+
+  const valuesOfResolvedFields = useMemo(() => {
+    return getValuesOfFields(fieldsToKeepTrackFromContext || "");
+  }, [fieldsToKeepTrackFromContext, getValuesOfFields]);
+
+  const stringiFiedValues = JSON.stringify({
+    valuesOfFields,
+    valuesOfResolvedFields,
+  });
+
+  const { headers, requestType, body, url } = useMemo(() => {
+    if (props.optionSource === "api") {
+      try {
+        const {
+          endpoint: rawEndpoint,
+          headers: rawHeaders,
+          requestType,
+          queryParams,
+        } = props;
+
+        const endpoint = resolveExpression(rawEndpoint, formValues, context);
+
+        const headers = (rawHeaders || []).reduce((acc, header) => {
+          acc[header.key] = resolveExpression(
+            header.value,
+            formValues,
+            context,
+          );
+          return acc;
+        }, {});
+
+        const body = props.requestBody?.reduce((acc, body) => {
+          acc[body.key] = resolveExpression(body.value, formValues, context);
+          return acc;
+        }, {});
+
+        const url = new URL(resolveExpression(endpoint, formValues, context));
+
+        queryParams?.forEach((param) => {
+          url.searchParams.append(
+            param.key,
+            resolveExpression(param.value, formValues, context),
+          );
+        });
+
+        return {
+          endpoint,
+          headers: JSON.stringify(headers),
+          requestType,
+          body: JSON.stringify(body),
+          url: url.toString(),
+        };
+      } catch (error: Error | any) {
+        message.error(error.message);
+      }
+    }
+    return {};
+  }, [context, formValues, props]);
+
+  const labelKey = (props as ApiSelectInputProps).labelKey;
+  const valueKey = (props as ApiSelectInputProps).valueKey;
+  const dataPath = (props as ApiSelectInputProps).dataPath;
+
+  const getOptionFields = useCallback(
+    (item: Record<string, any>) => {
+      const values = {
+        ...(valuesOfFields || {}),
+        ...(valuesOfResolvedFields || {}),
+      };
+
+      return {
+        label: get(item, resolveExpression(labelKey, values, context)),
+        value: get(item, resolveExpression(valueKey, values, context)),
+      };
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [labelKey, valueKey, stringiFiedValues, context],
+  );
+
+  useEffect(() => {
+    if (props.optionSource === "api" && url) {
+      try {
+        const getData = async () => {
+          setLoading(true);
+          const response = await fetch(url, {
+            method: requestType,
+            headers: headers ? JSON.parse(headers) : null,
+            body,
+          });
+          const data = await response.json();
+          setLoading(false);
+          let opts = data;
+          if (dataPath?.trim()) {
+            opts = get(data, dataPath);
+          }
+          const finalOptions =
+            opts?.map((item: Record<string, any>) => getOptionFields(item)) ||
+            [];
+
+          setOptions(finalOptions);
+        };
+        getData();
+      } catch (error: Error | any) {
+        message.error(error.message);
+      }
+    }
+  }, [
+    headers,
+    requestType,
+    body,
+    url,
+    props.optionSource,
+    context,
+    getOptionFields,
+    dataPath,
+  ]);
 
   return { loading, options };
 };
