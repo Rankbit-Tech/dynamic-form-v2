@@ -27,7 +27,7 @@ interface FormState {
   setSelected: (data: RecordType | null) => void;
   setFields: (data: RecordType | null) => void;
   setIsPreview: (flag: boolean) => void;
-  setFormValues: (data: RecordType | null) => void;
+  setFormValues: (callback: Function) => void;
   getSummary: () => Step[];
   setFormConfig: (data?: FormConfig) => void;
 }
@@ -56,9 +56,9 @@ export const useFormStore = create<FormState>()(
           state.fields = callback(get().fields);
         });
       },
-      setFormValues: (data: any) => {
+      setFormValues: (callback: any) => {
         set((state: FormState) => {
-          state.formValues = data;
+          state.formValues = callback(get().formValues);
         });
       },
 
@@ -79,6 +79,7 @@ export const useFormStore = create<FormState>()(
                   fields: [],
                 };
               }
+
               acc[step.id].fields.push({
                 label: field.label,
                 value: formValues[field.name] || "No value",
@@ -87,7 +88,6 @@ export const useFormStore = create<FormState>()(
           }
           return acc;
         }, {});
-
         return Object.values(groupedFields);
       },
 
