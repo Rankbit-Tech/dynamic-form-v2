@@ -98,6 +98,7 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
   }, [data, formConfig, formValues]);
 
   const saveAsAbove = form.getFieldValue("sameAsAbove");
+
   useEffect(() => {
     if (saveAsAbove) {
       saveAsAboveOptions?.forEach(

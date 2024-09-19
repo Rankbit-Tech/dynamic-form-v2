@@ -26,7 +26,9 @@ const Preview = ({ data, onSubmit }: PreviewProps) => {
     const { current, next, prev, items } = usePreview(form, data)
 
     const handleValueChange = (_: any, allValues: any) => {
-        setFormValues(allValues)
+        setFormValues((oldValues: any) => {
+            return { ...oldValues, ...allValues }
+        })
     }
 
     const handleFinish = (values: Record<string, any>) => {
