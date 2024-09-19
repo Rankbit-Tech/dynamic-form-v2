@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useFormStore } from '@store/useFormStore';
 import DraggableFieldList from '@components/molecules/DraggableFieldList';
 import DroppableZone from '@components/molecules/DroppableZone';
@@ -7,11 +7,10 @@ import DragOverlayContainer from '@components/molecules/DragOverlayContainer';
 import SettingsPanel from '@components/organisms/SettingsPanel';
 import DividerWithHeader from '@components/atoms/Divider';
 import { Button, Input, Select } from 'antd';
+import useEventBus from '@hooks/useEventBus';
 
-interface FormBuilderTemplateProps {
-    onFormSave: (schema: Record<string, any>) => void
-}
-const FormBuilderTemplate = ({ onFormSave }: FormBuilderTemplateProps) => {
+
+const FormBuilderTemplate = () => {
     const { selectedField, setSelected, setIsPreview, fields } = useFormStore();
     const handeOutSideClick = (e: React.SyntheticEvent) => {
         e.stopPropagation()
@@ -26,9 +25,9 @@ const FormBuilderTemplate = ({ onFormSave }: FormBuilderTemplateProps) => {
     const handleFormNameChange = (values: any) => {
         console.log({ values })
     }
-
+    const { emitEvent } = useEventBus()
     const handleFormSave = () => {
-        onFormSave(fields)
+        emitEvent('saveSchema', fields)
     }
 
     const options = [
