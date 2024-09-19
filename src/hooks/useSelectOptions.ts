@@ -72,7 +72,9 @@ export const useSelectOptions = (props: SelectInputProps) => {
 
       const usedVariable = [
         rawEndpoint,
+        rawHeaders?.map((header: any) => header.key).join(", "),
         rawHeaders?.map((header: any) => header.value).join(", "),
+        queryParams?.map((param: any) => param.key).join(", "),
         queryParams?.map((param: any) => param.value).join(", "),
       ]
         .join(", ")
@@ -151,16 +153,14 @@ export const useSelectOptions = (props: SelectInputProps) => {
         const endpoint = resolveExpression(rawEndpoint, formValues, context);
 
         const headers = (rawHeaders || []).reduce((acc, header) => {
-          acc[header.key] = resolveExpression(
-            header.value,
-            formValues,
-            context,
-          );
+          acc[resolveExpression(header.key, formValues, context)] =
+            resolveExpression(header.value, formValues, context);
           return acc;
         }, {});
 
         const body = props.requestBody?.reduce((acc, body) => {
-          acc[body.key] = resolveExpression(body.value, formValues, context);
+          acc[resolveExpression(body.key, formValues, context)] =
+            resolveExpression(body.value, formValues, context);
           return acc;
         }, {});
 
@@ -168,7 +168,7 @@ export const useSelectOptions = (props: SelectInputProps) => {
 
         queryParams?.forEach((param) => {
           url.searchParams.append(
-            param.key,
+            resolveExpression(param.key, formValues, context),
             resolveExpression(param.value, formValues, context),
           );
         });
