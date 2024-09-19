@@ -6,11 +6,13 @@ import { ImCross } from "react-icons/im";
 import DragOverlayContainer from '@components/molecules/DragOverlayContainer';
 import SettingsPanel from '@components/organisms/SettingsPanel';
 import DividerWithHeader from '@components/atoms/Divider';
-import { Button } from 'antd';
+import { Button, Input, Select } from 'antd';
 
-
-const FormBuilderTemplate: React.FC = () => {
-    const { selectedField, setSelected, setIsPreview } = useFormStore();
+interface FormBuilderTemplateProps {
+    onFormSave: (schema: Record<string, any>) => void
+}
+const FormBuilderTemplate = ({ onFormSave }: FormBuilderTemplateProps) => {
+    const { selectedField, setSelected, setIsPreview, fields } = useFormStore();
     const handeOutSideClick = (e: React.SyntheticEvent) => {
         e.stopPropagation()
         setSelected(null)
@@ -20,6 +22,29 @@ const FormBuilderTemplate: React.FC = () => {
         e.stopPropagation()
         setIsPreview(true)
     }
+
+    const handleFormNameChange = (values: any) => {
+        console.log({ values })
+    }
+
+    const handleFormSave = () => {
+        onFormSave(fields)
+    }
+
+    const options = [
+        {
+            value: "",
+            label: "Version"
+        },
+        {
+            value: '1',
+            label: '1',
+        },
+        {
+            value: '2',
+            label: '2',
+        },
+    ];
 
     return (
         <div className="flex h-screen">
@@ -39,14 +64,18 @@ const FormBuilderTemplate: React.FC = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="w-full bg-white p-4 border-r flex flex-col justify-between h-full border-gray-200">
+                    <div className="w-full bg-white border-r flex flex-col justify-between h-full border-gray-200">
+                        <div className="w-full mb-2 flex gap-2">
+                            <Select defaultValue="1" options={options} />
+                            <Input placeholder='Enter form name' />
+                        </div>
                         <div className='flex-1'>
                             <DraggableFieldList />
                         </div>
                         <div className='p-2 flex justify-end '>
                             <div className='flex items-center gap-2 w-full'>
                                 <Button type='primary' className='w-full' ghost onClick={handlePreview}>Preview</Button>
-                                <Button type='primary' className='w-full' onClick={handlePreview}>Save</Button>
+                                <Button type='primary' className='w-full' onClick={handleFormSave}>Save</Button>
                             </div>
                         </div>
                     </div>

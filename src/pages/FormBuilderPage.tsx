@@ -3,7 +3,11 @@ import FormBuilderTemplate from '@components/templates/FormBuilderTemplate';
 import { DndContext, MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import useFormBuilder from '@hooks/useFormBuilder';
 
-const FormBuilderPage: React.FC = () => {
+interface FormBuilderPageProps {
+    onFormSave: (schema: Record<string, any>) => void
+}
+
+const FormBuilderPage = ({ onFormSave }: FormBuilderPageProps) => {
 
     const { handleDragEnd } = useFormBuilder()
 
@@ -22,9 +26,10 @@ const FormBuilderPage: React.FC = () => {
     const sensors = useSensors(mouseSensor, touchSensor)
 
 
+
     return (
         <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
-            <FormBuilderTemplate />
+            <FormBuilderTemplate onFormSave={onFormSave} />
         </DndContext>
     );
 };
