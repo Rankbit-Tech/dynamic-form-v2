@@ -29,7 +29,7 @@ const useAadharVerify = (configuration: Record<string, any>) => {
     const { config: urls, headers, formConfig } = configuration || {}
 
     let configHeaders: Record<string, any> = {}
-    headers.forEach(({ key, value }: { key: string, value: string }) => {
+    headers?.forEach(({ key, value }: { key: string, value: string }) => {
         configHeaders[key] = resolveExpression(value, null, formConfig.context)
     });
 
