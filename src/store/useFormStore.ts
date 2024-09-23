@@ -17,6 +17,7 @@ interface Step {
 export type FormConfig = {
   initialValues?: any;
   context?: any;
+  schema?: Record<string, any>
 };
 interface FormState {
   fields: recordArray;

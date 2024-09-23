@@ -11,7 +11,7 @@ type RendererProps = {
 const Renderer = ({ formConfig, onFormSubmit }: RendererProps) => {
   const [isConfigured, setConfigured] = useState(false);
   const [formData, setFormConfig] = useFormStore((state) => [
-    transformData(state.fields),
+    transformData(formConfig?.schema || state.fields),
     state.setFormConfig,
   ]);
 
