@@ -8,16 +8,18 @@ import useEventBus from "@hooks/useEventBus"
 interface PreviewProps {
     data: Record<string, any>[]
     onSubmit?: (formData: FormData) => void
+    isPreview?: boolean
 }
 
 interface Item {
     key: string
     title: string
     content: (step: Step, formValues: Record<string, any>) => void
+
 }
 
 
-const Preview = ({ data, onSubmit }: PreviewProps) => {
+const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
     const { setIsPreview, setFormValues } = useFormStore(state => state);
     const { subscribe } = useEventBus()
 
@@ -32,6 +34,8 @@ const Preview = ({ data, onSubmit }: PreviewProps) => {
     }
 
     const handleFinish = (values: Record<string, any>) => {
+
+        if (isPreview) return false;
         const formData = new FormData();
 
         Object.entries(values).forEach(([key, value]: any[]) => {
@@ -50,12 +54,14 @@ const Preview = ({ data, onSubmit }: PreviewProps) => {
         form.setFieldsValue(data)
     })
 
-
     return (
         <div>
-            <div className="w-full h-[50px] p-2 bg-slate-200 flex justify-end">
-                <Button type="primary" onClick={() => setIsPreview(false)}>Builder</Button>
-            </div>
+            {
+                isPreview && (<div className="w-full h-[50px] p-2 flex justify-end">
+                    <Button type="primary" onClick={() => setIsPreview(false)}>Builder</Button>
+                </div>)
+            }
+
             <div className="p-5 m-2">
                 {data.length > 0 && (
                     <Form form={form} layout="vertical" onFinish={handleFinish} onValuesChange={handleValueChange}>

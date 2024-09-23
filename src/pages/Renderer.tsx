@@ -6,9 +6,10 @@ import { startTransition, useEffect, useState } from "react";
 type RendererProps = {
   formConfig?: FormConfig;
   onFormSubmit?: (formData: FormData) => void
+  isPreview?: boolean
 };
 
-const Renderer = ({ formConfig, onFormSubmit }: RendererProps) => {
+const Renderer = ({ formConfig, onFormSubmit, isPreview }: RendererProps) => {
   const [isConfigured, setConfigured] = useState(false);
   const [formData, setFormConfig] = useFormStore((state) => [
     transformData(state.fields),
@@ -29,7 +30,7 @@ const Renderer = ({ formConfig, onFormSubmit }: RendererProps) => {
     return null;
   }
 
-  return <Preview data={formData} onSubmit={onFormSubmit} />;
+  return <Preview data={formData} isPreview={isPreview} onSubmit={onFormSubmit} />;
 };
 
 export default Renderer;
