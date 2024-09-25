@@ -24,12 +24,17 @@ interface FormState {
   selectedField: RecordType | null;
   formValues: RecordType;
   formConfig?: FormConfig;
+  metadata?: {
+    name: string
+    version: number
+  }
   setSelected: (data: RecordType | null) => void;
   setFields: (data: RecordType | null) => void;
   setIsPreview: (flag: boolean) => void;
   setFormValues: (callback: Function) => void;
   getSummary: () => Step[];
   setFormConfig: (data?: FormConfig) => void;
+  setMetadata: (callback: Function | FormState['metadata']) => void
 }
 
 export const useFormStore = create<FormState>()(
@@ -40,6 +45,10 @@ export const useFormStore = create<FormState>()(
       selectedField: null,
       formValues: {},
       formConfig: {},
+      metadata: {
+        name: '',
+        version: 1
+      },
       setSelected: (data: RecordType | null) => {
         set((state: FormState) => {
           state.selectedField = data;
@@ -96,6 +105,15 @@ export const useFormStore = create<FormState>()(
           state.formConfig = data;
         });
       },
+      setMetadata: (callback: Function | FormState['metadata']) => {
+        set((state: FormState) => {
+          if (typeof callback == "function") {
+            state.metadata = callback(get().metadata)
+          } else {
+            state.metadata = callback
+          }
+        })
+      }
     })),
   ),
 );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useFormStore } from '@store/useFormStore';
 import DraggableFieldList from '@components/molecules/DraggableFieldList';
 import DroppableZone from '@components/molecules/DroppableZone';
@@ -11,8 +11,8 @@ import useEventBus from '@hooks/useEventBus';
 
 
 const FormBuilderTemplate = () => {
-    const { selectedField, setSelected, setIsPreview, fields } = useFormStore();
-    const [formName, setFormName] = useState('')
+    const { selectedField, setSelected, setIsPreview, fields, setMetadata, metadata } = useFormStore(state => state);
+
 
     const handeOutSideClick = (e: React.SyntheticEvent) => {
         e.stopPropagation()
@@ -24,12 +24,17 @@ const FormBuilderTemplate = () => {
         setIsPreview(true)
     }
 
-    const { emitEvent } = useEventBus()
-    const handleFormSave = () => {
-        emitEvent('saveSchema', { fields, formName: formName.trim() })
+    const handleFormNameChange = (e: any) => {
+        const { name, value } = e.target || {}
+
+        if (!name || !value.trim()) return
+        setMetadata((old: Record<string, any>) => ({ ...old, [name]: value }))
+
     }
-
-
+    const { emitEvent } = useEventBus()
+    const handleFormSave = useCallback(() => {
+        emitEvent('saveSchema', { fields, metadata })
+    }, [])
 
     return (
         <div className="flex h-screen">
@@ -50,8 +55,13 @@ const FormBuilderTemplate = () => {
                     </div>
                 ) : (
                     <div className="w-full bg-white flex flex-col justify-between h-full">
-                        <div className="w-full mb-2">
-                            <Input placeholder='Enter form name' onChange={(e) => setFormName(e.target.value)} name='name' />
+                        <div className="w-full mb-2 grid-cols-6 grid gap-1">
+                            <div className='col-span-2'>
+                                <Input value={metadata?.version} placeholder='Version' onChange={handleFormNameChange} name='version' />
+                            </div>
+                            <div className='col-span-4'>
+                                <Input value={metadata?.name} placeholder='Form name' onChange={handleFormNameChange} name='name' />
+                            </div>
                         </div>
                         <div className='flex-1'>
                             <DraggableFieldList />
