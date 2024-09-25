@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useFormStore } from '@store/useFormStore';
 import DraggableFieldList from '@components/molecules/DraggableFieldList';
 import DroppableZone from '@components/molecules/DroppableZone';
@@ -31,9 +31,9 @@ const FormBuilderTemplate = () => {
 
     }
     const { emitEvent } = useEventBus()
-    const handleFormSave = useCallback(() => {
+    const handleFormSave = () => {
         emitEvent('saveSchema', { fields, metadata })
-    }, [])
+    }
 
     return (
         <div className="flex h-screen">
