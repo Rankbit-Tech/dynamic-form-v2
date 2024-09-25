@@ -38,15 +38,26 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
         if (isPreview) return false;
         const formData = new FormData();
 
-        Object.entries(values).forEach(([key, value]: any[]) => {
-            if (value instanceof FileList) {
-                Array.from(value).forEach((file) => {
-                    formData.append(key, file);
+        Object.entries(values).forEach(([key, value]) => {
+            if (value && value?.originFileObj) {
+                formData.append(key, value.originFileObj);
+            } else if (Array.isArray(value)) {
+                value.forEach((item, index) => {
+                    if (item.originFileObj) {
+                        formData.append(`${key}[${index}]`, item.originFileObj);
+                    } else {
+                        formData.append(`${key}[${index}]`, item);
+                    }
+                });
+            } else if (typeof value === 'object' && value !== null) {
+                Object.entries(value).forEach(([subKey, subValue]: any[]) => {
+                    formData.append(`${key}[${subKey}]`, subValue);
                 });
             } else {
                 formData.append(key, value);
             }
         });
+
         onSubmit?.(formData)
     }
 
