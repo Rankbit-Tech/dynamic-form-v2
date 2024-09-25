@@ -32,12 +32,16 @@ function App() {
       console.log(value);
     }
   };
+
+  const onFormSave = (schema: any) => {
+    console.log(schema, "Schema")
+  }
   return (
     <>
       {isPreview ? (
         <Renderer formConfig={formConfig} onFormSubmit={onFormSubmit} />
       ) : (
-        <FormBuilderPage />
+        <FormBuilderPage onFormSave={onFormSave} />
       )}
     </>
   );
