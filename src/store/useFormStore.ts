@@ -8,6 +8,7 @@ type recordArray = Record<string, any>[];
 interface Field {
   label: string;
   value: string;
+  type: string
 }
 
 interface Step {
@@ -87,6 +88,7 @@ export const useFormStore = create<FormState>()(
                 acc[step.id] = {
                   title: step.title,
                   fields: [],
+                  type: ''
                 };
               }
 
@@ -97,12 +99,14 @@ export const useFormStore = create<FormState>()(
                     acc[step.id].fields.push({
                       label: summaryField.label,
                       value: formValues[summaryField.name] || "No value",
+                      type: summaryField.type
                     });
                   });
               } else {
                 acc[step.id].fields.push({
                   label: field.label,
                   value: formValues[field.name] || "No value",
+                  type: field.type
                 });
               }
 

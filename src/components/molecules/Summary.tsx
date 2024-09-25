@@ -1,11 +1,10 @@
+import { fieldTypes } from "@constants/fieldTypes";
 import { useFormStore } from "@store/useFormStore"
-
-
-
 
 interface Field {
     label: string;
     value: string;
+    type: string
 }
 
 interface Step {
@@ -25,12 +24,15 @@ const Summary = () => {
                     <div key={index} style={{ marginBottom: 24 }}>
                         <h2 className="text-red-900 font-semibold mb-4 w-full">{step.title}</h2>
                         <div className="w-full">
-                            {step.fields.map(field => (
-                                <div className="flex" key={field.label}>
-                                    <span className="min-w-[250px] font-bold">{field.label}</span>
-                                    <span> : &nbsp;{field.value}</span>
-                                </div>
-                            )
+                            {step.fields.map((field: Field) => {
+                                if (field.type == fieldTypes.FILEUPLOAD) return null
+                                return (
+                                    <div className="flex" key={field.label}>
+                                        <span className="min-w-[250px] font-bold">{field.label}</span>
+                                        <span> : &nbsp;{field.value}</span>
+                                    </div>
+                                )
+                            }
                             )}
                         </div>
                     </div>

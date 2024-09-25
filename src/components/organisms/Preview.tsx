@@ -4,6 +4,7 @@ import { Button, Form, Steps } from "antd"
 import { useForm } from "antd/es/form/Form"
 import usePreview, { Step } from "@hooks/usePreview"
 import useEventBus from "@hooks/useEventBus"
+import { useEffect } from "react"
 
 interface PreviewProps {
     data: Record<string, any>[]
@@ -18,9 +19,8 @@ interface Item {
 
 }
 
-
 const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
-    const { setIsPreview, setFormValues } = useFormStore(state => state);
+    const { setIsPreview, setFormValues, formValues } = useFormStore(state => state);
     const { subscribe } = useEventBus()
 
     const [form] = useForm();
@@ -33,9 +33,17 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
         })
     }
 
-    const handleFinish = (values: Record<string, any>) => {
+    useEffect(() => {
+        const sendAdharData = subscribe("sendAdharData", (data) => {
+            form.setFieldsValue(data)
+        })
 
-        if (isPreview) return false;
+        return () => {
+            sendAdharData()
+        }
+    })
+    console.log(formValues)
+    const convertIntoFormData = async (values: Record<string, any>) => {
         const formData = new FormData();
 
         Object.entries(values).forEach(([key, value]) => {
@@ -58,12 +66,17 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
             }
         });
 
+        return formData;
+    }
+
+    const handleFinish = async (values: Record<string, any>) => {
+
+        if (isPreview) return false;
+        const finalValues = Object.values(values).length > 0 ? values : formValues
+        const formData = await convertIntoFormData(finalValues)
         onSubmit?.(formData)
     }
 
-    subscribe("sendAdharData", (data) => {
-        form.setFieldsValue(data)
-    })
 
     return (
         <div>
