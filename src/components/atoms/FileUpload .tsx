@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { Form, Upload, Button, UploadFile, UploadProps } from 'antd';
+import { Form, Upload, Button, UploadFile, UploadProps, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
 interface FileUploadProps {
     label: string;
     name: string;
     validations: {
-        required: boolean;
-        acceptedFiles: string
-        maxSize: number
+        required?: boolean;
+        accept?: string
+        maxSize?: number
+        maxCount?: number
+        multiple?: boolean
     };
 }
 
@@ -17,8 +19,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ label, name, validations }) => 
 
     const [fileList, setFileList] = useState<UploadFile[]>([]);
 
-
-    const { required } = validations || {};
+    const { required, maxCount, accept, maxSize, multiple } = validations || {};
 
     const rules = [
         { required, message: `Please upload your ${label}` },
@@ -32,15 +33,20 @@ const FileUpload: React.FC<FileUploadProps> = ({ label, name, validations }) => 
             setFileList(newFileList);
         },
         beforeUpload: (file) => {
-            setFileList([...fileList, file]);
+            const isFileSizeValid = maxSize && file.size <= maxSize * 1024;
 
+            if (!isFileSizeValid) {
+                message.error(`File must be smaller or equal to ${maxSize}MB!`);
+                return Upload.LIST_IGNORE;
+            }
+            setFileList((prevFileList) => [...prevFileList, file]);
             return false;
         },
         fileList,
     };
     return (
         <Form.Item label={label} name={name} valuePropName="fileList" getValueFromEvent={e => e?.fileList} rules={rules}>
-            <Upload  {...props}>
+            <Upload  {...props} maxCount={maxCount} accept={accept} multiple={multiple} >
                 <Button icon={<UploadOutlined />}>Upload Image</Button>
             </Upload>
         </Form.Item>
