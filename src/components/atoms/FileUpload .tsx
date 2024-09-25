@@ -33,9 +33,9 @@ const FileUpload: React.FC<FileUploadProps> = ({ label, name, validations }) => 
             setFileList(newFileList);
         },
         beforeUpload: (file) => {
-            const isFileSizeValid = maxSize && file.size <= maxSize * 1024;
+            const isFileSizeValid = maxSize && file.size <= maxSize * 1024 || true;
 
-            if (!isFileSizeValid) {
+            if (maxSize && !isFileSizeValid) {
                 message.error(`File must be smaller or equal to ${maxSize}MB!`);
                 return Upload.LIST_IGNORE;
             }
