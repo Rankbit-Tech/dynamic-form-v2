@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { useFormStore } from '@store/useFormStore';
 import DraggableFieldList from '@components/molecules/DraggableFieldList';
 import DroppableZone from '@components/molecules/DroppableZone';
@@ -27,8 +27,7 @@ const FormBuilderTemplate = () => {
     const handleFormNameChange = (e: any) => {
         const { name, value } = e.target || {}
 
-        if (!name || !value.trim()) return
-        setMetadata((old: Record<string, any>) => ({ ...old, [name]: value }))
+        setMetadata((old: Record<string, any>) => ({ ...old, [name]: value.trim() }))
 
     }
     const { emitEvent } = useEventBus()
