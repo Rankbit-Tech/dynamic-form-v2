@@ -7,11 +7,10 @@ import DragOverlayContainer from '@components/molecules/DragOverlayContainer';
 import SettingsPanel from '@components/organisms/SettingsPanel';
 import DividerWithHeader from '@components/atoms/Divider';
 import { Button, Input } from 'antd';
-import useEventBus from '@hooks/useEventBus';
 
 
-const FormBuilderTemplate = () => {
-    const { selectedField, setSelected, setIsPreview, fields, setMetadata, metadata } = useFormStore(state => state);
+const FormBuilderTemplate = ({ onFormSave }: FormBuilderPageProps) => {
+    const { selectedField, setSelected, setIsPreview, fields, setMetadata, metadata } = useFormStore();
 
 
     const handeOutSideClick = (e: React.SyntheticEvent) => {
@@ -30,9 +29,9 @@ const FormBuilderTemplate = () => {
         setMetadata((old: Record<string, any>) => ({ ...old, [name]: value.trim() }))
 
     }
-    const { emitEvent } = useEventBus()
     const handleFormSave = () => {
-        emitEvent('saveSchema', { fields, metadata })
+        console.log({ fields, metadata })
+        onFormSave({ fields, metadata })
     }
 
     return (
