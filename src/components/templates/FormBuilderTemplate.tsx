@@ -11,7 +11,7 @@ import useEventBus from '@hooks/useEventBus';
 
 
 const FormBuilderTemplate = () => {
-    const { selectedField, setSelected, setIsPreview, fields, setMetadata, metadata } = useFormStore(state => state);
+    const { selectedField, setSelected, setIsPreview, fields, setMetadata, metadata } = useFormStore();
 
 
     const handeOutSideClick = (e: React.SyntheticEvent) => {
