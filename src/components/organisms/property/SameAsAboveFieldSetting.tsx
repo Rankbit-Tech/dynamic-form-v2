@@ -24,7 +24,7 @@ const CheckboxFieldSettings: React.FC = () => {
                                     <Form.Item
                                         {...restField}
                                         name={[name, 'label']}
-                                        label="Label"
+                                        label="From"
                                         rules={[{ required: true, message: 'Missing option label' }]}
                                     >
                                         <Select
@@ -37,7 +37,7 @@ const CheckboxFieldSettings: React.FC = () => {
                                     <Form.Item
                                         {...restField}
                                         name={[name, 'value']}
-                                        label="Value"
+                                        label="To"
                                         rules={[{ required: true, message: 'Missing option value' }]}
                                     >
                                         <Select
