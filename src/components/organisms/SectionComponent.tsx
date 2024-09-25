@@ -21,7 +21,7 @@ const SectionComponent: React.FC<SectionProps> = ({ id, title, childrenComponent
     ];
     return (
 
-        <Collapse className="shadow m-2" defaultActiveKey={id}  {... !isCollapsable && { activeKey: id }} items={items} />
+        <Collapse className="shadow mb-2" defaultActiveKey={id}  {... !isCollapsable && { activeKey: id }} items={items} />
     );
 };
 

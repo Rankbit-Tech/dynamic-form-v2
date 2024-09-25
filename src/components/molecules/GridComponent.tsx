@@ -9,7 +9,7 @@ interface GridComponentProps {
 const GridComponent = ({ cols, childrenComponent }: GridComponentProps) => {
     const { isMobile, isTablet } = useMediaQuery();
 
-    const gridClassName = isMobile ? 'p-2 grid gap-2 grid-cols-1' : `p-2 grid gap-2 grid-cols-${(isTablet && cols >= 2) ? 2 : cols}`;
+    const gridClassName = isMobile ? 'grid grid-cols-1 gap-1' : `grid gap-1 grid-cols-${(isTablet && cols >= 2) ? 2 : cols}`;
 
     return (
         <div className={gridClassName}>
