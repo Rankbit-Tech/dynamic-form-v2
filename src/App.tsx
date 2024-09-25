@@ -39,7 +39,7 @@ function App() {
   return (
     <>
       {isPreview ? (
-        <Renderer formConfig={formConfig} onFormSubmit={onFormSubmit} />
+        <Renderer formConfig={formConfig} onFormSubmit={onFormSubmit} isPreview={true} />
       ) : (
         <FormBuilderPage onFormSave={onFormSave} />
       )}

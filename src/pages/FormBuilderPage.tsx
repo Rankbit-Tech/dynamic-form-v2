@@ -33,7 +33,7 @@ const FormBuilderPage = ({ onFormSave }: FormBuilderPageProps) => {
 
         return () => {
             unsubscribe();
-            setFields(() => [])
+            // setFields(() => [])
         }
     }, [])
 
