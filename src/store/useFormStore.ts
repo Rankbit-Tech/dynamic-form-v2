@@ -130,5 +130,9 @@ export const useFormStore = create<FormState>()(
         })
       }
     })),
-  ),
+    {
+      name: "dynamic-form"
+    }
+  )
+
 );
