@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, FormItemProps, Input } from 'antd';
+import { Form, Input } from 'antd';
 
 interface TextInputProps {
   label?: string;
