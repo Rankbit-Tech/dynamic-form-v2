@@ -12,10 +12,7 @@ import useEventBus from '@hooks/useEventBus';
 
 const FormBuilderTemplate = () => {
     const { selectedField, setSelected, setIsPreview, fields } = useFormStore();
-    const [metadata, setMetadata] = useState({
-        name: '',
-        version: 1
-    })
+    const [formName, setFormName] = useState('')
 
     const handeOutSideClick = (e: React.SyntheticEvent) => {
         e.stopPropagation()
@@ -27,16 +24,9 @@ const FormBuilderTemplate = () => {
         setIsPreview(true)
     }
 
-    const handleFormNameChange = (e: any) => {
-        const { name, value } = e.target || {}
-
-        if (!name || !value.trim()) return
-        setMetadata((old) => ({ ...old, [name]: value }))
-
-    }
     const { emitEvent } = useEventBus()
     const handleFormSave = () => {
-        emitEvent('saveSchema', { fields, metadata })
+        emitEvent('saveSchema', { fields, formName: formName.trim() })
     }
 
 
@@ -60,13 +50,8 @@ const FormBuilderTemplate = () => {
                     </div>
                 ) : (
                     <div className="w-full bg-white flex flex-col justify-between h-full">
-                        <div className="w-full mb-2 grid-cols-6 grid gap-1">
-                            <div className='col-span-2'>
-                                <Input placeholder='Version' onChange={handleFormNameChange} name='version' />
-                            </div>
-                            <div className='col-span-4'>
-                                <Input placeholder='Form name' onChange={handleFormNameChange} name='name' />
-                            </div>
+                        <div className="w-full mb-2">
+                            <Input placeholder='Enter form name' onChange={(e) => setFormName(e.target.value)} name='name' />
                         </div>
                         <div className='flex-1'>
                             <DraggableFieldList />
