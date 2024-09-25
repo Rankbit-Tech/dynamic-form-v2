@@ -24,10 +24,12 @@ interface FormState {
   selectedField: RecordType | null;
   formValues: RecordType;
   formConfig?: FormConfig;
+  current: number;
   metadata?: {
     name: string
     version: number
   }
+  setCurrent: (callback: number | Function) => void;
   setSelected: (data: RecordType | null) => void;
   setFields: (data: RecordType | null) => void;
   setIsPreview: (flag: boolean) => void;
@@ -35,6 +37,7 @@ interface FormState {
   getSummary: () => Step[];
   setFormConfig: (data?: FormConfig) => void;
   setMetadata: (callback: Function | FormState['metadata']) => void
+  reset: (fullReset: boolean | undefined) => void
 }
 
 export const useFormStore = create<FormState>()(
@@ -45,10 +48,21 @@ export const useFormStore = create<FormState>()(
       selectedField: null,
       formValues: {},
       formConfig: {},
+      current: 0,
       metadata: {
         name: '',
         version: 1
       },
+      setCurrent: ((callback: number | Function) => {
+        set((state: FormState) => {
+
+          if (typeof callback == "function") {
+            state.current = callback(get().current)
+          } else {
+            state.current = callback
+          }
+        })
+      }),
       setSelected: (data: RecordType | null) => {
         set((state: FormState) => {
           state.selectedField = data;
@@ -125,6 +139,23 @@ export const useFormStore = create<FormState>()(
             state.metadata = callback(get().metadata)
           } else {
             state.metadata = callback
+          }
+        })
+      },
+      reset: (fullReset: boolean | undefined) => {
+        set((state: FormState) => {
+
+          state.current = 0;
+          state.formValues = {};
+          state.selectedField = null
+
+          if (fullReset) {
+            state.fields = []
+            state.isPreview = false;
+            state.metadata = {
+              name: '',
+              version: 1
+            }
           }
         })
       }

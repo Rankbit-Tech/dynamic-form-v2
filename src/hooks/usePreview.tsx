@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { FormInstance, useWatch } from "antd/es/form/Form";
 import { Rule, evaluateConditions } from "@lib/condition";
 import INPUT_FIELDS from "@constants/inputFieldConstants";
@@ -78,14 +78,16 @@ const renderStep = (
 };
 
 const usePreview = (form: FormInstance, data: Record<string, any>) => {
-  const [current, setCurrent] = useState(0);
+
   const formValues = useWatch([], form) || {};
 
-  const [saveAsAboveOptions, formConfig] = useFormStore((state) => {
+  const [saveAsAboveOptions, formConfig, current, setCurrent] = useFormStore((state) => {
     return [
       state.fields?.find((field) => field.type == fieldTypes.SAMEASABOVE)
         ?.options || [],
       state.formConfig,
+      state.current,
+      state.setCurrent
     ];
   });
 
@@ -115,12 +117,12 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
 
   const next = useCallback(() => {
     form.validateFields().then(() => {
-      setCurrent((prev) => prev + 1);
+      setCurrent((prev: number) => prev + 1);
     });
   }, [form]);
 
   const prev = useCallback(() => {
-    setCurrent((prev) => prev - 1);
+    setCurrent((prev: number) => prev - 1);
   }, []);
 
   return {
