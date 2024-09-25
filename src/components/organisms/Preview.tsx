@@ -1,14 +1,14 @@
 
 import { useFormStore } from "@store/useFormStore"
 import { Button, Form, Steps } from "antd"
-import { useForm } from "antd/es/form/Form"
+import { FormInstance, useForm } from "antd/es/form/Form"
 import usePreview, { Step } from "@hooks/usePreview"
 import useEventBus from "@hooks/useEventBus"
 import { useEffect } from "react"
 
 interface PreviewProps {
     data: Record<string, any>[]
-    onSubmit?: (formData: FormData) => void
+    onSubmit?: (formData: FormData, form?: FormInstance) => void
     isPreview?: boolean
 }
 
@@ -74,9 +74,8 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
         if (isPreview) return false;
         const finalValues = Object.values(values).length > 0 ? values : formValues
         const formData = await convertIntoFormData(finalValues)
-        onSubmit?.(formData)
+        onSubmit?.(formData, form)
     }
-
 
     return (
         <div>

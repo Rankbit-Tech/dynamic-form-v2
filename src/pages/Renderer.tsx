@@ -1,11 +1,12 @@
 import Preview from "@components/organisms/Preview";
 import { FormConfig, useFormStore } from "@store/useFormStore";
 import { transformData } from "@utils/transform";
+import { FormInstance } from "antd";
 import { startTransition, useEffect, useState } from "react";
 
 type RendererProps = {
   formConfig?: FormConfig;
-  onFormSubmit?: (formData: FormData) => void
+  onFormSubmit?: (formData: FormData, form?: FormInstance) => void
   isPreview?: boolean
 };
 
