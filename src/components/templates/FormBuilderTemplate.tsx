@@ -33,7 +33,7 @@ const FormBuilderTemplate = ({ onFormSave }: FormBuilderPageProps) => {
     }
 
     return (
-        <div className="flex max-h-[80vh]">
+        <div className="flex max-h-[80vh] min-w-[70vh]">
             <div className="flex-1 bg-white" onClick={handeOutSideClick}>
                 <div className="h-full overflow-y-scroll">
                     <DroppableZone />

@@ -10,9 +10,10 @@ interface TextFieldDesigner {
     paragraph: string
     parentId: string
     fontSize: string
+    textColor: string
 }
 
-const TextFieldDesigner: React.FC<TextFieldDesigner> = ({ label, id, paragraph, fontSize, parentId }) => {
+const TextFieldDesigner: React.FC<TextFieldDesigner> = ({ label, id, paragraph, fontSize, parentId, textColor }) => {
     const topHalf = useDroppable({
         id: `top-field-${id}`,
         data: {
@@ -39,7 +40,7 @@ const TextFieldDesigner: React.FC<TextFieldDesigner> = ({ label, id, paragraph, 
                 <div className='mt-2 p-2'>
                     <label className='font-semibold'>{label}</label>
                     <div className="mt-1">
-                        <p className=" p-1 rounded w-full" style={{ fontSize: `${fontSize}px` }}>{paragraph}</p>
+                        <p className=" p-1 rounded w-full" style={{ fontSize: `${fontSize}px`, color: textColor }}>{paragraph}</p>
                     </div>
                 </div>
             </DragAreaSeperator>
