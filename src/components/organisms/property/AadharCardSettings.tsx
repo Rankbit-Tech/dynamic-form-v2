@@ -11,7 +11,9 @@ import QueryBuilderComponent from '@components/molecules/QueryBuilder';
 
 const AadharCardSettings: React.FC = () => {
 
-    const options = useFormStore(state => state.fields.filter(field => field.variant === VARIANT.FIELD || field.variant === VARIANT.IMAGE).map((item) => ({ label: item.name, value: item.name }))
+    const options = useFormStore(state =>
+        state.fields.filter(field => field.variant === VARIANT.FIELD || field.variant === VARIANT.IMAGE)
+            .map((item) => (item.name && { label: item.name, value: item.name }))
     )
 
     const labels = [
