@@ -26,6 +26,9 @@ const FileUploadFieldSettings: React.FC = () => {
             <Form.Item label="Max File Size (MB)" name={['validations', 'maxSize']}>
                 <Input type="number" placeholder="e.g., 5" />
             </Form.Item>
+            <Form.Item label="Maximum Files" name={['validations', 'maxCount']}>
+                <Input type="number" placeholder="e.g., 5" />
+            </Form.Item>
             <DividerWithHeader title='Conditions' />
             <QueryBuilderComponent handleCondition={handleCondition} conditions={values.conditions} />
         </Form>
