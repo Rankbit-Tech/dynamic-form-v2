@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input } from 'antd';
+import { Form, FormItemProps, Input } from 'antd';
 
 interface TextInputProps {
   label?: string;
@@ -11,17 +11,26 @@ interface TextInputProps {
     minLength?: number
     maxLength?: number
     disabled?: boolean
+    numeric?: boolean
   }
 }
 
 const InputField: React.FC<TextInputProps> = ({ label, name, disabled, placeholder, validations }) => {
-  const { required, maxLength, minLength, disabled: validationDisabled } = validations || {}
+  const { required, maxLength, minLength, disabled: validationDisabled, numeric } = validations || {}
 
-  const rules = [
-    { required, message: `Please enter your ${label}` },
-    { min: minLength, message: `Minimum length is ${minLength} characters` },
-    { max: maxLength, message: `Maximum length is ${maxLength} characters` },
-  ].filter(rule => rule.required || rule.min !== undefined || rule.max !== undefined);
+  const rules: any = [
+    required && { required, message: `Please enter your ${label}` },
+    minLength && { min: minLength, message: `Minimum length is ${minLength} characters` },
+    maxLength && { max: maxLength, message: `Maximum length is ${maxLength} characters` },
+    numeric && {
+      validator: (_: any, value: any) => {
+        if (value && !/^\d+$/.test(value)) {
+          return Promise.reject(new Error("Enter numbers only"));
+        }
+        return Promise.resolve();
+      }
+    }
+  ].filter(Boolean);
 
   return (
     <Form.Item label={label} name={name} rules={rules}>

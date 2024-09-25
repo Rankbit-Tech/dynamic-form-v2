@@ -28,6 +28,9 @@ const InputFieldSettings: React.FC = () => {
                 <Form.Item initialValue={values?.validations.disabled} name={['validations', 'disabled']} valuePropName="checked">
                     <Checkbox>Disable</Checkbox>
                 </Form.Item>
+                <Form.Item initialValue={values?.validations.numeric} name={['validations', 'numeric']} valuePropName="checked">
+                    <Checkbox>Numeric Only</Checkbox>
+                </Form.Item>
             </Flex>
 
 

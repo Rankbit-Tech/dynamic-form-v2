@@ -75,12 +75,13 @@ export const useFormStore = create<FormState>()(
         const { fields, formValues } = get();
 
         const groupedFields = fields.reduce((acc, field) => {
-          if (field.variant === "FIELD") {
+          if (field.variant === "FIELD" || field.variant === "GRID") {
             const step = fields.find(
               (stepField) =>
                 stepField.id === field.parentId &&
                 stepField.variant === "STEPPER"
             );
+
             if (step) {
 
               if (!acc[step.id]) {
@@ -90,10 +91,23 @@ export const useFormStore = create<FormState>()(
                 };
               }
 
-              acc[step.id].fields.push({
-                label: field.label,
-                value: formValues[field.name] || "No value",
-              });
+              if (field.variant === "GRID") {
+                fields
+                  .filter(summaryField => summaryField.parentId === field.id)
+                  .forEach((summaryField) => {
+                    acc[step.id].fields.push({
+                      label: summaryField.label,
+                      value: formValues[summaryField.name] || "No value",
+                    });
+                  });
+              } else {
+                acc[step.id].fields.push({
+                  label: field.label,
+                  value: formValues[field.name] || "No value",
+                });
+              }
+
+
             }
           }
           return acc;
