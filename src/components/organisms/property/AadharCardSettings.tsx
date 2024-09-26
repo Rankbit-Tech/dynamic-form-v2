@@ -13,10 +13,9 @@ const AadharCardSettings: React.FC = () => {
 
     const options = useFormStore(state =>
         state.fields.filter(field => field.variant === VARIANT.FIELD || field.variant === VARIANT.IMAGE)
-            .map((item) => (item.name && { label: item.name, value: item.name }))
+            .map((item) => (item?.name && { label: item.name, value: item.name })).filter(Boolean)
     )
 
-    console.log(options)
 
     const labels = [
         { key: "aadhaar_number", value: "Aadhaar Number" },

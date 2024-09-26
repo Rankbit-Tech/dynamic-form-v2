@@ -8,7 +8,7 @@ import { VARIANT } from '@constants/fieldTypes';
 
 
 const CheckboxFieldSettings: React.FC = () => {
-    const options = useFormStore(state => state.fields.filter(field => field.variant === VARIANT.FIELD).map((item) => (item?.name && { label: item.name, value: item.name })));
+    const options = useFormStore(state => state.fields.filter(field => field.variant === VARIANT.FIELD).map((item) => (item?.name && { label: item.name, value: item.name })).filter(Boolean));
 
     const { handleValuesChange, values } = useSettingsForm();
 
