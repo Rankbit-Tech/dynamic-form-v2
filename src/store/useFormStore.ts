@@ -8,6 +8,7 @@ type recordArray = Record<string, any>[];
 interface Field {
   label: string;
   value: string;
+  type: string
 }
 
 interface Step {
@@ -93,14 +94,16 @@ export const useFormStore = create<FormState>()(
             const step = fields.find(
               (stepField) =>
                 stepField.id === field.parentId &&
-                stepField.variant === "STEPPER",
+                stepField.variant === "STEPPER"
             );
 
             if (step) {
+
               if (!acc[step.id]) {
                 acc[step.id] = {
                   title: step.title,
                   fields: [],
+                  type: ''
                 };
               }
 

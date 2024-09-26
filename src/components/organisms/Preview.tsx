@@ -1,13 +1,14 @@
 
 import { useFormStore } from "@store/useFormStore"
 import { Button, Form, Steps } from "antd"
-import { useForm } from "antd/es/form/Form"
+import { FormInstance, useForm } from "antd/es/form/Form"
 import usePreview, { Step } from "@hooks/usePreview"
 import useEventBus from "@hooks/useEventBus"
+import { useEffect } from "react"
 
 interface PreviewProps {
     data: Record<string, any>[]
-    onSubmit?: (formData: FormData) => void
+    onSubmit?: (formData: FormData, form?: FormInstance) => void
     isPreview?: boolean
 }
 
@@ -18,9 +19,8 @@ interface Item {
 
 }
 
-
 const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
-    const { setIsPreview, setFormValues } = useFormStore(state => state);
+    const { setIsPreview, setFormValues, formValues } = useFormStore(state => state);
     const { subscribe } = useEventBus()
 
     const [form] = useForm();
@@ -33,26 +33,49 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
         })
     }
 
-    const handleFinish = (values: Record<string, any>) => {
+    useEffect(() => {
+        const sendAdharData = subscribe("sendAdharData", (data) => {
+            form.setFieldsValue(data)
+        })
 
-        if (isPreview) return false;
+        return () => {
+            sendAdharData()
+        }
+    })
+
+    const convertIntoFormData = async (values: Record<string, any>) => {
         const formData = new FormData();
 
-        Object.entries(values).forEach(([key, value]: any[]) => {
-            if (value instanceof FileList) {
-                Array.from(value).forEach((file) => {
-                    formData.append(key, file);
+        Object.entries(values).forEach(([key, value]) => {
+            if (value && value?.originFileObj) {
+                formData.append(key, value.originFileObj);
+            } else if (Array.isArray(value)) {
+                value.forEach((item, index) => {
+                    if (item.originFileObj) {
+                        formData.append(`${key}[${index}]`, item.originFileObj);
+                    } else {
+                        formData.append(`${key}[${index}]`, item);
+                    }
+                });
+            } else if (typeof value === 'object' && value !== null) {
+                Object.entries(value).forEach(([subKey, subValue]: any[]) => {
+                    formData.append(`${key}[${subKey}]`, subValue);
                 });
             } else {
                 formData.append(key, value);
             }
         });
-        onSubmit?.(formData)
+
+        return formData;
     }
 
-    subscribe("sendAdharData", (data) => {
-        form.setFieldsValue(data)
-    })
+    const handleFinish = async (values: Record<string, any>) => {
+
+        if (isPreview) return false;
+        const finalValues = Object.values(values).length > 0 ? values : formValues
+        const formData = await convertIntoFormData(finalValues)
+        onSubmit?.(formData, form)
+    }
 
     return (
         <div>

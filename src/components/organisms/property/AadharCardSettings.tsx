@@ -16,6 +16,7 @@ const AadharCardSettings: React.FC = () => {
             .map((item) => (item?.name && { label: item.name, value: item.name })).filter(Boolean)
     )
 
+
     const labels = [
         { key: "aadhaar_number", value: "Aadhaar Number" },
         { key: "first_name", value: "Fist Name" },

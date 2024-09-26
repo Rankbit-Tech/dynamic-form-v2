@@ -5,6 +5,7 @@ import { Image as ImagePreview } from "antd"
 interface Field {
     label: string;
     value: string;
+    type: string
 }
 
 interface Step {

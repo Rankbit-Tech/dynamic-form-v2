@@ -7,10 +7,9 @@ import DragOverlayContainer from '@components/molecules/DragOverlayContainer';
 import SettingsPanel from '@components/organisms/SettingsPanel';
 import DividerWithHeader from '@components/atoms/Divider';
 import { Button, Input } from 'antd';
-import useEventBus from '@hooks/useEventBus';
 
 
-const FormBuilderTemplate = () => {
+const FormBuilderTemplate = ({ onFormSave }: FormBuilderPageProps) => {
     const { selectedField, setSelected, setIsPreview, fields, setMetadata, metadata } = useFormStore();
 
 
@@ -26,18 +25,16 @@ const FormBuilderTemplate = () => {
 
     const handleFormNameChange = (e: any) => {
         const { name, value } = e.target || {}
-
-        setMetadata((old: Record<string, any>) => ({ ...old, [name]: value.trim() }))
+        setMetadata((old: Record<string, any>) => ({ ...old, [name]: value }))
 
     }
-    const { emitEvent } = useEventBus()
     const handleFormSave = () => {
-        emitEvent('saveSchema', { fields, metadata })
+        onFormSave({ fields, metadata })
     }
 
     return (
-        <div className="flex h-screen">
-            <div className="flex-1 bg-white p-4" onClick={handeOutSideClick}>
+        <div className="flex max-h-[80vh] min-w-[70vh]">
+            <div className="flex-1 bg-white" onClick={handeOutSideClick}>
                 <div className="h-full overflow-y-scroll">
                     <DroppableZone />
                 </div>
@@ -53,14 +50,9 @@ const FormBuilderTemplate = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="w-full bg-white flex flex-col justify-between h-full">
-                        <div className="w-full mb-2 grid-cols-6 grid gap-1">
-                            <div className='col-span-2'>
-                                <Input value={metadata?.version} placeholder='Version' onChange={handleFormNameChange} name='version' />
-                            </div>
-                            <div className='col-span-4'>
-                                <Input value={metadata?.name} placeholder='Form name' onChange={handleFormNameChange} name='name' />
-                            </div>
+                    <div className="w-full bg-white flex flex-col justify-between h-full overflow-y-scroll">
+                        <div className="w-full mb-2 gap-1">
+                            <Input value={metadata?.name} placeholder='Form name' onChange={handleFormNameChange} name='name' />
                         </div>
                         <div className='flex-1'>
                             <DraggableFieldList />
@@ -75,7 +67,6 @@ const FormBuilderTemplate = () => {
                 )}
             </div>
             <DragOverlayContainer />
-
         </div>
     );
 };

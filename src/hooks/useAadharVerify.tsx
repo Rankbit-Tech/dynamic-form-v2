@@ -1,6 +1,6 @@
 import { AadharManager } from '@api/aadhardata';
 import { useFormStore } from '@store/useFormStore';
-import { InputRef } from 'antd';
+import { InputRef, message } from 'antd';
 import React, { useRef, useState } from 'react'
 import useEventBus from './useEventBus';
 import { fieldTypes } from '@constants/fieldTypes';
@@ -18,7 +18,7 @@ interface OtpTypes {
 
 const useAadharVerify = (configuration: Record<string, any>) => {
 
-    const [loading] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false)
     const [isAadharValid, setAadharValid] = useState(false)
     const [aadharNumber, setAadharNumber] = useState("")
     const [otp, setOtp] = useState<number | null>(null)
@@ -57,6 +57,7 @@ const useAadharVerify = (configuration: Record<string, any>) => {
     const handleSendOTP = async () => {
 
         try {
+            setLoading(true)
             if (!aadharNumber || aadharNumber.length !== 12) return
             const res = await aadharManager.sendOTP(aadharNumber);
 
@@ -64,8 +65,11 @@ const useAadharVerify = (configuration: Record<string, any>) => {
                 setOtpData(res.data.data);
                 setAadharValid(true)
             }
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            message.warning(error?.message || 'Failed to get OTP')
+
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -78,6 +82,8 @@ const useAadharVerify = (configuration: Record<string, any>) => {
 
     const handleAadharData = async () => {
         try {
+            setLoading(true)
+
             if (!otpData.requestId || !otp) return
 
             const response = await aadharManager.verifyOTP(otpData.requestId, otp)
@@ -87,8 +93,10 @@ const useAadharVerify = (configuration: Record<string, any>) => {
             const mapData = await transformAadharData(data, mapping, emitEvent);
 
             emitEvent("sendAdharData", mapData)
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            message.warning(error?.message || 'Failed to verify OTP')
+        } finally {
+            setLoading(false)
         }
     }
     return {
