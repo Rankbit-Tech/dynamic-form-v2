@@ -11,9 +11,12 @@ interface TextFieldDesigner {
     parentId: string
     fontSize: string
     textColor: string
+    bold?: boolean;
+    italic?: boolean
+    underline?: boolean
 }
 
-const TextFieldDesigner: React.FC<TextFieldDesigner> = ({ label, id, paragraph, fontSize, parentId, textColor }) => {
+const TextFieldDesigner: React.FC<TextFieldDesigner> = ({ label, id, paragraph, fontSize, parentId, textColor, bold, italic, underline }) => {
     const topHalf = useDroppable({
         id: `top-field-${id}`,
         data: {
@@ -33,6 +36,14 @@ const TextFieldDesigner: React.FC<TextFieldDesigner> = ({ label, id, paragraph, 
             type: VARIANT.FIELD
         }
     });
+
+    const styles = {
+        fontSize: `${fontSize}px`,
+        color: textColor,
+        ...(bold && { fontWeight: 'bold' }),
+        ...(italic && { fontStyle: 'italic' }),
+        ...(underline && { textDecoration: 'underline' }),
+    }
     return (
         <div className=" border rounded bg-white shadow mt-1">
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
@@ -40,7 +51,7 @@ const TextFieldDesigner: React.FC<TextFieldDesigner> = ({ label, id, paragraph, 
                 <div className='mt-2 p-2'>
                     <label className='font-semibold'>{label}</label>
                     <div className="mt-1">
-                        <p className=" p-1 rounded w-full" style={{ fontSize: `${fontSize}px`, color: textColor }}>{paragraph}</p>
+                        <p className=" p-1 rounded w-full" style={styles}>{paragraph}</p>
                     </div>
                 </div>
             </DragAreaSeperator>

@@ -17,24 +17,24 @@ const TextFieldSettings: React.FC = () => {
         <TextArea rows={4} placeholder='Write here' />
       </Form.Item>
 
-      <Flex justify='space-between'>
+      <Flex justify='space-between' gap={2}>
         <Form.Item label="Font Size" name="fontSize">
           <InputNumber />
         </Form.Item>
 
-        <Form.Item label="Font Size" name="textColor">
+        <Form.Item label="Font Color" name="textColor">
           <Input placeholder='Eg.(blue or #1f2129)' />
         </Form.Item>
       </Flex>
 
       <Flex justify='space-between'>
-        <Form.Item name="bold">
+        <Form.Item initialValue={values?.bold} name='bold' valuePropName="checked">
           <Checkbox>Bold</Checkbox>
         </Form.Item>
-        <Form.Item name="italic">
+        <Form.Item initialValue={values?.bold} name='italic' valuePropName="checked">
           <Checkbox>Italic</Checkbox>
         </Form.Item>
-        <Form.Item name="underline">
+        <Form.Item initialValue={values?.bold} name='underline' valuePropName="checked">
           <Checkbox>Underline</Checkbox>
         </Form.Item>
       </Flex>
