@@ -6,9 +6,11 @@ interface CustomTextFieldProps {
     fontSize: number
     paragraph: string
     textColor: string
-    bold: boolean
-    italic: boolean
-    underline: boolean
+
+    bold?: boolean;
+    italic?: boolean
+    underline?: boolean
+
 }
 
 const CustomTextField: React.FC<CustomTextFieldProps> = ({ label, paragraph, fontSize, textColor, bold, italic, underline }) => {
@@ -19,8 +21,8 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({ label, paragraph, fon
         ...(bold && { fontWeight: 'bold' }),
         ...(italic && { fontStyle: 'italic' }),
         ...(underline && { textDecoration: 'underline' }),
-
     }
+
     return (<>
         <Form.Item label={label}>
             <p style={styles}>{paragraph}</p>
