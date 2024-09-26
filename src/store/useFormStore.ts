@@ -89,7 +89,7 @@ export const useFormStore = create<FormState>()(
         const { fields, formValues } = get();
 
         const groupedFields = fields.reduce((acc, field) => {
-          if (field.variant === "FIELD" || field.variant === "GRID") {
+          if (["FIELD", "GRID", "IMAGE"].includes(field.variant)) {
             const step = fields.find(
               (stepField) =>
                 stepField.id === field.parentId &&
@@ -108,15 +108,17 @@ export const useFormStore = create<FormState>()(
                 fields
                   .filter(summaryField => summaryField.parentId === field.id)
                   .forEach((summaryField) => {
+                    const _value = summaryField.variant == "IMAGE" ? summaryField?.src : formValues[summaryField.name]
                     acc[step.id].fields.push({
                       label: summaryField.label,
-                      value: formValues[summaryField.name] || "No value",
+                      value: _value || "No value",
                     });
                   });
               } else {
+                const _value = field.variant == "IMAGE" ? field?.src : formValues[field.name];
                 acc[step.id].fields.push({
                   label: field.label,
-                  value: formValues[field.name] || "No value",
+                  value: _value || "No value",
                 });
               }
 

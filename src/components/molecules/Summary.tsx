@@ -1,7 +1,6 @@
 import { useFormStore } from "@store/useFormStore"
 
-
-
+import { Image as ImagePreview } from "antd"
 
 interface Field {
     label: string;
@@ -28,7 +27,12 @@ const Summary = () => {
                             {step.fields.map(field => (
                                 <div className="flex" key={field.label}>
                                     <span className="min-w-[250px] font-bold">{field.label}</span>
-                                    <span> : &nbsp;{field.value}</span>
+                                    {field?.type == "IMAGE" ? (
+                                        <ImagePreview
+                                            height={60}
+                                            src={field.value}
+                                        />
+                                    ) : (<span> : &nbsp;{field.value}</span>)}
                                 </div>
                             )
                             )}

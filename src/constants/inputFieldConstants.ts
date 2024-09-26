@@ -418,6 +418,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             type: fieldTypes.IMAGE,
             variant: VARIANT.IMAGE,
             label: 'Label',
+            name: "",
             src: "",
             height: '',
             width: 60,
