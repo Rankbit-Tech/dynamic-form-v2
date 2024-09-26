@@ -1,14 +1,9 @@
 import FormBuilderTemplate from '@components/templates/FormBuilderTemplate';
 import { DndContext, MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import useFormBuilder from '@hooks/useFormBuilder';
-import { useFormStore } from '@store/useFormStore';
-import { useEffect } from 'react';
-
-
 
 const FormBuilderPage = ({ onFormSave }: FormBuilderPageProps) => {
     const { handleDragEnd } = useFormBuilder()
-    const { setFields, setMetadata } = useFormStore(state => state)
 
     const mouseSensor = useSensor(MouseSensor, {
         activationConstraint: {
@@ -22,15 +17,6 @@ const FormBuilderPage = ({ onFormSave }: FormBuilderPageProps) => {
         },
     });
 
-    useEffect(() => {
-        return () => {
-            setFields(() => [])
-            setMetadata({
-                name: '',
-                version: 1
-            })
-        }
-    }, [])
 
     const sensors = useSensors(mouseSensor, touchSensor)
 
