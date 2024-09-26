@@ -33,7 +33,7 @@ const FormBuilderTemplate = ({ onFormSave }: FormBuilderPageProps) => {
     }
 
     return (
-        <div className="flex max-h-[80vh] min-w-[70vh]">
+        <div className="flex max-h-[90vh] h-full min-w-[70vh]">
             <div className="flex-1 bg-white" onClick={handeOutSideClick}>
                 <div className="h-full overflow-y-scroll">
                     <DroppableZone />
@@ -50,7 +50,7 @@ const FormBuilderTemplate = ({ onFormSave }: FormBuilderPageProps) => {
                         </div>
                     </div>
                 ) : (
-                    <div className="w-full bg-white flex flex-col justify-between h-full overflow-y-scroll">
+                    <div className="w-full bg-white flex flex-col justify-between h-full ">
                         <div className="w-full mb-2 gap-1">
                             <Input value={metadata?.name} placeholder='Form name' onChange={handleFormNameChange} name='name' />
                         </div>

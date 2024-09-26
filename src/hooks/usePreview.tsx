@@ -9,6 +9,13 @@ export type Step = {
   title: string;
   children: Record<string, any>[];
 };
+interface SameAsAboveOption {
+  label: string;
+  value: string;
+}
+interface FormValues {
+  [key: string]: any;
+}
 
 const renderStep = (
   steps: Record<string, any>[],
@@ -81,13 +88,15 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
 
   const formValues = useWatch([], form) || {};
 
-  const [saveAsAboveOptions, formConfig, current, setCurrent] = useFormStore((state) => {
+
+  const [sameAsAboveOptions, formConfig, current, setCurrent, setFormValues] = useFormStore((state) => {
     return [
       state.fields?.find((field) => field.type == fieldTypes.SAMEASABOVE)
         ?.options || [],
       state.formConfig,
       state.current,
-      state.setCurrent
+      state.setCurrent,
+      state.setFormValues
     ];
   });
 
@@ -99,21 +108,27 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
     }));
   }, [data, formConfig, formValues]);
 
+  const handleValueChange = useCallback((_: any, allValues: any) => {
+    setFormValues((oldValues: any) => {
+      return { ...oldValues, ...allValues }
+    })
+  }, [setFormValues])
+
   const saveAsAbove = form.getFieldValue("sameAsAbove");
 
+
   useEffect(() => {
-    if (saveAsAbove) {
-      saveAsAboveOptions?.forEach(
-        ({ label, value }: { label: string; value: string }) => {
-          form.setFieldValue(value, form.getFieldValue(label));
-        },
-      );
-    } else {
-      saveAsAboveOptions?.forEach(({ value }: { value: string }) => {
-        form.setFieldValue(value, "");
-      });
-    }
-  }, [saveAsAbove, saveAsAboveOptions, form]);
+    const updatedValues: FormValues = {};
+
+    sameAsAboveOptions?.forEach(({ label, value }: SameAsAboveOption) => {
+      updatedValues[value] = saveAsAbove ? form.getFieldValue(label) : ""; // Copy or clear values
+    });
+
+    form.setFieldsValue(updatedValues);
+
+    handleValueChange(null, { ...form.getFieldsValue(), ...updatedValues });
+
+  }, [saveAsAbove, form, sameAsAboveOptions]);
 
   const next = useCallback(() => {
     form.validateFields().then(() => {
@@ -130,6 +145,7 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
     next,
     prev,
     items,
+    handleValueChange
   };
 };
 

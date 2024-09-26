@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Select, Checkbox, Row, Col, Button } from 'antd';
+import { Form, Select, Checkbox, Row, Col, Button, Input } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import DividerWithHeader from '@components/atoms/Divider';
 import useSettingsForm from '@hooks/useSettingsForm';
@@ -14,6 +14,9 @@ const CheckboxFieldSettings: React.FC = () => {
 
     return (
         <Form initialValues={values} layout="vertical" onValuesChange={handleValuesChange}>
+            <Form.Item label="Label" name="label">
+                <Input />
+            </Form.Item>
             <DividerWithHeader title="Options" />
             <Form.List name="options">
                 {(fields, { add, remove }) => (
@@ -66,6 +69,9 @@ const CheckboxFieldSettings: React.FC = () => {
             <DividerWithHeader title="Validations" />
             <Form.Item name={['validations', 'required']} valuePropName="checked">
                 <Checkbox>Required</Checkbox>
+            </Form.Item>
+            <Form.Item name={['validations', 'disable']} valuePropName="checked">
+                <Checkbox>Disable</Checkbox>
             </Form.Item>
         </Form>
     );
