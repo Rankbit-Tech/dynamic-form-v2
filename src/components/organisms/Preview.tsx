@@ -20,18 +20,12 @@ interface Item {
 }
 
 const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
-    const { setIsPreview, setFormValues, formValues } = useFormStore(state => state);
+    const { setIsPreview, formValues } = useFormStore(state => state);
     const { subscribe } = useEventBus()
 
     const [form] = useForm();
 
-    const { current, next, prev, items } = usePreview(form, data)
-
-    const handleValueChange = (_: any, allValues: any) => {
-        setFormValues((oldValues: any) => {
-            return { ...oldValues, ...allValues }
-        })
-    }
+    const { current, next, prev, items, handleValueChange } = usePreview(form, data)
 
     useEffect(() => {
         const sendAdharData = subscribe("sendAdharData", (data) => {

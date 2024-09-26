@@ -8,9 +8,10 @@ import { useDroppable } from '@dnd-kit/core';
 interface SameAsAboveProps {
     id: string;
     parentId: string;
+    label: string
 }
 
-const SameAsAboveDesigner: React.FC<SameAsAboveProps> = ({ id, parentId }) => {
+const SameAsAboveDesigner: React.FC<SameAsAboveProps> = ({ id, parentId, label }) => {
     const topHalf = useDroppable({
         id: `top-field-${id}`,
         data: {
@@ -37,7 +38,7 @@ const SameAsAboveDesigner: React.FC<SameAsAboveProps> = ({ id, parentId }) => {
             <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
                 <div className='p-1'>
                     <div className='flex items-center gap-2 mt-5'>
-                        <Checkbox>Same As Above</Checkbox>
+                        <Checkbox>{label}</Checkbox>
                     </div>
 
                 </div>
