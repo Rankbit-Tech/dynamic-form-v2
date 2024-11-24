@@ -2,7 +2,7 @@ import Preview from "@components/organisms/Preview";
 import { FormConfig, useFormStore } from "@store/useFormStore";
 import { transformData } from "@utils/transform";
 import { FormInstance } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import _ from "lodash";
 
 type RendererProps = {
