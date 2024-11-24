@@ -5,7 +5,9 @@ import "../index.css"
 
 const Builder = ({ onFormSave }: FormBuilderPageProps) => {
 
-    const { isPreview } = useFormStore(state => state)
+    const { isPreview } = useFormStore(state => ({
+        isPreview: state.isPreview
+    }))
 
     return (
         <>
