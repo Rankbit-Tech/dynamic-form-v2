@@ -13,9 +13,6 @@ type RendererProps = {
 
 const Renderer = ({ formConfig, onFormSubmit, isPreview }: RendererProps) => {
 
-  const [isConfigured, setConfigured] = useState(false);
-
-
   const [fields, setFormConfig] = useFormStore((state) => [
     state.fields,
     state.setFormConfig,
@@ -32,14 +29,9 @@ const Renderer = ({ formConfig, onFormSubmit, isPreview }: RendererProps) => {
         setFormConfig(formConfig);
       }
 
-      setConfigured(true);
     }
   }, [formConfig, setFormConfig]);
 
-
-  if (!isConfigured) {
-    return null;
-  }
 
   return <Preview data={formData} isPreview={isPreview} onSubmit={onFormSubmit} />;
 };
