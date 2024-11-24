@@ -10,6 +10,10 @@ interface Field {
 }
 
 interface Step {
-    title: string;
+    title?: string;
     fields: Field[];
+    name: string;
+    type: string
+    label: string
+    value: any
 }
