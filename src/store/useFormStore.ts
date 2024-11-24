@@ -5,6 +5,13 @@ import { immer } from "zustand/middleware/immer";
 type RecordType = Record<string, any>;
 type recordArray = Record<string, any>[];
 
+interface Field {
+  label: string;
+  value: string;
+  type: string
+}
+
+
 export type FormConfig = {
   initialValues?: any;
   context?: any;

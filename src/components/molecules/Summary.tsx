@@ -2,19 +2,19 @@ import { useFormStore } from "@store/useFormStore"
 
 import { Image as ImagePreview } from "antd"
 
-
 interface summaryProps {
     validations?: {
         fields?: string[]
     }
 }
+
 const Summary = ({ validations }: summaryProps) => {
 
-    const { getSummary } = useFormStore(state => state)
+
+    const summary: Step[] = useFormStore(state => state.getSummary());
 
     const fieldsToIncludeSet = new Set(validations?.fields || []);
 
-    const summary: Step[] = getSummary();
     return (
         <div className="border p-2 bg-white shadow" >
             <div>
