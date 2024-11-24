@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { FormInstance, useWatch } from "antd/es/form/Form";
 import { Rule, evaluateConditions } from "@lib/condition";
 import INPUT_FIELDS from "@constants/inputFieldConstants";
@@ -9,13 +9,7 @@ export type Step = {
   title: string;
   children: Record<string, any>[];
 };
-interface SameAsAboveOption {
-  label: string;
-  value: string;
-}
-interface FormValues {
-  [key: string]: any;
-}
+
 
 const renderStep = (
   steps: Record<string, any>[],
@@ -89,10 +83,8 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
   const formValues = useWatch([], form) || {};
 
 
-  const [sameAsAboveOptions, formConfig, current, setCurrent, setFormValues] = useFormStore((state) => {
+  const [formConfig, current, setCurrent, setFormValues] = useFormStore((state) => {
     return [
-      state.fields?.find((field) => field.type == fieldTypes.SAMEASABOVE)
-        ?.options || [],
       state.formConfig,
       state.current,
       state.setCurrent,
@@ -114,21 +106,7 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
     })
   }, [setFormValues])
 
-  const saveAsAbove = form.getFieldValue("sameAsAbove");
 
-
-  useEffect(() => {
-    const updatedValues: FormValues = {};
-
-    sameAsAboveOptions?.forEach(({ label, value }: SameAsAboveOption) => {
-      updatedValues[value] = saveAsAbove ? form.getFieldValue(label) : ""; // Copy or clear values
-    });
-
-    form.setFieldsValue(updatedValues);
-
-    handleValueChange(null, { ...form.getFieldsValue(), ...updatedValues });
-
-  }, [saveAsAbove, form, sameAsAboveOptions]);
 
   const next = useCallback(() => {
     form.validateFields().then(() => {
