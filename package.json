@@ -1,8 +1,22 @@
 {
   "name": "form-builder-v2",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -12,7 +26,15 @@
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
     "@dnd-kit/sortable": "^8.0.0",
-    "antd": "^5.18.0",
+    "immer": "^10.1.1",
+    "nanoid": "^5.0.7",
+    "react-icons": "^5.2.1",
+    "react-querybuilder": "^7.5.2",
+    "rxjs": "^7.8.1",
+    "tailwind-merge": "^2.3.0"
+  },
+  "peerDependencies": {
+    "antd": ">=5.12.0",
     "autoprefixer": "^10.4.19",
     "axios": "^1.7.2",
     "clsx": "^2.1.1",
@@ -21,17 +43,14 @@
     "lodash": "^4.17.21",
     "nanoid": "^5.0.7",
     "postcss": "^8.4.38",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^5.2.1",
-    "react-querybuilder": "^7.5.2",
-    "rxjs": "^7.8.1",
-    "tailwind-merge": "^2.3.0",
+    "react": ">=16.0.0",
+    "react-dom": ">=16.0.0",
     "tailwindcss": "^3.4.4",
     "vite-tsconfig-paths": "^4.3.2",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@types/node": "^20.14.12",
     "@types/lodash": "^4.17.7",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
@@ -42,6 +61,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "typescript": "^5.2.2",
-    "vite": "^5.2.0"
+    "vite": "^5.2.0",
+    "vite-plugin-dts": "^4.0.0-beta.1"
   }
 }
