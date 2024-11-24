@@ -20,14 +20,12 @@ interface Item {
 }
 
 const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
-    const { setIsPreview, setFormValues, formValues } = useFormStore(state => state);
+    const { setIsPreview, formValues } = useFormStore(state => state);
     const { subscribe } = useEventBus()
 
     const [form] = useForm();
 
     const { current, next, prev, items, handleValueChange } = usePreview(form, data)
-
-
 
     useEffect(() => {
         const sendAdharData = subscribe("sendAdharData", (data) => {
@@ -38,7 +36,7 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
             sendAdharData()
         }
     })
-    console.log(formValues)
+
     const convertIntoFormData = async (values: Record<string, any>) => {
         const formData = new FormData();
 
@@ -70,9 +68,8 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
         if (isPreview) return false;
         const finalValues = Object.values(values).length > 0 ? values : formValues
         const formData = await convertIntoFormData(finalValues)
-        onSubmit?.(formData)
+        onSubmit?.(formData, form)
     }
-
 
     return (
         <div>
