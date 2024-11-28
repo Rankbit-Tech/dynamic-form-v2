@@ -17,6 +17,9 @@ const CheckboxFieldSettings: React.FC = () => {
             <Form.Item label="Label" name="label">
                 <Input />
             </Form.Item>
+            <Form.Item label="Name" name="name">
+                <Input />
+            </Form.Item>
             <DividerWithHeader title="Options" />
             <Form.List name="options">
                 {(fields, { add, remove }) => (

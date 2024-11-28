@@ -20,22 +20,40 @@ interface Item {
 }
 
 const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
-    const { setIsPreview, formValues } = useFormStore(state => state);
-    const { subscribe } = useEventBus()
+
+    const { setIsPreview, formValues } = useFormStore((state) => ({
+        setIsPreview: state.setIsPreview,
+        formValues: state.formValues,
+
+    })); const { subscribe } = useEventBus()
 
     const [form] = useForm();
 
     const { current, next, prev, items, handleValueChange } = usePreview(form, data)
 
     useEffect(() => {
-        const sendAdharData = subscribe("sendAdharData", (data) => {
+        const unsubscribeAdharData = subscribe("sendAdharData", (data) => {
             form.setFieldsValue(data)
         })
 
+
+        const unsubscribeSameAsAboveFields = subscribe('fillSaveAsAbove', ({ options, isChecked }) => {
+            const updatedValues: FormValues = {};
+
+            options?.forEach(({ label, value }: SameAsAboveOption) => {
+                updatedValues[value] = isChecked ? form.getFieldValue(label) : ""; // Copy or clear values
+            });
+
+            form.setFieldsValue(updatedValues);
+
+            handleValueChange(null, { ...form.getFieldsValue(), ...updatedValues });
+        })
+
         return () => {
-            sendAdharData()
+            unsubscribeAdharData();
+            unsubscribeSameAsAboveFields();
         }
-    })
+    }, [form, handleValueChange, subscribe])
 
     const convertIntoFormData = async (values: Record<string, any>) => {
         const formData = new FormData();
