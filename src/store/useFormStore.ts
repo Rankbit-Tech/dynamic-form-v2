@@ -91,12 +91,18 @@ const test = [
     type: 'SUMMARY',
     variant: 'SUMMARY',
     label: 'Label',
-    validations: {},
+    validations: {
+      fields: [
+        'asd'
+      ]
+    },
     conditions: {
       combinator: 'and',
       rules: []
     },
-    parentId: 'fhmk5ukJ9dLJfJPzyCWh1'
+    parentId: 'fhmk5ukJ9dLJfJPzyCWh1',
+    mapFields: {},
+    config: {}
   },
   {
     id: 'KKHHxDW9_ALg8j7zU48mo',
@@ -121,6 +127,22 @@ const test = [
     label: 'Last Name',
     name: 'lname',
     placeholder: 'Placeholder',
+    validations: {},
+    conditions: {
+      combinator: 'and',
+      rules: []
+    },
+    parentId: '-GspfcIC_1-oK3f8iUUis',
+    mapFields: {},
+    config: {}
+  },
+  {
+    id: 'BtPzpyB3YH5ahWpWCFZuG',
+    type: 'DATETIME',
+    variant: 'FIELD',
+    label: 'DateTime label',
+    name: 'asd',
+    defaultValue: '',
     validations: {},
     conditions: {
       combinator: 'and',
@@ -239,7 +261,8 @@ export const useFormStore = create<FormState>()(
                     acc[step.id].fields.push({
                       label: summaryField.label,
                       value: _value || "No value",
-                      name: summaryField.name
+                      type: summaryField.type,
+                      name: summaryField.name,
                     });
                   });
               } else {
@@ -247,6 +270,7 @@ export const useFormStore = create<FormState>()(
                 acc[step.id].fields.push({
                   label: field.label,
                   value: _value || "No value",
+                  type: field.type,
                   name: field.name
                 });
               }
