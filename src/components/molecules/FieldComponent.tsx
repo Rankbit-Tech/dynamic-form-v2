@@ -39,7 +39,7 @@ const FieldComponent: React.FC<{ field: any }> = ({ field }) => {
                 <IoMdSettings size={15} className='hover:rotate-45 hover:text-blue-500 transition-all cursor-pointer' onClick={handleSelectField} />
                 <FaTrashAlt size={15} className='hover:text-red-500 cursor-pointer' onClick={handleDeleteField} />
             </div>
-            <DesignerComponent {...field}>
+            <DesignerComponent {...field} className="h-10">
                 {field.children && field.children.map((child: any) => (
                     <FieldComponent key={child.id} field={child} />
                 ))}
