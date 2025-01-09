@@ -260,7 +260,7 @@ export const useFormStore = create<FormState>()(
                     const _value = summaryField.variant == "IMAGE" ? summaryField?.src : formValues[summaryField.name]
                     acc[step.id].fields.push({
                       label: summaryField.label,
-                      value: _value || "No value",
+                      value: _value || "",
                       type: summaryField.type,
                       name: summaryField.name,
                     });
@@ -269,7 +269,7 @@ export const useFormStore = create<FormState>()(
                 const _value = field.variant == "IMAGE" ? field?.src : formValues[field.name];
                 acc[step.id].fields.push({
                   label: field.label,
-                  value: _value || "No value",
+                  value: _value || "",
                   type: field.type,
                   name: field.name
                 });

@@ -38,7 +38,7 @@ const Summary = ({ validations }: summaryProps) => {
                 {summary.map((step, index) => (
                     <div key={index} style={{ marginBottom: 24 }}>
                         <h2 className="text-red-900 font-semibold mb-4 w-full">{step.title}</h2>
-                        <div className="w-full">
+                        <div className="w-full columns-2">
                             {step.fields.map(field => {
                                 if (!fieldsToIncludeSet.has(field.name)) {
                                     return null;
