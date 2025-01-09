@@ -40,13 +40,13 @@ const SelectFieldDesigner: React.FC<SelectFieldDesignerProps> = ({ id, label, pa
     });
 
     return (
-        <div className="relative border rounded bg-white shadow my-2">
+        <div className="relative border rounded bg-white shadow my-1">
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
             <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
-                <div className='mt-2 p-2'>
+                <div className='p-2 my-1'>
                     <label htmlFor="">{label || "Label"}</label>
                     <Select
-                        className='w-full'
+                        className='w-full h-9'
                         disabled
                         options={options}
                     />

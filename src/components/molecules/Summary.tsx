@@ -4,13 +4,11 @@ import { Image as ImagePreview } from "antd"
 import { useCallback } from "react"
 import dayjs from "dayjs";
 
-
 interface summaryProps {
     validations?: {
         fields?: string[]
     }
 }
-
 
 const Summary = ({ validations }: summaryProps) => {
 
