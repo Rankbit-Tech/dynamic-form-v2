@@ -18,20 +18,22 @@ const SummarySettings = () => {
 
     const { handleValuesChange, values, handleCondition } = useSettingsForm();
 
-
     const handleSelectAll = (e: CheckboxChangeEvent) => {
         const { checked } = e.target || {}
 
         if (checked) {
-            // Check all options when "Select All" is checked
+            const initialValues = options.map(option => option.value);
+
+            handleValuesChange({ validations: { fields: initialValues }, check_all: true }, values)
             form.setFieldsValue({
                 validations: {
-                    fields: options.map(option => option.value), // Set all options as checked
+                    fields: initialValues,
                 },
                 check_all: true
             });
         } else {
-            // Uncheck all options when "Select All" is unchecked
+            handleValuesChange({ validations: { fields: [] }, check_all: false }, values)
+
             form.setFieldsValue({
                 validations: {
                     fields: [],
@@ -43,11 +45,8 @@ const SummarySettings = () => {
 
     const handleValuesChangeWithCheckAll = (_changedValues: any, allValues: any) => {
         handleValuesChange(_changedValues, allValues);
-
         const selectedFields = allValues.validations?.fields || [];
         const allSelected = options.every((option) => selectedFields.includes(option.value));
-
-        // Automatically uncheck "Check All" if not all options are selected
         form.setFieldsValue({
             check_all: allSelected,
         });
@@ -56,7 +55,7 @@ const SummarySettings = () => {
     return (
         <Form form={form} layout="vertical" className="max-w-xs mx-auto" initialValues={values} onValuesChange={handleValuesChangeWithCheckAll}>
             <Form.Item name="check_all" valuePropName="checked">
-                <Checkbox onChange={handleSelectAll}>
+                <Checkbox onChange={handleSelectAll} >
                     Select All
                 </Checkbox>
             </Form.Item>
@@ -68,7 +67,6 @@ const SummarySettings = () => {
             <QueryBuilderComponent handleCondition={handleCondition} conditions={values.conditions} />
         </Form>
     )
-
 }
 
 export default SummarySettings
