@@ -101,7 +101,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             type: fieldTypes.INPUT,
             variant: VARIANT.FIELD,
             label: 'Label',
-            name: 'name',
+            name: '',
             placeholder: 'Placeholder',
             validations: {},
             conditions: {

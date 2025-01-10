@@ -33,13 +33,13 @@ const FormBuilderTemplate = ({ onFormSave }: FormBuilderPageProps) => {
     }
 
     return (
-        <div className="flex max-h-[90vh] h-full min-w-[70vh]">
-            <div className="flex-1 bg-white" onClick={handeOutSideClick}>
+        <div className="flex h-[90vh]  min-w-[50vh]">
+            <div className="flex-1  bg-white" onClick={handeOutSideClick}>
                 <div className="h-full overflow-y-scroll">
                     <DroppableZone />
                 </div>
             </div>
-            <div className="w-1/5 bg-white p-4 border-l border-gray-200">
+            <div className="w-1/4 bg-white p-4 border-l border-gray-200">
                 {selectedField ? (
                     <div>
                         <div className='flex flex-col'>
@@ -51,18 +51,19 @@ const FormBuilderTemplate = ({ onFormSave }: FormBuilderPageProps) => {
                     </div>
                 ) : (
                     <div className="w-full bg-white flex flex-col justify-between h-full ">
-                        <div className="w-full mb-2 gap-1">
-                            <Input value={metadata?.name} placeholder='Form name' onChange={handleFormNameChange} name='name' />
-                        </div>
-                        <div className='flex-1'>
-                            <DraggableFieldList />
-                        </div>
                         <div className='p-2 flex justify-end '>
                             <div className='flex items-center gap-2 w-full'>
                                 <Button type='primary' className='w-full' ghost onClick={handlePreview}>Preview</Button>
                                 <Button type='primary' className='w-full' onClick={handleFormSave}>Save</Button>
                             </div>
                         </div>
+                        <div className="w-full mb-2 gap-1">
+                            <Input value={metadata?.name} placeholder='Form name' onChange={handleFormNameChange} name='name' />
+                        </div>
+                        <div className='flex-1'>
+                            <DraggableFieldList />
+                        </div>
+
                     </div>
                 )}
             </div>

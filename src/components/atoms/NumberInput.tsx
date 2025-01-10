@@ -3,21 +3,23 @@ import { Form, InputNumber } from 'antd';
 
 interface NumberInputProps {
     label: string;
-    name: string
-    placeholder: string
-    defaultValue: number,
-    step: number
-    showControls: boolean
+    name: string;
+    placeholder: string;
+    defaultValue: number;
+    disabled: boolean;
+    step: number;
+    showControls: boolean;
     validations?: {
         required?: boolean;
+        disabled: boolean;
         minValue?: number;
         maxValue?: number;
     };
 }
 
-const NumberInput: React.FC<NumberInputProps> = ({ label, name, showControls, defaultValue, step, placeholder, validations }) => {
+const NumberInput: React.FC<NumberInputProps> = ({ label, name, disabled, showControls, defaultValue, step, placeholder, validations }) => {
 
-    const { required, minValue, maxValue, } = validations || {}
+    const { required, minValue, maxValue, disabled: validation_disabled } = validations || {}
     const rules = [
         { required, message: `Please enter ${label}` }
     ].filter(rule => rule.required);
@@ -38,6 +40,7 @@ const NumberInput: React.FC<NumberInputProps> = ({ label, name, showControls, de
                 step={step}
                 min={minValue}
                 max={maxValue}
+                disabled={disabled || validation_disabled}
                 placeholder={placeholder}
                 controls={showControls}
                 stringMode={false}

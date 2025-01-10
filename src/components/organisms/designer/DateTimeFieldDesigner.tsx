@@ -34,12 +34,12 @@ const DateTimeFieldDesigner: React.FC<DateTimeFieldDesigner> = ({ label, id, par
         }
     });
     return (
-        <div className=" border rounded bg-white shadow mt-1">
+        <div className="border rounded bg-white shadow mt-1">
             <DragAreaSplitter topRef={topHalf.setNodeRef} bottomRef={bottomHalf.setNodeRef} />
             <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
-                <div className='mt-2 p-2'>
+                <div className='mt-1 p-2'>
                     <label>{label}</label>
-                    <div className="mt-4">
+                    <div className="mt-2">
                         <DatePicker className='w-full' />
                     </div>
                 </div>
