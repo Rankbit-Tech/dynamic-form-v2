@@ -4,9 +4,9 @@ interface FormBuilderPageProps {
 
 interface Field {
     label: string;
-    value: string;
-    type: string
-    name: string
+    value: string | any;
+    type: string;
+    name: string;
 }
 
 interface Step {

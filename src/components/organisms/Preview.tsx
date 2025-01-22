@@ -109,6 +109,11 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
                             {items[current].content}
                         </div>
                         <div className="mt-6">
+                            {current > 0 && (
+                                <Button className="mx-2" onClick={prev}>
+                                    Previous
+                                </Button>
+                            )}
                             {current < items.length - 1 && (
                                 <Button type="primary" onClick={next}>
                                     Next
@@ -117,11 +122,6 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
                             {current === items.length - 1 && (
                                 <Button type="primary" htmlType="submit">
                                     Submit
-                                </Button>
-                            )}
-                            {current > 0 && (
-                                <Button className="mx-2" onClick={prev}>
-                                    Previous
                                 </Button>
                             )}
                         </div>

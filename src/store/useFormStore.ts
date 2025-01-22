@@ -31,143 +31,12 @@ interface FormState {
   reset: (fullReset: boolean | undefined) => void
 }
 
-const test = [
-  {
-    id: 'fhmk5ukJ9dLJfJPzyCWh1',
-    type: 'STEPPER',
-    variant: 'STEPPER',
-    title: 'Step'
-  },
-  {
-    id: '-GspfcIC_1-oK3f8iUUis',
-    type: 'GRID',
-    variant: 'GRID',
-    cols: 2,
-    placement: 'start',
-    conditions: {
-      combinator: 'and',
-      rules: []
-    },
-    parentId: 'fhmk5ukJ9dLJfJPzyCWh1'
-  },
-  {
-    id: 'NVDAAChKrJULZuTKH599J',
-    type: 'SAMEASABOVE',
-    variant: 'FIELD',
-    label: 'Same As Above',
-    validations: {},
-    conditions: {
-      combinator: 'and',
-      rules: []
-    },
-    parentId: 'fhmk5ukJ9dLJfJPzyCWh1',
-    options: [
-      {
-        label: 'fname',
-        value: 'sfname'
-      },
-      {
-        label: 'lname',
-        value: 'slname'
-      }
-    ],
-    mapFields: {},
-    config: {}
-  },
-  {
-    id: 'mvXrVXLwSyoJ36m9ZTQKq',
-    type: 'GRID',
-    variant: 'GRID',
-    cols: 2,
-    placement: 'start',
-    conditions: {
-      combinator: 'and',
-      rules: []
-    },
-    parentId: 'fhmk5ukJ9dLJfJPzyCWh1'
-  },
-  {
-    id: 'Co9OxSM9f9obj3z_X93hA',
-    type: 'SUMMARY',
-    variant: 'SUMMARY',
-    label: 'Label',
-    validations: {},
-    conditions: {
-      combinator: 'and',
-      rules: []
-    },
-    parentId: 'fhmk5ukJ9dLJfJPzyCWh1'
-  },
-  {
-    id: 'KKHHxDW9_ALg8j7zU48mo',
-    type: 'INPUT',
-    variant: 'FIELD',
-    label: 'First Name',
-    name: 'fname',
-    placeholder: 'Placeholder',
-    validations: {},
-    conditions: {
-      combinator: 'and',
-      rules: []
-    },
-    parentId: '-GspfcIC_1-oK3f8iUUis',
-    mapFields: {},
-    config: {}
-  },
-  {
-    id: 'WwoTxv4QRi6t1z7Lzt4ek',
-    type: 'INPUT',
-    variant: 'FIELD',
-    label: 'Last Name',
-    name: 'lname',
-    placeholder: 'Placeholder',
-    validations: {},
-    conditions: {
-      combinator: 'and',
-      rules: []
-    },
-    parentId: '-GspfcIC_1-oK3f8iUUis',
-    mapFields: {},
-    config: {}
-  },
-  {
-    id: 'ptkb0pHYoLvUWYw8b9yTj',
-    type: 'INPUT',
-    variant: 'FIELD',
-    label: 'same first name',
-    name: 'sfname',
-    placeholder: 'Placeholder',
-    validations: {},
-    conditions: {
-      combinator: 'and',
-      rules: []
-    },
-    parentId: 'mvXrVXLwSyoJ36m9ZTQKq',
-    mapFields: {},
-    config: {}
-  },
-  {
-    id: 'xjsyaVmqSCqVJAuMtF1GW',
-    type: 'INPUT',
-    variant: 'FIELD',
-    label: 'same last',
-    name: 'slname',
-    placeholder: 'Placeholder',
-    validations: {},
-    conditions: {
-      combinator: 'and',
-      rules: []
-    },
-    parentId: 'mvXrVXLwSyoJ36m9ZTQKq',
-    mapFields: {},
-    config: {}
-  }
-]
+
 
 export const useFormStore = create<FormState>()(
   devtools(
     immer((set, get) => ({
-      fields: test,
+      fields: [],
       isPreview: false,
       selectedField: null,
       formValues: {},
@@ -238,15 +107,17 @@ export const useFormStore = create<FormState>()(
                     const _value = summaryField.variant == "IMAGE" ? summaryField?.src : formValues[summaryField.name]
                     acc[step.id].fields.push({
                       label: summaryField.label,
-                      value: _value || "No value",
-                      name: summaryField.name
+                      value: _value || "",
+                      type: summaryField.type,
+                      name: summaryField.name,
                     });
                   });
               } else {
                 const _value = field.variant == "IMAGE" ? field?.src : formValues[field.name];
                 acc[step.id].fields.push({
                   label: field.label,
-                  value: _value || "No value",
+                  value: _value || "",
+                  type: field.type,
                   name: field.name
                 });
               }

@@ -35,11 +35,11 @@ const FieldComponent: React.FC<{ field: any }> = ({ field }) => {
             className="relative"
         >
 
-            <div className='absolute flex gap-x-3 items-center justify-between z-10 right-3 top-2' >
+            <div className='absolute flex gap-x-3 items-center justify-between z-10 right-3 top-2 p-2'>
                 <IoMdSettings size={15} className='hover:rotate-45 hover:text-blue-500 transition-all cursor-pointer' onClick={handleSelectField} />
                 <FaTrashAlt size={15} className='hover:text-red-500 cursor-pointer' onClick={handleDeleteField} />
             </div>
-            <DesignerComponent {...field}>
+            <DesignerComponent {...field} className="h-10">
                 {field.children && field.children.map((child: any) => (
                     <FieldComponent key={child.id} field={child} />
                 ))}
