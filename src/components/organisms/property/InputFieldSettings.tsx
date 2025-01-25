@@ -41,6 +41,9 @@ const InputFieldSettings: React.FC = () => {
                 <Form.Item label="Max Length" name={['validations', 'maxLength']}>
                     <InputNumber min={0} />
                 </Form.Item>
+                <Form.Item label="RegEx" name={['validations', 'regEx']}>
+                    <Input />
+                </Form.Item>
             </Flex>
 
             <Form.Item label="Custom Validation Message" name={['validations', 'message']}>
