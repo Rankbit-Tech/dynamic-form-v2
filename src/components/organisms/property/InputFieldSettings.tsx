@@ -46,9 +46,9 @@ const InputFieldSettings: React.FC = () => {
                 </Form.Item>
             </Flex>
 
-            <Form.Item label="Custom Validation Message" name={['validations', 'message']}>
+            {/* <Form.Item label="Custom Validation Message" name={['validations', 'message']}>
                 <Input.TextArea rows={3} />
-            </Form.Item>
+            </Form.Item> */}
 
             <DividerWithHeader title='Conditions' />
             <QueryBuilderComponent handleCondition={handleCondition} conditions={values.conditions} />
