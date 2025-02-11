@@ -3,7 +3,6 @@ import { fieldTypes } from "@constants/fieldTypes";
 import { Image as ImagePreview } from "antd"
 import { useCallback } from "react"
 import dayjs from "dayjs";
-
 interface summaryProps {
     validations?: {
         fields?: string[]
@@ -25,6 +24,9 @@ const Summary = ({ validations }: summaryProps) => {
                     height={60}
                     src={field.value}
                 />
+            case fieldTypes.FILEUPLOAD:
+                const name = field?.name || "File Upload"
+                return <span> : &nbsp;{name}</span>;
             case fieldTypes.DATETIME:
                 return dayjs.isDayjs(field.value) ? (<span> : &nbsp; {dayjs(field.value).format("DD/MM/YYYY").toString()} </span>) : <span> : &nbsp;{field.value}</span>
             default:
@@ -58,5 +60,6 @@ const Summary = ({ validations }: summaryProps) => {
         </div>
     )
 }
+
 
 export default Summary
