@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Form } from 'antd';
+import { Input, Form, Checkbox, Flex } from 'antd';
 import useSettingsForm from '@hooks/useSettingsForm';
 
 const StepperFieldSettings: React.FC = () => {
@@ -11,7 +11,12 @@ const StepperFieldSettings: React.FC = () => {
             <Form.Item label="Title" name="title">
                 <Input />
             </Form.Item>
-        </Form>
+
+
+            <Form.Item name="step-wise-response">
+                <Checkbox>Step wise response</Checkbox>
+            </Form.Item>
+        </Form >
     );
 };
 

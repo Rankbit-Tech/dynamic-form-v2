@@ -4,11 +4,14 @@ import { Rule, evaluateConditions } from "@lib/condition";
 import INPUT_FIELDS from "@constants/inputFieldConstants";
 import { fieldTypes } from "@constants/fieldTypes";
 import { FormConfig, useFormStore } from "@store/useFormStore";
+import { toCamelCase } from "@utils/index";
 
 export type Step = {
   title: string;
   children: Record<string, any>[];
 };
+
+
 
 
 const renderStep = (
@@ -83,20 +86,13 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
   const formValues = useWatch([], form) || {};
 
 
-  const [formConfig, current, setCurrent, setFormValues] = useFormStore((state) => {
-    return [
-      state.formConfig,
-      state.current,
-      state.setCurrent,
-      state.setFormValues
-    ];
-  });
+  const { formConfig, current, setCurrent, setFormValues, fields } = useFormStore((state) => state);
 
   const items = useMemo(() => {
     return data?.map((step: Step, index: number) => ({
       key: index.toString(),
       title: step.title,
-      content: renderStep(step.children, formValues, formConfig),
+      content: renderStep(step.children, form.getFieldsValue(true), formConfig),
     }));
   }, [data, formConfig, formValues]);
 
@@ -109,21 +105,59 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
 
 
   const next = useCallback(() => {
+
     form.validateFields().then(() => {
       setCurrent((prev: number) => prev + 1);
-    });
+      setFormValues((oldValues: any) => {
+        return { ...oldValues, ...form.getFieldsValue(true) }
+      })
+    }).catch(err => {
+      return false
+    })
   }, [form]);
 
   const prev = useCallback(() => {
     setCurrent((prev: number) => prev - 1);
   }, []);
 
+
+  const findStepByFieldName = (field: any) => {
+    if (!field) return undefined
+    if (field.variant == "STEPPER") {
+      return toCamelCase(field.title)
+    } else if (field.parentId) {
+      const parent = fields.find(f => f.id == field.parentId)
+      return findStepByFieldName(parent)
+    }
+
+  }
+
+  const formateDataStepWise = (values: Object) => {
+    const steps: Record<string, any> = {};
+
+    Object.entries(values).forEach(([key, value]) => {
+      const field = fields.find(f => f.name == key)
+      if (!field) return;
+      const stepTitle = findStepByFieldName(field)
+
+      if (!stepTitle) return;
+      if (steps[stepTitle]) {
+        steps[stepTitle] = { ...steps[stepTitle], [key]: value };
+      } else {
+        steps[stepTitle] = { [key]: value }
+      }
+
+    })
+    return steps
+  }
+
   return {
     current,
     next,
     prev,
     items,
-    handleValueChange
+    handleValueChange,
+    formateDataStepWise
   };
 };
 
