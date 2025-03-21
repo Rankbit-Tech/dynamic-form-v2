@@ -21,15 +21,12 @@ interface Item {
 
 const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
 
-    const { setIsPreview, formValues } = useFormStore((state) => ({
-        setIsPreview: state.setIsPreview,
-        formValues: state.formValues,
-
-    })); const { subscribe } = useEventBus()
+    const { setIsPreview, formConfig, setFormValues } = useFormStore((state) => state);
+    const { subscribe } = useEventBus()
 
     const [form] = useForm();
 
-    const { current, next, prev, items, handleValueChange } = usePreview(form, data)
+    const { current, next, prev, items, handleValueChange, formateDataStepWise } = usePreview(form, data)
 
     useEffect(() => {
         const unsubscribeAdharData = subscribe("sendAdharData", (data) => {
@@ -49,11 +46,17 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
             handleValueChange(null, { ...form.getFieldsValue(), ...updatedValues });
         })
 
+        form.setFieldsValue(formConfig?.initialValues)
+
+        setFormValues((values: Object) => {
+            return { ...values, ...formConfig?.initialValues }
+        })
+
         return () => {
             unsubscribeAdharData();
             unsubscribeSameAsAboveFields();
         }
-    }, [form, handleValueChange, subscribe])
+    }, [form, handleValueChange, subscribe, formConfig])
 
     const convertIntoFormData = async (values: Record<string, any>) => {
         const formData = new FormData();
@@ -81,13 +84,18 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
         return formData;
     }
 
-    const handleFinish = async (values: Record<string, any>) => {
-
+    const handleFinish = async () => {
         if (isPreview) return false;
-        const finalValues = Object.values(values).length > 0 ? values : formValues
-        const formData = await convertIntoFormData(finalValues)
+
+        const values = form.getFieldsValue(true)
+
+        // const formatedData = formateDataStepWise(values)
+        const formData = await convertIntoFormData(values)
+
         onSubmit?.(formData, form)
     }
+
+
 
     return (
         <div>
@@ -99,33 +107,35 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
 
             <div className="p-5 m-2">
                 {data.length > 0 && (
-                    <Form form={form} layout="vertical" onFinish={handleFinish} onValuesChange={handleValueChange}>
-                        <Steps current={current}>
-                            {items?.map((item: Item) => (
-                                <Steps.Step key={item.key} title={item.title} />
-                            ))}
-                        </Steps>
-                        <div className="mt-4">
-                            {items[current].content}
-                        </div>
-                        <div className="mt-6">
-                            {current > 0 && (
-                                <Button className="mx-2" onClick={prev}>
-                                    Previous
-                                </Button>
-                            )}
-                            {current < items.length - 1 && (
-                                <Button type="primary" onClick={next}>
-                                    Next
-                                </Button>
-                            )}
-                            {current === items.length - 1 && (
-                                <Button type="primary" htmlType="submit">
-                                    Submit
-                                </Button>
-                            )}
-                        </div>
-                    </Form>
+                    <Form.Provider>
+                        <Form form={form} layout="vertical" name="dynamic-form" onFinish={handleFinish} onValuesChange={handleValueChange}>
+                            <Steps current={current}>
+                                {items?.map((item: Item) => (
+                                    <Steps.Step key={item.key} title={item.title} />
+                                ))}
+                            </Steps>
+                            <div className="mt-4">
+                                {items[current].content}
+                            </div>
+                            <div className="mt-6">
+                                {current > 0 && (
+                                    <Button className="mx-2" onClick={prev}>
+                                        Previous
+                                    </Button>
+                                )}
+                                {current < items.length - 1 && (
+                                    <Button type="primary" onClick={next}>
+                                        Next
+                                    </Button>
+                                )}
+                                {current === items.length - 1 && (
+                                    <Button type="primary" htmlType="submit">
+                                        Submit
+                                    </Button>
+                                )}
+                            </div>
+                        </Form>
+                    </Form.Provider>
                 )}
 
                 {data.length == 0 && (<h1 className="text-center font-semibold text-slate-600">No fields found</h1>)}

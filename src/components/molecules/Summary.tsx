@@ -9,13 +9,83 @@ interface summaryProps {
     }
 }
 
+interface Field {
+    label: string;
+    value: string;
+    type: string;
+    name: string;
+}
+
+interface Step {
+    title: string;
+    fields: Field[];
+}
+
+interface FormField {
+    id: string;
+    parentId?: string;
+    variant: "FIELD" | "GRID" | "IMAGE" | "SECTION" | "STEPPER";
+    title?: string;
+    label?: string;
+    name?: string;
+    type?: string;
+    src?: string;
+}
+
+
 const Summary = ({ validations }: summaryProps) => {
 
-    const { getSummary } = useFormStore(state => state)
+    const { fields, formValues } = useFormStore(state => state)
 
     const fieldsToIncludeSet = new Set(validations?.fields || []);
 
-    const summary: Step[] = getSummary();
+
+    const getSummary = (): Step[] => {
+
+        const groupedFields: Record<string, Step> = {};
+        const typedFields = fields as FormField[];
+
+
+        fields.forEach((field) => {
+            if (["FIELD", "GRID", "IMAGE", "SECTION"].includes(field.variant)) {
+                const step = fields.find(
+                    (stepField) => stepField.id === field.parentId && stepField.variant === "STEPPER"
+                );
+
+                if (step) {
+                    if (!groupedFields[step.id]) {
+                        groupedFields[step.id] = {
+                            title: step.title || "",
+                            fields: []
+                        };
+                    }
+
+                    const addFieldToStep = (f: FormField) => {
+                        if (f.variant === "GRID" || f.variant === "SECTION") {
+                            typedFields
+                                .filter(subField => subField.parentId === f.id)
+                                .forEach((subField) => addFieldToStep(subField));
+                        } else {
+                            const value = f.variant === "IMAGE" ? f.src || "" : formValues[f.name || ""] || "";
+                            groupedFields[step.id].fields.push({
+                                label: f.label || "",
+                                value,
+                                type: f.type || "",
+                                name: f.name || ""
+                            });
+                        }
+                    };
+
+                    addFieldToStep(field as FormField);
+                }
+            }
+        });
+
+        return Object.values(groupedFields);
+    };
+
+
+    const summary = getSummary();
 
     const renderFields = useCallback((field: Field) => {
         switch (field.type) {

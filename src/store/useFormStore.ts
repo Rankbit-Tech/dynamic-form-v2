@@ -26,10 +26,13 @@ interface FormState {
   setIsPreview: (flag: boolean) => void;
   setFormValues: (callback: Function) => void;
   getSummary: () => Step[];
+  getSummaryV2: () => void;
   setFormConfig: (data?: FormConfig) => void;
   setMetadata: (callback: Function | FormState['metadata']) => void
   reset: (fullReset: boolean | undefined) => void
 }
+
+type Summary = Record<string, Record<string, any>>;
 
 
 
@@ -82,7 +85,7 @@ export const useFormStore = create<FormState>()(
         const { fields, formValues } = get();
 
         const groupedFields = fields.reduce((acc, field) => {
-          if (["FIELD", "GRID", "IMAGE"].includes(field.variant)) {
+          if (["FIELD", "GRID", "IMAGE", "SECTION"].includes(field.variant)) {
             const step = fields.find(
               (stepField) =>
                 stepField.id === field.parentId &&
@@ -127,6 +130,50 @@ export const useFormStore = create<FormState>()(
         }, {});
         return Object.values(groupedFields);
       },
+      getSummaryV2: () => {
+        const { fields, formValues } = get();
+
+        const groupedFields: Summary = {};
+
+        const processFields = (fieldsList: recordArray, parentId: string, stepTitle: string) => {
+          fieldsList.forEach(field => {
+            if (field.parentId === parentId) {
+              if (field.variant === "SECTION") {
+                // Recursively process nested sections
+                processFields(fieldsList, field.id, stepTitle);
+              } else {
+                if (!groupedFields[stepTitle]) {
+                  groupedFields[stepTitle] = {};
+                }
+
+                let value = field.variant === "IMAGE" ? field.src || "" : formValues[field.name || ""] || "";
+
+                if (field.variant === "GRID") {
+                  const gridFields = fieldsList.filter(f => f.parentId === field.id);
+                  gridFields.forEach(gridField => {
+                    let gridValue = gridField.variant === "IMAGE" ? gridField.src || "" : formValues[gridField.name || ""] || "";
+                    groupedFields[stepTitle][gridField.name || ""] = gridValue;
+                  });
+                } else {
+                  if (field.name) {
+                    groupedFields[stepTitle][field.name] = value;
+                  }
+                }
+              }
+            }
+          });
+        };
+
+        // Loop through all stepper fields
+        fields.forEach(step => {
+          if (step.variant === "STEPPER" && step.title) {
+            processFields(fields, step.id, step.title);
+          }
+        });
+
+        return groupedFields;
+      },
+
 
       setFormConfig: (data?: FormConfig) => {
         set((state: FormState) => {
