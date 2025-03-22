@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Form, Checkbox, Flex } from 'antd';
+import { Input, Form } from 'antd';
 import useSettingsForm from '@hooks/useSettingsForm';
 
 const StepperFieldSettings: React.FC = () => {

@@ -12,8 +12,6 @@ export type Step = {
 };
 
 
-
-
 const renderStep = (
   steps: Record<string, any>[],
   formValues: any,
@@ -111,7 +109,7 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
       setFormValues((oldValues: any) => {
         return { ...oldValues, ...form.getFieldsValue(true) }
       })
-    }).catch(err => {
+    }).catch(() => {
       return false
     })
   }, [form]);
@@ -121,7 +119,7 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
   }, []);
 
 
-  const findStepByFieldName = (field: any) => {
+  const findStepByFieldName = (field: any): string | undefined | any => {
     if (!field) return undefined
     if (field.variant == "STEPPER") {
       return toCamelCase(field.title)
