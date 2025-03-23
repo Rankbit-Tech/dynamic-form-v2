@@ -124,7 +124,7 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
     if (field.variant == "STEPPER") {
       return toCamelCase(field.title)
     } else if (field.parentId) {
-      const parent = fields.find(f => f.id == field.parentId)
+      const parent = fields?.find(f => f.id == field.parentId)
       return findStepByFieldName(parent)
     }
 
@@ -134,7 +134,7 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
     const steps: Record<string, any> = {};
 
     Object.entries(values).forEach(([key, value]) => {
-      const field = fields.find(f => f.name == key)
+      const field = fields?.find(f => f.name == key)
       if (!field) return;
       const stepTitle = findStepByFieldName(field)
 

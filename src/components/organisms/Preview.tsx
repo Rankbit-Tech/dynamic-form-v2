@@ -26,7 +26,7 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
 
     const [form] = useForm();
 
-    const { current, next, prev, items, handleValueChange } = usePreview(form, data)
+    const { current, next, prev, items, handleValueChange, formateDataStepWise } = usePreview(form, data)
 
     useEffect(() => {
         const unsubscribeAdharData = subscribe("sendAdharData", (data) => {
@@ -89,8 +89,8 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
 
         const values = form.getFieldsValue(true)
 
-        // const formatedData = formateDataStepWise(values)
-        const formData = await convertIntoFormData(values)
+        const formatedData = formateDataStepWise(values)
+        const formData = await convertIntoFormData(formatedData)
 
         onSubmit?.(formData, form)
     }
