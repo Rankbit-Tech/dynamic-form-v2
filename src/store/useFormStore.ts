@@ -40,7 +40,7 @@ type Summary = Record<string, Record<string, any>>;
 export const useFormStore = create<FormState>()(
   devtools(
     immer((set, get) => ({
-      fields: data,
+      fields: [],
       isPreview: false,
       selectedField: null,
       formValues: {},

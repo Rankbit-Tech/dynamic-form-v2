@@ -1,135 +1,151 @@
-import { useFormStore } from "@store/useFormStore"
+import { useFormStore } from "@store/useFormStore";
 import { fieldTypes } from "@constants/fieldTypes";
-import { Image as ImagePreview } from "antd"
-import { useCallback } from "react"
+import { Image as ImagePreview } from "antd";
+import { useCallback } from "react";
 import dayjs from "dayjs";
 interface summaryProps {
-    validations?: {
-        fields?: string[]
-    }
+  validations?: {
+    fields?: string[];
+  };
 }
 
 interface Field {
-    label: string;
-    value: string;
-    type: string;
-    name: string;
+  label: string;
+  value: string;
+  type: string;
+  name: string;
 }
 
 interface Step {
-    title: string;
-    fields: Field[];
+  title: string;
+  fields: Field[];
 }
 
 interface FormField {
-    id: string;
-    parentId?: string;
-    variant: "FIELD" | "GRID" | "IMAGE" | "SECTION" | "STEPPER";
-    title?: string;
-    label?: string;
-    name?: string;
-    type?: string;
-    src?: string;
+  id: string;
+  parentId?: string;
+  variant: "FIELD" | "GRID" | "IMAGE" | "SECTION" | "STEPPER";
+  title?: string;
+  label?: string;
+  name?: string;
+  type?: string;
+  src?: string;
 }
 
+const RenderImages = ({ field }: { field: Field }) => {
+  if (!Array.isArray(field?.value)) return null;
+
+  return field.value.map((file) => (
+    <ImagePreview
+      key={file.name}
+      height={60}
+      src={URL.createObjectURL(file.originFileObj)}
+    />
+  ));
+};
 
 const Summary = ({ validations }: summaryProps) => {
+  const { fields, formValues } = useFormStore((state) => state);
 
-    const { fields, formValues } = useFormStore(state => state)
+  const fieldsToIncludeSet = new Set(validations?.fields || []);
 
-    const fieldsToIncludeSet = new Set(validations?.fields || []);
+  const getSummary = (): Step[] => {
+    const groupedFields: Record<string, Step> = {};
+    const typedFields = fields as FormField[];
 
+    fields.forEach((field) => {
+      if (["FIELD", "GRID", "IMAGE", "SECTION"].includes(field.variant)) {
+        const step = fields.find(
+          (stepField) =>
+            stepField.id === field.parentId && stepField.variant === "STEPPER"
+        );
 
-    const getSummary = (): Step[] => {
+        if (step) {
+          if (!groupedFields[step.id]) {
+            groupedFields[step.id] = {
+              title: step.title || "",
+              fields: [],
+            };
+          }
 
-        const groupedFields: Record<string, Step> = {};
-        const typedFields = fields as FormField[];
-
-
-        fields.forEach((field) => {
-            if (["FIELD", "GRID", "IMAGE", "SECTION"].includes(field.variant)) {
-                const step = fields.find(
-                    (stepField) => stepField.id === field.parentId && stepField.variant === "STEPPER"
-                );
-
-                if (step) {
-                    if (!groupedFields[step.id]) {
-                        groupedFields[step.id] = {
-                            title: step.title || "",
-                            fields: []
-                        };
-                    }
-
-                    const addFieldToStep = (f: FormField) => {
-                        if (f.variant === "GRID" || f.variant === "SECTION") {
-                            typedFields
-                                .filter(subField => subField.parentId === f.id)
-                                .forEach((subField) => addFieldToStep(subField));
-                        } else {
-                            const value = f.variant === "IMAGE" ? f.src || "" : formValues[f.name || ""] || "";
-                            groupedFields[step.id].fields.push({
-                                label: f.label || "",
-                                value,
-                                type: f.type || "",
-                                name: f.name || ""
-                            });
-                        }
-                    };
-
-                    addFieldToStep(field as FormField);
-                }
+          const addFieldToStep = (f: FormField) => {
+            if (f.variant === "GRID" || f.variant === "SECTION") {
+              typedFields
+                .filter((subField) => subField.parentId === f.id)
+                .forEach((subField) => addFieldToStep(subField));
+            } else {
+              const value =
+                f.variant === "IMAGE"
+                  ? f.src || ""
+                  : formValues[f.name || ""] || "";
+              groupedFields[step.id].fields.push({
+                label: f.label || "",
+                value,
+                type: f.type || "",
+                name: f.name || "",
+              });
             }
-        });
+          };
 
-        return Object.values(groupedFields);
-    };
-
-
-    const summary = getSummary();
-
-    const renderFields = useCallback((field: Field) => {
-        switch (field.type) {
-            case fieldTypes.IMAGE:
-                return <ImagePreview
-                    height={60}
-                    src={field.value}
-                />
-            case fieldTypes.FILEUPLOAD:
-                const name = field?.name || "File Upload"
-                return <span> : &nbsp;{name}</span>;
-            case fieldTypes.DATETIME:
-                return dayjs.isDayjs(field.value) ? (<span> : &nbsp; {dayjs(field.value).format("DD/MM/YYYY").toString()} </span>) : <span> : &nbsp;{field.value}</span>
-            default:
-                return <span> : &nbsp;{field.value}</span>
+          addFieldToStep(field as FormField);
         }
-    }, [])
+      }
+    });
 
-    return (
-        <div className="border p-2 bg-white shadow" >
-            <div>
-                {summary.map((step, index) => (
-                    <div key={index} style={{ marginBottom: 24 }}>
-                        <h2 className="text-red-900 font-semibold mb-4 w-full">{step.title}</h2>
-                        <div className="w-full columns-2">
-                            {step.fields.map(field => {
-                                if (!fieldsToIncludeSet.has(field.name)) {
-                                    return null;
-                                }
-                                return (
-                                    <div className="flex" key={field.label}>
-                                        <span className="min-w-[250px] font-bold">{field.label}</span>
-                                        {renderFields(field)}
-                                    </div>
-                                )
-                            }
-                            )}
-                        </div>
-                    </div>
-                ))}
+    return Object.values(groupedFields);
+  };
+
+  const summary = getSummary();
+
+  const renderFields = useCallback((field: Field) => {
+    switch (field.type) {
+      case fieldTypes.IMAGEUPLOAD:
+        return <RenderImages field={field} />;
+      case fieldTypes.FILEUPLOAD:
+        const name = field?.name || "File Upload";
+        return <span> : &nbsp;{name}</span>;
+      case fieldTypes.DATETIME:
+        return dayjs.isDayjs(field.value) ? (
+          <span>
+            {" "}
+            : &nbsp; {dayjs(field.value).format("YYYY/MM/DD").toString()}{" "}
+          </span>
+        ) : (
+          <span> : &nbsp;{field.value}</span>
+        );
+      default:
+        return <span> : &nbsp;{field.value}</span>;
+    }
+  }, []);
+
+  return (
+    <div className="border p-2 bg-white shadow">
+      <div>
+        {summary.map((step, index) => (
+          <div key={index} style={{ marginBottom: 24 }}>
+            <h2 className="text-red-900 font-semibold mb-4 w-full">
+              {step.title}
+            </h2>
+            <div className="w-full columns-2">
+              {step.fields.map((field) => {
+                if (!fieldsToIncludeSet.has(field.name)) {
+                  return null;
+                }
+                return (
+                  <div className="flex" key={field.label}>
+                    <span className="min-w-[250px] font-bold">
+                      {field.label}
+                    </span>
+                    {renderFields(field)}
+                  </div>
+                );
+              })}
             </div>
-        </div>
-    )
-}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
-
-export default Summary
+export default Summary;
