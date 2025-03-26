@@ -13,7 +13,7 @@ interface FileUploadFieldDesigner {
   parentId: string;
 }
 
-const FileUploadFieldDesigner: React.FC<FileUploadFieldDesigner> = ({
+const ImageUploadFieldDesigner: React.FC<FileUploadFieldDesigner> = ({
   label,
   id,
   parentId,
@@ -47,7 +47,7 @@ const FileUploadFieldDesigner: React.FC<FileUploadFieldDesigner> = ({
           <label>{label}</label>
           <div className="mt-1">
             <Upload>
-              <Button icon={<UploadOutlined />}>Upload File</Button>
+              <Button icon={<UploadOutlined />}>Upload Image</Button>
             </Upload>
           </div>
         </div>
@@ -56,4 +56,4 @@ const FileUploadFieldDesigner: React.FC<FileUploadFieldDesigner> = ({
   );
 };
 
-export default FileUploadFieldDesigner;
+export default ImageUploadFieldDesigner;

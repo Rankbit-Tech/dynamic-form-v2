@@ -18,7 +18,9 @@ export const fieldTypes = {
     TEXTAREA: "TEXTAREA",
     GRID: "GRID",
     SUMMARY: "SUMMARY",
-    IMAGE: "IMAGE"
+    IMAGE: "IMAGE",
+    IMAGEUPLOAD: "IMAGEUPLOAD",
+
 }
 
 export const VARIANT = {

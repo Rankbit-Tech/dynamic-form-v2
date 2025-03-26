@@ -18,6 +18,8 @@ import TextAreaFieldSettings from '@components/organisms/property/TextAreaFieldS
 import TextAreaFieldDesigner from '@components/organisms/designer/TextAreaFieldDesigner';
 import SectionFieldSettings from '@components/organisms/property/SectionFieldSettings';
 import StepperFieldSettings from '@components/organisms/property/StepperFieldSettings';
+import ImageUploadFieldSettings from '@components/organisms/property/ImageUploadFieldSettings';
+import ImageUploadFieldDesigner from '@components/organisms/designer/ImageUploadFieldDesigner';
 import SectionDesigner from '@components/organisms/designer/SectionDesigner';
 
 import { VARIANT, fieldTypes } from "@constants/fieldTypes";
@@ -53,7 +55,7 @@ import InputFieldSettings from '@components/organisms/property/InputFieldSetting
 import InputFieldDesigner from '@components/organisms/designer/InputFieldDesigner';
 import InputField from '@components/atoms/Input';
 import PasswordInput from '@components/atoms/PasswordInput';
-import FileUpload from '@components/atoms/FileUpload ';
+import FileUpload from '@components/atoms/FileUpload';
 import TextField from '@components/atoms/TextField';
 import TextFieldSettings from '@components/organisms/property/TextFieldSettings';
 import TextFieldDesigner from '@components/organisms/designer/TextFieldDesigner';
@@ -65,11 +67,13 @@ import SummaryDesigner from '@components/organisms/designer/SummaryDesigner';
 import ImageSettings from '@components/organisms/property/ImageSettings';
 import ImageDesigner from '@components/organisms/designer/ImageDesigner';
 import Image from '@components/atoms/Image';
+import ImageUpload from '@components/atoms/ImageUpload';
 
 import SameAsAboveDesigner from '@components/organisms/designer/SameAsAboveDesigner';
 import SameAsAboveFieldSetting from '@components/organisms/property/SameAsAboveFieldSetting';
 import SameAsAbove from '@components/molecules/SameAsAbove';
 import AadharCard from '@components/molecules/AdharCard';
+
 
 
 export interface InputFieldConfig {
@@ -244,6 +248,31 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             type: fieldTypes.FILEUPLOAD,
             variant: VARIANT.FIELD,
             label: 'File Upload Label',
+            name: '',
+            validations: {
+                required: false,
+                maxCount: 1,
+                accept: '',
+                maxSize: null,
+            },
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            },
+        }),
+    },
+    [fieldTypes.IMAGEUPLOAD]: {
+        type: fieldTypes.IMAGEUPLOAD,
+        propertyComponent: ImageUploadFieldSettings,
+        designerComponent: ImageUploadFieldDesigner,
+        renderComponent: ImageUpload,
+        icon: FaFileImage,
+        title: "Image Upload",
+        variant: VARIANT.FIELD,
+        construct: () => ({
+            type: fieldTypes.IMAGEUPLOAD,
+            variant: VARIANT.FIELD,
+            label: 'Image Upload Label',
             name: '',
             validations: {
                 required: false,

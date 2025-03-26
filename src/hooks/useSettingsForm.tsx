@@ -15,31 +15,30 @@ interface FieldType {
 type UseSettingsFormReturnType = {
   handleValuesChange: (
     changedValues: Record<string, any>,
-    allValues: Record<string, any>,
+    allValues: Record<string, any>
   ) => void;
   values: FieldType;
   handleCondition: (values: Record<string, any>) => void;
 };
 
 const useSettingsForm = (): UseSettingsFormReturnType => {
-  const { selectedField, setFields, fields } = useFormStore((state) => state);
+  const { selectedField, setFields, fields } = useFormStore();
 
   const values = fields.find(
-    (item) => item.id == selectedField?.id,
+    (item) => item.id == selectedField?.id
   ) as FieldType;
-
   if (values && values?.options === null) {
     values.options = [];
   }
 
   const handleValuesChange = (
     changedValues: Record<string, any>,
-    allValues: Record<string, any>,
+    allValues: Record<string, any>
   ) => {
     setFields((fields: FieldType[]) => {
       const elements = [...fields];
       const index = elements.findIndex(
-        (item: FieldType) => item.id === selectedField?.id,
+        (item: FieldType) => item.id === selectedField?.id
       );
 
       if (index !== -1) {
@@ -69,8 +68,7 @@ const useSettingsForm = (): UseSettingsFormReturnType => {
           config: {
             ...elements[index].config,
             ...changedValues.config,
-
-          }
+          },
         };
       }
 
@@ -80,7 +78,7 @@ const useSettingsForm = (): UseSettingsFormReturnType => {
   const handleCondition = (values: Record<string, any>) => {
     handleValuesChange(
       { conditions: JSON.parse(values.conditions) },
-      { ...values, conditions: values },
+      { ...values, conditions: values }
     );
   };
 

@@ -13,11 +13,12 @@ interface TextInputProps {
     disabled?: boolean
     numeric?: boolean
     regEx?: string
+    regExRemark?:string
   }
 }
 
 const InputField: React.FC<TextInputProps> = ({ label, name, disabled, placeholder, validations }) => {
-  const { required, maxLength, minLength, disabled: validationDisabled, numeric, regEx } = validations || {}
+  const { required, maxLength, minLength, disabled: validationDisabled, numeric, regEx ,regExRemark} = validations || {}
 
   const rules: any = [
     required && { required, message: `Please enter your ${label}` },
@@ -34,7 +35,7 @@ const InputField: React.FC<TextInputProps> = ({ label, name, disabled, placehold
     regEx && {
       validator: (_: any, value: any) => {
         if (value && !new RegExp(regEx).test(value)) {
-          return Promise.reject(new Error(`The value does not match the required pattern: ${regEx}`));
+          return Promise.reject(new Error(regExRemark));
         }
         return Promise.resolve();
       }

@@ -4,9 +4,8 @@ import useSettingsForm from "@hooks/useSettingsForm";
 import DividerWithHeader from "@components/atoms/Divider";
 import QueryBuilderComponent from "@components/molecules/QueryBuilder";
 
-const FileUploadFieldSettings: React.FC = () => {
+const ImageUploadFieldSettings: React.FC = () => {
   const { handleValuesChange, values, handleCondition } = useSettingsForm();
-
   return (
     <Form
       layout="vertical"
@@ -43,12 +42,11 @@ const FileUploadFieldSettings: React.FC = () => {
         label="Accepted File Types"
         name={["validations", "acceptedFiles"]}
       >
-        <Input placeholder="e.g., .zip, .exe, .pdf" />
+        <Input placeholder="e.g., .jpg, .png, .pdf" />
       </Form.Item>
       <Form.Item label="Max File Size (MB)" name={["validations", "maxSize"]}>
         <Input type="number" placeholder="e.g., 5" />
       </Form.Item>
-
       <Form.Item label="Maximum Files" name={["validations", "maxCount"]}>
         <Input
           type="number"
@@ -56,7 +54,6 @@ const FileUploadFieldSettings: React.FC = () => {
           disabled={!values?.validations.multiple}
         />
       </Form.Item>
-
       <DividerWithHeader title="Conditions" />
       <QueryBuilderComponent
         handleCondition={handleCondition}
@@ -66,4 +63,4 @@ const FileUploadFieldSettings: React.FC = () => {
   );
 };
 
-export default FileUploadFieldSettings;
+export default ImageUploadFieldSettings;
