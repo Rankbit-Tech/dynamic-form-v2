@@ -1,5 +1,3 @@
-
-
 export const fieldTypes = {
     INPUT: "INPUT",
     TEXT: "TEXT",
@@ -20,7 +18,7 @@ export const fieldTypes = {
     SUMMARY: "SUMMARY",
     IMAGE: "IMAGE",
     IMAGEUPLOAD: "IMAGEUPLOAD",
-
+    IMAGECAPTURE: "IMAGECAPTURE",
 }
 
 export const VARIANT = {

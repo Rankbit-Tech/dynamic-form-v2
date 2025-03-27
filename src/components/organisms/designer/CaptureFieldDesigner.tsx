@@ -2,22 +2,19 @@ import DragAreaSeperator from "@components/atoms/DragAreaSeperator";
 import DragAreaSplitter from "@components/atoms/DragAreaSplitter";
 import { VARIANT } from "@constants/fieldTypes";
 import { useDroppable } from "@dnd-kit/core";
-import { Checkbox } from "antd";
-import React from "react";
+import { Button } from "antd";
 
-interface CheckboxFieldDesignerProps {
+interface CaptureFieldDesignerProps {
   label: string;
-  options?: string[];
   id: string;
   parentId: string;
 }
 
-const CheckboxFieldDesigner: React.FC<CheckboxFieldDesignerProps> = ({
+const CaptureFieldDesigner = ({
   label,
-  options,
   parentId,
   id,
-}) => {
+}: CaptureFieldDesignerProps) => {
   const topHalf = useDroppable({
     id: `top-field-${id}`,
     data: {
@@ -36,7 +33,6 @@ const CheckboxFieldDesigner: React.FC<CheckboxFieldDesignerProps> = ({
       type: VARIANT.FIELD,
     },
   });
-
   return (
     <div className=" py-4 border rounded bg-white shadow mt-1">
       <DragAreaSplitter
@@ -46,11 +42,11 @@ const CheckboxFieldDesigner: React.FC<CheckboxFieldDesignerProps> = ({
       <DragAreaSeperator topHalf={topHalf} bottomHalf={bottomHalf}>
         <div className="mt-2 p-2 flex flex-col">
           <label className="mr-2 font-semibold mb-1">{label}</label>
-          <Checkbox.Group options={options} />
+          <Button>Capture</Button>
         </div>
       </DragAreaSeperator>
     </div>
   );
 };
 
-export default CheckboxFieldDesigner;
+export default CaptureFieldDesigner;

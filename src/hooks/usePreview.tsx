@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { FormInstance, useWatch } from "antd/es/form/Form";
+import { FormInstance } from "antd/es/form/Form";
 import { Rule, evaluateConditions } from "@lib/condition";
 import INPUT_FIELDS from "@constants/inputFieldConstants";
 import { fieldTypes } from "@constants/fieldTypes";
@@ -11,11 +11,10 @@ export type Step = {
   children: Record<string, any>[];
 };
 
-
 const renderStep = (
   steps: Record<string, any>[],
   formValues: any,
-  formConfig?: FormConfig,
+  formConfig?: FormConfig
 ) => {
   return steps.map((step) => {
     const RenderComponent = INPUT_FIELDS[step.type]?.renderComponent;
@@ -80,11 +79,8 @@ const renderStep = (
 };
 
 const usePreview = (form: FormInstance, data: Record<string, any>) => {
-
-  const formValues = useWatch([], form) || {};
-
-
-  const { formConfig, current, setCurrent, setFormValues, fields } = useFormStore((state) => state);
+  const { formConfig, current, setCurrent, setFormValues, fields } =
+    useFormStore((state) => state);
 
   const items = useMemo(() => {
     return data?.map((step: Step, index: number) => ({
@@ -92,62 +88,62 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
       title: step.title,
       content: renderStep(step.children, form.getFieldsValue(true), formConfig),
     }));
-  }, [data, formConfig, formValues]);
+  }, [data, form, formConfig]);
 
-  const handleValueChange = useCallback((_: any, allValues: any) => {
-    setFormValues((oldValues: any) => {
-      return { ...oldValues, ...allValues }
-    })
-  }, [setFormValues])
-
-
+  const handleValueChange = useCallback(
+    (_: any, allValues: any) => {
+      setFormValues((oldValues: any) => {
+        return { ...oldValues, ...allValues };
+      });
+    },
+    [setFormValues]
+  );
 
   const next = useCallback(() => {
-
-    form.validateFields().then(() => {
-      setCurrent((prev: number) => prev + 1);
-      setFormValues((oldValues: any) => {
-        return { ...oldValues, ...form.getFieldsValue(true) }
+    form
+      .validateFields()
+      .then(() => {
+        setCurrent((prev: number) => prev + 1);
+        setFormValues((oldValues: any) => {
+          return { ...oldValues, ...form.getFieldsValue(true) };
+        });
       })
-    }).catch(() => {
-      return false
-    })
-  }, [form]);
+      .catch(() => {
+        return false;
+      });
+  }, [form, setCurrent, setFormValues]);
 
   const prev = useCallback(() => {
     setCurrent((prev: number) => prev - 1);
-  }, []);
+  }, [setCurrent]);
 
-
-  const findStepByFieldName = (field: any): string | undefined | any => {
-    if (!field) return undefined
+  const findStepByFieldName = (field: any) => {
+    if (!field) return undefined;
     if (field.variant == "STEPPER") {
-      return toCamelCase(field.title)
+      return toCamelCase(field.title);
     } else if (field.parentId) {
-      const parent = fields?.find(f => f.id == field.parentId)
-      return findStepByFieldName(parent)
+      const parent = fields.find((f) => f.id == field.parentId);
+      return findStepByFieldName(parent);
     }
+  };
 
-  }
-
-  const formateDataStepWise = (values: Object) => {
+  const formateDataStepWise = (values: Record<string, any>) => {
     const steps: Record<string, any> = {};
 
     Object.entries(values).forEach(([key, value]) => {
-      const field = fields?.find(f => f.name == key)
+      const field = fields.find((f) => f.name == key);
       if (!field) return;
-      const stepTitle = findStepByFieldName(field)
+      const stepTitle = findStepByFieldName(field);
 
       if (!stepTitle) return;
       if (steps[stepTitle]) {
         steps[stepTitle] = { ...steps[stepTitle], [key]: value };
       } else {
-        steps[stepTitle] = { [key]: value }
+        steps[stepTitle] = { [key]: value };
       }
-
-    })
-    return steps
-  }
+    });
+    return steps;
+  };
 
   return {
     current,
@@ -155,7 +151,7 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
     prev,
     items,
     handleValueChange,
-    formateDataStepWise
+    formateDataStepWise,
   };
 };
 

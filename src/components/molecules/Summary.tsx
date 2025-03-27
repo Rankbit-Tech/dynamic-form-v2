@@ -99,11 +99,14 @@ const Summary = ({ validations }: summaryProps) => {
 
   const renderFields = useCallback((field: Field) => {
     switch (field.type) {
+      case fieldTypes.IMAGE:
+        return <ImagePreview key={field.name} height={60} src={field.value} />;
       case fieldTypes.IMAGEUPLOAD:
         return <RenderImages field={field} />;
-      case fieldTypes.FILEUPLOAD:
+      case fieldTypes.FILEUPLOAD: {
         const name = field?.name || "File Upload";
         return <span> : &nbsp;{name}</span>;
+      }
       case fieldTypes.DATETIME:
         return dayjs.isDayjs(field.value) ? (
           <span>
@@ -112,6 +115,15 @@ const Summary = ({ validations }: summaryProps) => {
           </span>
         ) : (
           <span> : &nbsp;{field.value}</span>
+        );
+      case fieldTypes.IMAGECAPTURE:
+        return (
+          <ImagePreview
+            key={field.name}
+            height={60}
+            width={60}
+            src={field.value}
+          />
         );
       default:
         return <span> : &nbsp;{field.value}</span>;
@@ -126,14 +138,14 @@ const Summary = ({ validations }: summaryProps) => {
             <h2 className="text-red-900 font-semibold mb-4 w-full">
               {step.title}
             </h2>
-            <div className="w-full columns-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {step.fields.map((field) => {
                 if (!fieldsToIncludeSet.has(field.name)) {
                   return null;
                 }
                 return (
-                  <div className="flex" key={field.label}>
-                    <span className="min-w-[250px] font-bold">
+                  <div className="flex gap-2" key={field.label}>
+                    <span className="font-bold sm:min-w-[100px]">
                       {field.label}
                     </span>
                     {renderFields(field)}
