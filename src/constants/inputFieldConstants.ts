@@ -77,6 +77,9 @@ import AadharCard from '@components/molecules/AdharCard';
 import Capture from '@components/atoms/Capture';
 import CaptureFieldSettings from '@components/organisms/property/CaptureFieldSettings';
 import CaptureFieldDesigner from '@components/organisms/designer/CaptureFieldDesigner';
+import DividerWithHeader from '@components/atoms/Divider';
+import DividerSettings from '@components/organisms/property/DividerSettings';
+import DividerDesinger from '@components/organisms/designer/DividerDesinger';
 
 
 
@@ -502,6 +505,20 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             },
         }),
     },
+    [fieldTypes.DIVIDER]: {
+        type: fieldTypes.DIVIDER,
+        propertyComponent: DividerSettings,
+        designerComponent: DividerDesinger,
+        renderComponent: DividerWithHeader,
+        icon: RxDividerVertical,
+        title: "Divider",
+        variant: VARIANT.FIELD, 
+        construct: () => ({
+            type: fieldTypes.DIVIDER,
+            variant: VARIANT.FIELD,
+            title: "Divider",
+        })
+    }
 
 };
 
