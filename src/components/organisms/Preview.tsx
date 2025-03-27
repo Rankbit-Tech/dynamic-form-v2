@@ -50,7 +50,7 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
 
     form.setFieldsValue(formConfig?.initialValues);
 
-    setFormValues((values: Object) => {
+    setFormValues((values: Record<string, any>) => {
       return { ...values, ...formConfig?.initialValues };
     });
 
@@ -58,7 +58,7 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
       unsubscribeAdharData();
       unsubscribeSameAsAboveFields();
     };
-  }, [form, handleValueChange, subscribe, formConfig]);
+  }, [form, handleValueChange, subscribe, formConfig, setFormValues]);
 
   const convertIntoFormData = async (values: Record<string, any>) => {
     const formData = new FormData();

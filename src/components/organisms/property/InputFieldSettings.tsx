@@ -51,13 +51,13 @@ const InputFieldSettings: React.FC = () => {
       <Row gutter={8}>
         <Col span={12}>
           <Form.Item label="Min Length" name={["validations", "minLength"]}>
-            <InputNumber min={0}  className="w-full"/>
+            <InputNumber min={0} className="w-full" />
           </Form.Item>
         </Col>
 
         <Col span={12}>
           <Form.Item label="Max Length" name={["validations", "maxLength"]}>
-            <InputNumber min={0}  className="w-full"/>
+            <InputNumber min={0} className="w-full" />
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -73,9 +73,9 @@ const InputFieldSettings: React.FC = () => {
         </Col>
       </Row>
 
-      {/* <Form.Item label="Custom Validation Message" name={['validations', 'message']}>
-                <Input.TextArea rows={3} />
-            </Form.Item> */}
+      <Form.Item label="Custom Value" name={["validations", "customValue"]}>
+        <Input placeholder="e.g. {{formValues.fiestName} {{formValues.lastName}}" />
+      </Form.Item>
 
       <DividerWithHeader title="Conditions" />
       <QueryBuilderComponent

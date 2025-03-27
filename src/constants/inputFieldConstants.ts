@@ -38,6 +38,7 @@ import { FaParagraph } from "react-icons/fa";
 import { FaAddressCard } from "react-icons/fa";
 import { BsTextParagraph } from "react-icons/bs";
 import { FaFileImage } from "react-icons/fa";
+import { AiFillCamera } from "react-icons/ai";
 
 
 
@@ -73,6 +74,9 @@ import SameAsAboveDesigner from '@components/organisms/designer/SameAsAboveDesig
 import SameAsAboveFieldSetting from '@components/organisms/property/SameAsAboveFieldSetting';
 import SameAsAbove from '@components/molecules/SameAsAbove';
 import AadharCard from '@components/molecules/AdharCard';
+import Capture from '@components/atoms/Capture';
+import CaptureFieldSettings from '@components/organisms/property/CaptureFieldSettings';
+import CaptureFieldDesigner from '@components/organisms/designer/CaptureFieldDesigner';
 
 
 
@@ -279,6 +283,28 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
                 maxCount: 1,
                 accept: '',
                 maxSize: null,
+            },
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            },
+        }),
+    },
+    [fieldTypes.IMAGECAPTURE]: {
+        type: fieldTypes.IMAGECAPTURE,
+        propertyComponent: CaptureFieldSettings,
+        designerComponent: CaptureFieldDesigner,
+        renderComponent: Capture,
+        icon: AiFillCamera ,
+        title: "Capture",
+        variant: VARIANT.FIELD,
+        construct: () => ({
+            type: fieldTypes.IMAGECAPTURE,
+            variant: VARIANT.FIELD,
+            label: 'Capture',
+            name: '',
+            validations: {
+                required: false,
             },
             conditions: {
                 combinator: 'and',
