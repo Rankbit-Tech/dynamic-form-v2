@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Form,
   Upload,
@@ -9,10 +9,12 @@ import {
   Image,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import { normalizeFileList } from "@utils/index";
 
 interface FileUploadProps {
   label: string;
   name: string;
+  formConfig: Record<string, any>;
   validations: {
     required?: boolean;
     accept?: string;
@@ -25,14 +27,21 @@ interface FileUploadProps {
 const ImageUpload: React.FC<FileUploadProps> = ({
   label,
   name,
+  formConfig,
   validations,
 }) => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [previewImages, setPreviewImages] = useState<(string | undefined)[]>(
-    []
-  );
 
+  const form = Form.useFormInstance();
   const { required, maxCount, accept, maxSize, multiple } = validations || {};
+
+  useEffect(() => {
+    const value =
+      form.getFieldValue(name) ||
+      normalizeFileList(formConfig?.initialValues?.[name] || []);
+    if (!value) return;
+    setFileList(value);
+  }, [form, name, formConfig?.initialValues]);
 
   const rules = [{ required, message: `Please upload your ${label}` }];
   const props: UploadProps = {
@@ -43,7 +52,8 @@ const ImageUpload: React.FC<FileUploadProps> = ({
       setFileList(newFileList);
     },
     beforeUpload: (file) => {
-      const isFileSizeValid = (maxSize && file.size <= maxSize * 1024) || true;
+      const isFileSizeValid =
+        (maxSize && file.size <= maxSize * 1024 * 1024) || true;
 
       if (maxSize && !isFileSizeValid) {
         message.error(`File must be smaller or equal to ${maxSize}MB!`);
@@ -59,11 +69,6 @@ const ImageUpload: React.FC<FileUploadProps> = ({
       );
 
       setFileList(uniqueFiles);
-      const imagePreviews = uniqueFiles.map((file) =>
-        file.originFileObj ? URL.createObjectURL(file.originFileObj) : file.url
-      );
-
-      setPreviewImages(imagePreviews);
     },
     fileList,
     maxCount: multiple ? maxCount : 1,
@@ -85,9 +90,14 @@ const ImageUpload: React.FC<FileUploadProps> = ({
         </Upload>
       </Form.Item>
       <div className="flex gap-2 mt-4">
-        {previewImages?.map((src, index) => (
-          <Image key={index} src={src} width={100} height={100} />
-        ))}
+        {fileList?.map((file, index) => {
+          const imageUrl = file.originFileObj
+            ? URL.createObjectURL(file.originFileObj)
+            : file.url;
+          return imageUrl ? (
+            <Image key={index} src={imageUrl} width={100} height={100} />
+          ) : null;
+        })}
       </div>
     </>
   );

@@ -26,12 +26,11 @@ import { VARIANT, fieldTypes } from "@constants/fieldTypes";
 
 import { IconType } from "react-icons";
 import { CiText } from "react-icons/ci";
-import { MdCheckBoxOutlineBlank } from "react-icons/md";
 import { IoMdCheckbox, IoMdRadioButtonOn } from 'react-icons/io';
 import { BsCalendar2DateFill, BsTextareaT } from 'react-icons/bs';
 import { FaCopy, FaFileUpload } from 'react-icons/fa';
 import { GoNumber } from 'react-icons/go';
-import { MdOutlinePassword } from 'react-icons/md';
+import { MdCheckBoxOutlineBlank, MdOutlinePassword } from 'react-icons/md';
 import { RxDividerVertical } from 'react-icons/rx';
 import { TbGridDots, TbSection } from 'react-icons/tb';
 import { FaParagraph } from "react-icons/fa";

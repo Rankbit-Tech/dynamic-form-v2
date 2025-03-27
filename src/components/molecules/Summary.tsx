@@ -39,7 +39,7 @@ const RenderImages = ({ field }: { field: Field }) => {
     <ImagePreview
       key={file.name}
       height={60}
-      src={URL.createObjectURL(file.originFileObj)}
+      src={file?.url || URL.createObjectURL(file?.originFileObj)}
     />
   ));
 };
