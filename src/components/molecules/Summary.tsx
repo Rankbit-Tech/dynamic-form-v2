@@ -7,6 +7,7 @@ interface summaryProps {
   validations?: {
     fields?: string[];
   };
+  isOnRenderPage?: boolean;
 }
 
 interface Field {
@@ -44,7 +45,7 @@ const RenderImages = ({ field }: { field: Field }) => {
   ));
 };
 
-const Summary = ({ validations }: summaryProps) => {
+const Summary = ({ validations, isOnRenderPage = false }: summaryProps) => {
   const { fields, formValues } = useFormStore((state) => state);
 
   const fieldsToIncludeSet = new Set(validations?.fields || []);
@@ -140,7 +141,7 @@ const Summary = ({ validations }: summaryProps) => {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {step.fields.map((field) => {
-                if (!fieldsToIncludeSet.has(field.name)) {
+                if (!fieldsToIncludeSet.has(field.name) && !isOnRenderPage) {
                   return null;
                 }
                 return (

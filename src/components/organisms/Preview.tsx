@@ -5,12 +5,14 @@ import usePreview, { Step } from "@hooks/usePreview";
 import useEventBus from "@hooks/useEventBus";
 import { useEffect } from "react";
 import { isImageUrl, normalizeFileList } from "@utils/index";
+import Summary from "@components/molecules/Summary";
 
 interface PreviewProps {
   data: Record<string, any>[];
   onSubmit?: (formData: FormData, form?: FormInstance) => void;
   isPreview?: boolean;
   isUpdateState?: boolean;
+  showSummaryOnly?: boolean;
 }
 
 interface Item {
@@ -24,6 +26,7 @@ const Preview = ({
   onSubmit,
   isPreview,
   isUpdateState,
+  showSummaryOnly,
 }: PreviewProps) => {
   const { setIsPreview, formConfig, setFormValues } = useFormStore(
     (state) => state
@@ -115,7 +118,9 @@ const Preview = ({
 
     onSubmit?.(formData, form);
   };
-
+  if (showSummaryOnly) {
+    return <Summary isOnRenderPage={true} />;
+  }
   return (
     <div>
       {isPreview && (
