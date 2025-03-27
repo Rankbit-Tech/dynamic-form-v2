@@ -4,12 +4,13 @@ import { FormInstance, useForm } from "antd/es/form/Form";
 import usePreview, { Step } from "@hooks/usePreview";
 import useEventBus from "@hooks/useEventBus";
 import { useEffect } from "react";
-import { isImageUrl, normalizeFileList, urlToBlob } from "@utils/index";
+import { isImageUrl, normalizeFileList } from "@utils/index";
 
 interface PreviewProps {
   data: Record<string, any>[];
   onSubmit?: (formData: FormData, form?: FormInstance) => void;
   isPreview?: boolean;
+  isUpdateState?: boolean;
 }
 
 interface Item {
@@ -18,7 +19,12 @@ interface Item {
   content: (step: Step, formValues: Record<string, any>) => void;
 }
 
-const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
+const Preview = ({
+  data,
+  onSubmit,
+  isPreview,
+  isUpdateState,
+}: PreviewProps) => {
   const { setIsPreview, formConfig, setFormValues } = useFormStore(
     (state) => state
   );
@@ -101,12 +107,11 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
   };
 
   const handleFinish = async () => {
-    // if (isPreview) return false;
+    if (isPreview) return false;
 
     const values = form.getFieldsValue(true);
-    // const formatedData = formateDataStepWise(values);
-    // console.log(formatedData, "formatedData");
-    const formData = await convertIntoFormData(values);
+    const formatedData = formateDataStepWise(values);
+    const formData = await convertIntoFormData(formatedData);
 
     onSubmit?.(formData, form);
   };
@@ -150,7 +155,7 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
                 )}
                 {current === items.length - 1 && (
                   <Button type="primary" htmlType="submit">
-                    Submit
+                    {isUpdateState ? "Update " : "Submit"}
                   </Button>
                 )}
               </div>
