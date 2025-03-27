@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { data } from "./test";
+import { test } from "./test";
 
 type RecordType = Record<string, any>;
 type recordArray = Record<string, any>[];
@@ -40,7 +40,7 @@ type Summary = Record<string, Record<string, any>>;
 export const useFormStore = create<FormState>()(
   devtools(
     immer((set, get) => ({
-      fields: [],
+      fields: test,
       isPreview: false,
       selectedField: null,
       formValues: {},

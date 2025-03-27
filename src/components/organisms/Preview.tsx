@@ -4,6 +4,7 @@ import { FormInstance, useForm } from "antd/es/form/Form";
 import usePreview, { Step } from "@hooks/usePreview";
 import useEventBus from "@hooks/useEventBus";
 import { useEffect } from "react";
+import { isImageUrl, normalizeFileList, urlToBlob } from "@utils/index";
 
 interface PreviewProps {
   data: Record<string, any>[];
@@ -48,7 +49,20 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
       }
     );
 
-    form.setFieldsValue(formConfig?.initialValues);
+    if (formConfig?.initialValues) {
+      const transformedValues = { ...formConfig.initialValues };
+
+      // Automatically detect and transform image fields
+      Object.keys(transformedValues).forEach((key) => {
+        if (
+          isImageUrl(transformedValues[key]) ||
+          Array.isArray(transformedValues[key])
+        ) {
+          transformedValues[key] = normalizeFileList(transformedValues[key]);
+        }
+      });
+      form.setFieldsValue(transformedValues);
+    }
 
     setFormValues((values: Record<string, any>) => {
       return { ...values, ...formConfig?.initialValues };
@@ -69,7 +83,7 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
       } else if (Array.isArray(value)) {
         value.forEach((item, index) => {
           if (item.originFileObj) {
-            formData.append(`${key}[${index}]`, item.originFileObj);
+            formData.append(key, item.originFileObj);
           } else {
             formData.append(`${key}[${index}]`, item);
           }
@@ -90,9 +104,9 @@ const Preview = ({ data, onSubmit, isPreview }: PreviewProps) => {
     // if (isPreview) return false;
 
     const values = form.getFieldsValue(true);
-    console.log(values, "values");
-    const formatedData = formateDataStepWise(values);
-    const formData = await convertIntoFormData(formatedData);
+    // const formatedData = formateDataStepWise(values);
+    // console.log(formatedData, "formatedData");
+    const formData = await convertIntoFormData(values);
 
     onSubmit?.(formData, form);
   };

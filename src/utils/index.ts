@@ -53,3 +53,39 @@ export const toCamelCase = (str: string) =>
       index === 0 ? match.toLowerCase() : match.toUpperCase()
     )
     .replace(/\s+/g, "");   
+
+
+export const urlToBlob = async (fileUrl: string): Promise<File> => {
+  const response = await fetch(fileUrl);
+  const blob = await response.blob();
+  const filename = fileUrl.split("/").pop() || "file";
+  return new File([blob], filename, { type: blob.type });
+};
+
+export const isImageUrl = (value:string) => {
+  if (typeof value === "string") {
+    return /\.(jpg|jpeg|png|gif|webp)$/i.test(value); // Check file extension
+  }
+  return false;
+};
+
+export const normalizeFileList = (value:string | string[]) => {
+  if (!value) return [];
+
+  if (typeof value === "string" && isImageUrl(value)) {
+    return [{ uid: crypto.randomUUID(), name: value.split("/").pop(), status: "done", url: value }];
+  }
+
+  if (Array.isArray(value)) {
+    return value
+      .filter((url) => isImageUrl(url))
+      .map((url) => ({
+        uid: crypto.randomUUID(),
+        name: url.split("/").pop(),
+        status: "done",
+        url,
+      }));
+  }
+
+  return [];
+};
