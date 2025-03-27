@@ -16,7 +16,7 @@ const useEvaluteValue = () => {
       let result = value;
 
       // Replace all template literals with actual values
-      result = result.replace(templateRegex, (match, field) => {
+      result = result.replace(templateRegex, (_, field) => {
         const fieldName = field.trim();
         // Get the complete field value
         const fieldValue = form.getFieldValue(fieldName);

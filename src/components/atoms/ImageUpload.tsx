@@ -6,7 +6,6 @@ import {
   UploadFile,
   UploadProps,
   message,
-  GetProp,
   Image,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";

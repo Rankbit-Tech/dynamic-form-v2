@@ -117,7 +117,7 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
     setCurrent((prev: number) => prev - 1);
   }, [setCurrent]);
 
-  const findStepByFieldName = (field: any) => {
+  const findStepByFieldName = (field: any): string | undefined | any => {
     if (!field) return undefined;
     if (field.variant == "STEPPER") {
       return toCamelCase(field.title);
@@ -125,6 +125,8 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
       const parent = fields.find((f) => f.id == field.parentId);
       return findStepByFieldName(parent);
     }
+
+    return null;
   };
 
   const formateDataStepWise = (values: Record<string, any>) => {
