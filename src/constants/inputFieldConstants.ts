@@ -26,7 +26,7 @@ import { VARIANT, fieldTypes } from "@constants/fieldTypes";
 
 import { IconType } from "react-icons";
 import { CiText } from "react-icons/ci";
-import { LuBoxSelect } from 'react-icons/lu';
+import { MdCheckBoxOutlineBlank } from "react-icons/md";
 import { IoMdCheckbox, IoMdRadioButtonOn } from 'react-icons/io';
 import { BsCalendar2DateFill, BsTextareaT } from 'react-icons/bs';
 import { FaCopy, FaFileUpload } from 'react-icons/fa';
@@ -126,8 +126,7 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         propertyComponent: SelectFieldSettings,
         designerComponent: SelectFieldDesigner,
         renderComponent: SelectInput,
-
-        icon: LuBoxSelect,
+        icon: MdCheckBoxOutlineBlank,
         title: "Select",
         variant: VARIANT.FIELD,
         construct: () => ({
