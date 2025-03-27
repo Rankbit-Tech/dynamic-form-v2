@@ -19,6 +19,7 @@ export const fieldTypes = {
     IMAGE: "IMAGE",
     IMAGEUPLOAD: "IMAGEUPLOAD",
     IMAGECAPTURE: "IMAGECAPTURE",
+    DIVIDER: "DIVIDER",
 }
 
 export const VARIANT = {
