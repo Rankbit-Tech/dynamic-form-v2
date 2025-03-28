@@ -9,9 +9,17 @@ type RendererProps = {
   formConfig?: FormConfig;
   onFormSubmit?: (formData: FormData, form?: FormInstance) => void;
   isPreview?: boolean;
+  isUpdateState?: boolean;
+  showSummaryOnly?: boolean;
 };
 
-const Renderer = ({ formConfig, onFormSubmit, isPreview }: RendererProps) => {
+const Renderer = ({
+  formConfig,
+  onFormSubmit,
+  isPreview,
+  isUpdateState,
+  showSummaryOnly,
+}: RendererProps) => {
   const [fields, setFormConfig] = useFormStore((state) => [
     state.fields,
     state.setFormConfig,
@@ -30,7 +38,13 @@ const Renderer = ({ formConfig, onFormSubmit, isPreview }: RendererProps) => {
   }, [formConfig, setFormConfig]);
 
   return (
-    <Preview data={formData} isPreview={isPreview} onSubmit={onFormSubmit} />
+    <Preview
+      isUpdateState={isUpdateState}
+      showSummaryOnly={showSummaryOnly}
+      data={formData}
+      isPreview={isPreview}
+      onSubmit={onFormSubmit}
+    />
   );
 };
 
