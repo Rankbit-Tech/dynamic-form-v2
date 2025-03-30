@@ -110,7 +110,7 @@ const Preview = ({
   };
 
   const handleFinish = async () => {
-    if (isPreview) return false;
+    // if (isPreview) return false;
 
     const values = form.getFieldsValue(true);
     const formatedData = formateDataStepWise(values);
