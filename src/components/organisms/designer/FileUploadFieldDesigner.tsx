@@ -9,7 +9,6 @@ import { VARIANT } from "@constants/fieldTypes";
 interface FileUploadFieldDesigner {
   id: string;
   label: string;
-
   parentId: string;
 }
 
