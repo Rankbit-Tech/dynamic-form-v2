@@ -115,12 +115,17 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
     valueKey: props.valueKey || "value",
     requestType: props.requestType || "GET",
     dataPath: props.dataPath || "",
+    headers: headers,
   });
+
+  const requestHeaders = (headers || []).reduce((acc, header) => {
+    acc[resolveExpression(header.key)] = resolveExpression(header.value);
+    return acc;
+  }, {});
 
   const handleTypeChange = (value: string) => {
     setSelectedType(value);
   };
-
   useEffect(() => {
     const field = fields.find((field: any) => field.name === name);
     if (field?.values) {
@@ -148,10 +153,7 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
       const response = await axios[method](config.endpoint, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          ...(headers?.reduce((acc, header) => ({
-            ...acc,
-            [header.key]: resolveExpression(header.value),
-          })) || {}),
+          ...requestHeaders,
         },
       });
 
@@ -230,13 +232,7 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
       const response = await axios.delete(endpoint, {
         headers: {
           "Content-Type": "multipart/form-data",
-          ...(headers?.reduce(
-            (acc, header) => ({
-              ...acc,
-              [header.key]: resolveExpression(header.value),
-            }),
-            {}
-          ) || {}),
+          ...requestHeaders,
         },
       });
 
@@ -346,8 +342,6 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
     accept: validations.accept,
     multiple: validations.multiple,
   };
-
-  console.log(options);
 
   return (
     <div className="space-y-4">
