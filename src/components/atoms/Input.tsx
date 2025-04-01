@@ -1,10 +1,18 @@
-import React from "react";
+declare global {
+  interface Window {
+    getFormValues: any;
+  }
+}
+
+import React, { useMemo } from "react";
 import { Form, Input } from "antd";
 import useEvaluteValue from "@hooks/useEvaluteValue";
+import useCodeExecution from "@hooks/useCodeExecution";
 
 interface TextInputProps {
   label?: string;
   name: string;
+  code?: string;
   placeholder?: string;
   disabled?: boolean;
   validations: {
@@ -25,6 +33,7 @@ const InputField: React.FC<TextInputProps> = ({
   disabled,
   placeholder,
   validations,
+  code,
 }) => {
   const {
     required,
@@ -35,7 +44,22 @@ const InputField: React.FC<TextInputProps> = ({
     regEx,
     regExRemark,
   } = validations || {};
+
   useEvaluteValue();
+
+  // Extract dependencies from code if it contains form value references
+  const dependencies = useMemo(
+    () =>
+      code
+        ? (code.match(/{{([a-zA-Z0-9._]+)}}/g) || []).map(
+            (match) => match.replace(/[{}]/g, "").split(".")[0]
+          )
+        : [],
+    [code]
+  );
+
+  // Use our custom hook for code execution
+  useCodeExecution({ code, name, dependencies });
 
   const rules: any = [
     required && { required, message: `Please enter your ${label}` },
@@ -66,7 +90,12 @@ const InputField: React.FC<TextInputProps> = ({
   ].filter(Boolean);
 
   return (
-    <Form.Item label={label} name={name} rules={rules}>
+    <Form.Item
+      label={label}
+      name={name}
+      rules={rules}
+      dependencies={dependencies}
+    >
       <Input
         placeholder={placeholder}
         disabled={disabled || validationDisabled}

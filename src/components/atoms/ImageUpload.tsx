@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Form,
   Upload,
@@ -7,11 +7,13 @@ import {
   UploadProps,
   message,
   Image,
-  Progress,
+  Table,
+  Space,
 } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import { normalizeFileList } from "@utils/index";
+import { DeleteOutlined, UploadOutlined } from "@ant-design/icons";
+import { resolveExpression } from "@utils/index";
 import axios from "axios";
+import { useFormStore } from "@store/useFormStore";
 
 interface FileUploadProps {
   label: string;
@@ -24,41 +26,34 @@ interface FileUploadProps {
     maxCount?: number;
     multiple?: boolean;
   };
+  headers?: Record<string, string>[];
   config?: {
     endpoint: string;
-    headers?: Record<string, string>;
     onSuccess?: (response: any) => void;
     onError?: (error: any) => void;
   };
 }
 
-interface UploadProgress {
-  [key: string]: number;
-}
-
 const ImageUpload: React.FC<FileUploadProps> = ({
   label,
   name,
-  formConfig,
   validations,
   config,
+  headers,
 }) => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [uploadProgress, setUploadProgress] = useState<UploadProgress>({});
   const [uploading, setUploading] = useState(false);
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [uploadedFiles, setUploadedFiles] = useState<UploadFile[]>([]);
   const form = Form.useFormInstance();
   const { required, maxCount, accept, maxSize, multiple } = validations || {};
 
-  useEffect(() => {
-    const value =
-      form.getFieldValue(name) ||
-      normalizeFileList(formConfig?.initialValues?.[name] || []);
-    if (!value) return;
-    setFileList(value);
-  }, [form, name, formConfig?.initialValues]);
-
   const rules = [{ required, message: `Please upload your ${label}` }];
+  const { formValues, setFormValues } = useFormStore();
+
+  const imageUrls = useMemo(() => {
+    return formValues?.[`${name}_urls`] || [];
+  }, [formValues, name]);
 
   const handleUpload = async (file: File) => {
     if (!config?.endpoint) {
@@ -71,27 +66,20 @@ const ImageUpload: React.FC<FileUploadProps> = ({
 
     try {
       setUploading(true);
-      setUploadProgress((prev) => ({ ...prev, [file.name]: 0 }));
-
       const response = await axios.post(config.endpoint, formData, {
         headers: {
-          ...config.headers,
           "Content-Type": "multipart/form-data",
-        },
-        onUploadProgress: (progressEvent) => {
-          const progress = Math.round(
-            (progressEvent.loaded * 100) / (progressEvent.total || 100)
-          );
-          setUploadProgress((prev) => ({ ...prev, [file.name]: progress }));
+          ...(headers?.reduce(
+            (acc, header) => ({
+              ...acc,
+              [header.key]: resolveExpression(header.value),
+            }),
+            {}
+          ) || {}),
         },
       });
 
-      setUploadProgress((prev) => ({ ...prev, [file.name]: 100 }));
       message.success(`${file.name} uploaded successfully`);
-
-      if (config.onSuccess) {
-        config.onSuccess(response.data);
-      }
 
       return response.data;
     } catch (error) {
@@ -102,7 +90,6 @@ const ImageUpload: React.FC<FileUploadProps> = ({
       throw error;
     } finally {
       setUploading(false);
-      setUploadProgress((prev) => ({ ...prev, [file.name]: 0 }));
     }
   };
 
@@ -130,6 +117,17 @@ const ImageUpload: React.FC<FileUploadProps> = ({
           status: "done" as const,
         };
         setFileList((prevFileList) => [...prevFileList, newFile]);
+        if (response.files) {
+          setUploadedFiles((prev) => {
+            const newUploadedFiles = [...prev, ...response.files];
+            form.setFieldValue(name, newUploadedFiles);
+            setFormValues((prev: any) => ({
+              ...prev,
+              [`${name}_urls`]: newUploadedFiles,
+            }));
+            return newUploadedFiles;
+          });
+        }
         return false;
       } catch (error) {
         return Upload.LIST_IGNORE;
@@ -149,40 +147,66 @@ const ImageUpload: React.FC<FileUploadProps> = ({
     multiple,
   };
 
+  const handleDelete = (record: any) => {
+    const newFileList = fileList.filter((file) => file.uid !== record.uid);
+    setFileList(newFileList);
+    form.setFieldValue(name, newFileList);
+    setFormValues((prev: any) => ({
+      ...prev,
+      [`${name}_urls`]: newFileList,
+    }));
+  };
+
+  const columns = [
+    {
+      title: "Preview",
+      dataIndex: "preview",
+      key: "preview",
+      render: (_: any, record: any) => {
+        return <Image src={record.url} width={60} height={60} />;
+      },
+    },
+    {
+      title: "File Name",
+      dataIndex: "fileName",
+      key: "fileName",
+      render: (text: string, record: any) => (
+        <Space>
+          <span>{text}</span>
+          <Space>
+            <Button
+              type="text"
+              danger
+              icon={<DeleteOutlined />}
+              onClick={() => handleDelete(record)}
+              title="Delete"
+            />
+          </Space>
+        </Space>
+      ),
+    },
+  ];
   return (
     <>
       <Form.Item
         label={label}
-        name={name}
         valuePropName="fileList"
         getValueFromEvent={(e) => e?.fileList}
         rules={rules}
       >
-        <Upload {...props}>
+        <Upload showUploadList={false} {...props}>
           <Button icon={<UploadOutlined />} loading={uploading}>
             Upload Image
           </Button>
         </Upload>
       </Form.Item>
       <div className="flex flex-col gap-4 mt-4">
-        {fileList?.map((file, index) => {
-          const imageUrl = file.originFileObj
-            ? URL.createObjectURL(file.originFileObj)
-            : file.url;
-          return (
-            <div key={index} className="flex items-center gap-4">
-              {imageUrl && <Image src={imageUrl} width={100} height={100} />}
-              {uploadProgress[file.name] > 0 &&
-                uploadProgress[file.name] < 100 && (
-                  <Progress
-                    percent={uploadProgress[file.name]}
-                    size="small"
-                    className="w-32"
-                  />
-                )}
-            </div>
-          );
-        })}
+        <Table
+          columns={columns}
+          dataSource={imageUrls}
+          rowKey="key"
+          pagination={false}
+        />
       </div>
     </>
   );

@@ -40,7 +40,7 @@ const ImageUploadFieldSettings: React.FC = () => {
       </Form.Item>
 
       <DividerWithHeader title="Headers" />
-      <Form.List name={["config", "headers"]}>
+      <Form.List name="headers">
         {(fields, { add, remove }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
@@ -52,7 +52,7 @@ const ImageUploadFieldSettings: React.FC = () => {
                     label="Key"
                     rules={[{ required: true, message: "Missing header key" }]}
                   >
-                    <Input placeholder="Header key" />
+                    <Input placeholder="Key" />
                   </Form.Item>
                 </Col>
                 <Col span={10}>
@@ -64,7 +64,7 @@ const ImageUploadFieldSettings: React.FC = () => {
                       { required: true, message: "Missing header value" },
                     ]}
                   >
-                    <Input placeholder="Header value" />
+                    <Input placeholder="Value" />
                   </Form.Item>
                 </Col>
                 <Col span={4}>

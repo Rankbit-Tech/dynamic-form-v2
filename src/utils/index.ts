@@ -1,3 +1,4 @@
+import { useFormStore } from "@store/useFormStore";
 import { get } from "lodash";
 
 export const onlyNumberInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -19,6 +20,14 @@ export const resolveExpression = (
   const expression = _expression?.trim();
   if (!expression || !/{{([a-zA-Z0-9._]+)}}/gm.test(expression)) {
     return expression;
+  }
+
+  if (!formValues) {
+    formValues = useFormStore.getState().formValues;
+  }
+
+  if (!context) {
+    context = useFormStore.getState().formConfig?.context;
   }
 
   const result = expression.replace(
@@ -89,3 +98,11 @@ export const normalizeFileList = (value:string | string[]) => {
 
   return [];
 };
+
+
+export const getFormValues = (callback: (values: any, context: any) => any) => {
+  const { formValues, formConfig } = useFormStore.getState();
+  const context = formConfig?.context || {};
+  return callback ? callback(formValues, context) : { values: formValues, context };
+};
+

@@ -1,11 +1,30 @@
 import React from "react";
-import { Input, Form, Checkbox, InputNumber, Flex, Row, Col } from "antd";
+import {
+  Input,
+  Form,
+  Checkbox,
+  InputNumber,
+  Flex,
+  Row,
+  Col,
+  Button,
+} from "antd";
 import useSettingsForm from "@hooks/useSettingsForm";
 import DividerWithHeader from "@components/atoms/Divider";
 import QueryBuilderComponent from "@components/molecules/QueryBuilder";
+import TextArea from "antd/lib/input/TextArea";
+import { getFormValues } from "@utils/index";
 
 const InputFieldSettings: React.FC = () => {
   const { handleValuesChange, values, handleCondition } = useSettingsForm();
+
+  const handleCode = () => {
+    const value = values?.code;
+
+    console.log(value);
+    const res = eval(value);
+    console.log(res);
+  };
 
   return (
     <Form
@@ -74,8 +93,14 @@ const InputFieldSettings: React.FC = () => {
       </Row>
 
       <Form.Item label="Custom Value" name={["validations", "customValue"]}>
-        <Input placeholder="e.g. {{formValues.fiestName} {{formValues.lastName}}" />
+        <Input placeholder="e.g. {{firstName} {{lastName}}" />
       </Form.Item>
+
+      <Form.Item name="code">
+        <TextArea></TextArea>
+      </Form.Item>
+
+      <Button onClick={handleCode}>Execute</Button>
 
       <DividerWithHeader title="Conditions" />
       <QueryBuilderComponent
