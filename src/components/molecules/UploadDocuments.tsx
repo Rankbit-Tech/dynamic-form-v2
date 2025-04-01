@@ -63,7 +63,6 @@ interface UploadDocumentsProps {
     typeFieldName: string;
     urlKey: string;
     statusKey: string;
-    headers?: Record<string, string>[];
   };
   options?: { label: string; value: string }[];
   deleteKey?: string;
@@ -81,6 +80,7 @@ interface UploadDocumentsProps {
   defaultValue?: string;
   requestType?: "GET" | "POST";
   dataPath?: string;
+  headers?: Record<string, string>[];
 }
 
 const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
@@ -99,6 +99,7 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
     validations = {},
     deleteEndpoint,
     deleteKey,
+    headers,
   } = props;
 
   const { setFieldValues, fields } = useFormStore();
@@ -147,13 +148,10 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
       const response = await axios[method](config.endpoint, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          ...(config.headers?.reduce(
-            (acc, header) => ({
-              ...acc,
-              [header.key]: resolveExpression(header.value),
-            }),
-            {}
-          ) || {}),
+          ...(headers?.reduce((acc, header) => ({
+            ...acc,
+            [header.key]: resolveExpression(header.value),
+          })) || {}),
         },
       });
 
@@ -232,7 +230,7 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
       const response = await axios.delete(endpoint, {
         headers: {
           "Content-Type": "multipart/form-data",
-          ...(config.headers?.reduce(
+          ...(headers?.reduce(
             (acc, header) => ({
               ...acc,
               [header.key]: resolveExpression(header.value),
