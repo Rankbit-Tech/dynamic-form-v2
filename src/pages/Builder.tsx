@@ -5,7 +5,7 @@ import "../index.css";
 import { FormBuilderPageProps } from "types/types";
 
 const Builder = ({ onFormSave }: FormBuilderPageProps) => {
-  console.log("version : 1.4.0");
+  console.log("version : 1.4.1");
   const { isPreview } = useFormStore((state) => ({
     isPreview: state.isPreview,
   }));
