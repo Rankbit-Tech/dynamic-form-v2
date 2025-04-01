@@ -139,7 +139,7 @@ const UploadDocumentsSettings: React.FC = () => {
       </Form.Item>
 
       <DividerWithHeader title="Headers" />
-      <Form.List name={["config", "headers"]}>
+      <Form.List name={"headers"}>
         {(fields, { add, remove }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
