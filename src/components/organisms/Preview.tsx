@@ -6,6 +6,7 @@ import useEventBus from "@hooks/useEventBus";
 import { useEffect } from "react";
 import { isImageUrl, normalizeFileList } from "@utils/index";
 import Summary from "@components/molecules/Summary";
+import { FormValues, SameAsAboveOption } from "types/types";
 
 interface PreviewProps {
   data: Record<string, any>[];
@@ -83,7 +84,10 @@ const Preview = ({
     };
   }, [form, handleValueChange, subscribe, formConfig, setFormValues]);
 
-  const convertIntoFormData = async (values: Record<string, any>) => {
+  const convertIntoFormData = async (
+    values: Record<string, any>,
+    rawData: any
+  ) => {
     const formData = new FormData();
 
     Object.entries(values).forEach(([key, value]) => {
@@ -106,6 +110,7 @@ const Preview = ({
       }
     });
 
+    formData.append("__rawdata__", rawData);
     return formData;
   };
 
@@ -113,8 +118,9 @@ const Preview = ({
     if (isPreview) return false;
 
     const values = form.getFieldsValue(true);
+    console.log(values, "values");
     const formatedData = formateDataStepWise(values);
-    const formData = await convertIntoFormData(formatedData);
+    const formData = await convertIntoFormData(formatedData, values);
 
     onSubmit?.(formData, form);
   };

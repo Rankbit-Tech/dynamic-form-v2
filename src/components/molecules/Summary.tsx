@@ -35,7 +35,7 @@ interface FormField {
 
 const RenderImages = ({ field }: { field: Field }) => {
   if (!Array.isArray(field?.value)) return null;
-
+  console.log(field.value, "field.value");
   return field.value.map((file) => (
     <ImagePreview
       key={file.name}
@@ -54,10 +54,10 @@ const Summary = ({ validations, isOnRenderPage = false }: summaryProps) => {
     const groupedFields: Record<string, Step> = {};
     const typedFields = fields as FormField[];
 
-    fields.forEach((field) => {
+    fields.forEach((field: any) => {
       if (["FIELD", "GRID", "IMAGE", "SECTION"].includes(field.variant)) {
         const step = fields.find(
-          (stepField) =>
+          (stepField: any) =>
             stepField.id === field.parentId && stepField.variant === "STEPPER"
         );
 

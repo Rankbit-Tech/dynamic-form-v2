@@ -10,7 +10,7 @@ export type FormConfig = {
   context?: any;
 };
 interface FormState {
-  fields: recordArray;
+  fields: any;
   isPreview: boolean;
   selectedField: RecordType | null;
   formValues: RecordType;
@@ -30,12 +30,52 @@ interface FormState {
   setFormConfig: (data?: FormConfig) => void;
   setMetadata: (callback: Function | FormState['metadata']) => void
   reset: (fullReset: boolean | undefined) => void
+  setFieldValues:(name:string,data:RecordType) => void
 }
 
 type Summary = Record<string, Record<string, any>>;
 
-
-
+const test = [
+  {
+    id: '3WbieUidLx647OQgUyvWu',
+    type: 'STEPPER',
+    variant: 'STEPPER',
+    title: 'Step'
+  },
+  {
+    id: '_Ei9jAjrmItMy-zQrya7-',
+    type: 'UPLOADDOCUMENTS',
+    variant: 'FIELD',
+    label: 'File Upload Label',
+    name: 'profile',
+    validations: {
+      required: false,
+      maxCount: 1,
+      accept: '',
+      maxSize: null
+    },
+    conditions: {
+      combinator: 'and',
+      rules: []
+    },
+    parentId: '3WbieUidLx647OQgUyvWu',
+    options: [
+      {
+        label: 'Aadhar Card',
+        value: 'aadharCard'
+      },
+      {
+        label: 'Pan Card',
+        value: 'panCard'
+      }
+    ],
+    mapFields: {},
+    config: {
+      endpoint: 'http://localhost:3000/upload/profile',
+      requestType: 'POST'
+    }
+  }
+]
 export const useFormStore = create<FormState>()(
   devtools(
     immer((set, get) => ({
@@ -174,7 +214,6 @@ export const useFormStore = create<FormState>()(
         return groupedFields;
       },
 
-
       setFormConfig: (data?: FormConfig) => {
         set((state: FormState) => {
           state.formConfig = data;
@@ -205,6 +244,21 @@ export const useFormStore = create<FormState>()(
             }
           }
         })
+      },
+      setFieldValues: (name: string, data: RecordType) => {
+        set((state: FormState) => {
+          if (name) {
+            state.fields = state.fields.map((field: RecordType) => {
+              if (field.name === name) {
+                return {
+                  ...field,
+                  values: data
+                };
+              }
+              return field;
+            });
+          }
+        });
       }
     })),
     {

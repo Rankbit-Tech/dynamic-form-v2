@@ -1,7 +1,8 @@
 import React from "react";
-import { Input, Form, Checkbox, Flex } from "antd";
-import useSettingsForm from "@hooks/useSettingsForm";
+import { Input, Form, Checkbox, Select, Row, Col, Button, Flex } from "antd";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import DividerWithHeader from "@components/atoms/Divider";
+import useSettingsForm from "@hooks/useSettingsForm";
 import QueryBuilderComponent from "@components/molecules/QueryBuilder";
 
 const ImageUploadFieldSettings: React.FC = () => {
@@ -18,6 +19,73 @@ const ImageUploadFieldSettings: React.FC = () => {
       <Form.Item label="Name" name="name">
         <Input />
       </Form.Item>
+
+      <DividerWithHeader title="Upload Configuration" />
+
+      <Form.Item label="API Endpoint" name={["config", "endpoint"]}>
+        <Input placeholder="Enter API endpoint URL" />
+      </Form.Item>
+      <Form.Item label="Request Type" name={["config", "requestType"]}>
+        <Select>
+          <Select.Option value="POST">POST</Select.Option>
+          <Select.Option value="PUT">PUT</Select.Option>
+        </Select>
+      </Form.Item>
+      <Form.Item label="Response URL Key" name={["config", "urlKey"]}>
+        <Input placeholder="Key for uploaded file URL in response" />
+      </Form.Item>
+      <Form.Item label="Response Status Key" name={["config", "statusKey"]}>
+        <Input placeholder="Key for upload status in response" />
+      </Form.Item>
+
+      <DividerWithHeader title="Headers" />
+      <Form.List name="headers">
+        {(fields, { add, remove }) => (
+          <>
+            {fields.map(({ key, name, ...restField }) => (
+              <Row gutter={16} key={key} align="middle">
+                <Col span={10}>
+                  <Form.Item
+                    {...restField}
+                    name={[name, "key"]}
+                    label="Key"
+                    rules={[{ required: true, message: "Missing header key" }]}
+                  >
+                    <Input placeholder="Key" />
+                  </Form.Item>
+                </Col>
+                <Col span={10}>
+                  <Form.Item
+                    {...restField}
+                    name={[name, "value"]}
+                    label="Value"
+                    rules={[
+                      { required: true, message: "Missing header value" },
+                    ]}
+                  >
+                    <Input placeholder="Value" />
+                  </Form.Item>
+                </Col>
+                <Col span={4}>
+                  <MinusCircleOutlined
+                    onClick={() => remove(name)}
+                    style={{ fontSize: "24px", color: "red" }}
+                  />
+                </Col>
+              </Row>
+            ))}
+            <Form.Item>
+              <Button
+                type="dashed"
+                onClick={() => add({ key: "", value: "" })}
+                icon={<PlusOutlined />}
+              >
+                Add Header
+              </Button>
+            </Form.Item>
+          </>
+        )}
+      </Form.List>
       <DividerWithHeader title="Validations" />
 
       <Flex justify="space-between">

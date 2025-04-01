@@ -79,6 +79,9 @@ import CaptureFieldDesigner from '@components/organisms/designer/CaptureFieldDes
 import DividerWithHeader from '@components/atoms/Divider';
 import DividerSettings from '@components/organisms/property/DividerSettings';
 import DividerDesinger from '@components/organisms/designer/DividerDesinger';
+import UploadDocumentsSettings from '@components/organisms/property/UploadDocumentsSettings';
+import UploadDocuments from '@components/molecules/UploadDocuments';
+import UploadDocumentsDesigner from '@components/organisms/designer/UploadDocumentsDesigner';
 
 
 
@@ -251,6 +254,31 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
         variant: VARIANT.FIELD,
         construct: () => ({
             type: fieldTypes.FILEUPLOAD,
+            variant: VARIANT.FIELD,
+            label: 'File Upload Label',
+            name: '',
+            validations: {
+                required: false,
+                maxCount: 1,
+                accept: '',
+                maxSize: null,
+            },
+            conditions: {
+                combinator: 'and',
+                rules: [],
+            },
+        }),
+    },
+    [fieldTypes.UPLOADDOCUMENTS]: {
+        type: fieldTypes.UPLOADDOCUMENTS,
+        propertyComponent: UploadDocumentsSettings,
+        designerComponent: UploadDocumentsDesigner,
+        renderComponent: UploadDocuments,
+        icon: FaFileUpload,
+        title: "Upload Documents",
+        variant: VARIANT.FIELD,
+        construct: () => ({
+            type: fieldTypes.UPLOADDOCUMENTS,
             variant: VARIANT.FIELD,
             label: 'File Upload Label',
             name: '',
