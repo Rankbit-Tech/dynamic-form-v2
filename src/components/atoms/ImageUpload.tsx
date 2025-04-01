@@ -44,7 +44,7 @@ const ImageUpload: React.FC<FileUploadProps> = ({
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [uploading, setUploading] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [uploadedFiles, setUploadedFiles] = useState<UploadFile[]>([]);
+  const [, setUploadedFiles] = useState<UploadFile[]>([]);
   const form = Form.useFormInstance();
   const { required, maxCount, accept, maxSize, multiple } = validations || {};
 

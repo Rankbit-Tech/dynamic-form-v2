@@ -13,7 +13,6 @@ import useSettingsForm from "@hooks/useSettingsForm";
 import DividerWithHeader from "@components/atoms/Divider";
 import QueryBuilderComponent from "@components/molecules/QueryBuilder";
 import TextArea from "antd/lib/input/TextArea";
-import { getFormValues } from "@utils/index";
 
 const InputFieldSettings: React.FC = () => {
   const { handleValuesChange, values, handleCondition } = useSettingsForm();

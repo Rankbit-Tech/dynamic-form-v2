@@ -1,4 +1,4 @@
-interface FormBuilderPageProps {
+export interface FormBuilderPageProps {
     onFormSave: (schema: Record<string, any>) => void
 }
 
@@ -9,15 +9,15 @@ interface Field {
     name: string;
 }
 
-interface Step {
+export interface Step {
     title: string;
     fields: Field[];
 }
 
-interface SameAsAboveOption {
+export interface SameAsAboveOption {
     label: string;
     value: string;
 }
-interface FormValues {
+export interface FormValues {
     [key: string]: any;
 }

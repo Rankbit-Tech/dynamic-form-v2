@@ -1,3 +1,4 @@
+import { Step } from "types/types";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
@@ -35,47 +36,6 @@ interface FormState {
 
 type Summary = Record<string, Record<string, any>>;
 
-const test = [
-  {
-    id: '3WbieUidLx647OQgUyvWu',
-    type: 'STEPPER',
-    variant: 'STEPPER',
-    title: 'Step'
-  },
-  {
-    id: '_Ei9jAjrmItMy-zQrya7-',
-    type: 'UPLOADDOCUMENTS',
-    variant: 'FIELD',
-    label: 'File Upload Label',
-    name: 'profile',
-    validations: {
-      required: false,
-      maxCount: 1,
-      accept: '',
-      maxSize: null
-    },
-    conditions: {
-      combinator: 'and',
-      rules: []
-    },
-    parentId: '3WbieUidLx647OQgUyvWu',
-    options: [
-      {
-        label: 'Aadhar Card',
-        value: 'aadharCard'
-      },
-      {
-        label: 'Pan Card',
-        value: 'panCard'
-      }
-    ],
-    mapFields: {},
-    config: {
-      endpoint: 'http://localhost:3000/upload/profile',
-      requestType: 'POST'
-    }
-  }
-]
 export const useFormStore = create<FormState>()(
   devtools(
     immer((set, get) => ({
