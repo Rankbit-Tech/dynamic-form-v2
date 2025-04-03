@@ -27,11 +27,6 @@ interface BaseSelectInputProps {
   formValues?: any;
 }
 
-type OptionType = {
-  label:string;
-  value:String;
-  isRequired?:boolean
-}
 
 interface ManualSelectInputProps extends BaseSelectInputProps {
   optionSource: "manual";
@@ -53,13 +48,6 @@ export const useSelectOptions = (props: SelectInputProps) => {
     ];
   });
 
-  const requiredOptions = useMemo(()=>{
-    return options.map((option:OptionType) => {
-      if(option.isRequired){
-        return option.value
-      }
-    }).filter(Boolean)
-  },[options])  
   
 
   const { formConfig, formValues } = props;
