@@ -6,12 +6,7 @@ import { useMemo } from "react";
 function App() {
   const formConfig = useMemo(
     () => ({
-      initialValues: {
-        image: [
-          "http://localhost:3000/uploads/1743106372384-Screenshot%202025-03-26%20145643.png",
-          "http://localhost:3000/uploads/1743106151609-Screenshot%202025-03-26%20145643.png",
-        ],
-      },
+      initialValues: {},
       context: {},
     }),
     []
@@ -20,7 +15,7 @@ function App() {
   const { isPreview } = useFormStore((state) => state);
   const onFormSubmit = async (formData: FormData) => {
     for (let [key, value] of formData.entries()) {
-      // console.log(`${key}:`, value);
+      console.log(`${key}:`, value);
     }
     try {
       const response = await fetch("http://localhost:3000/upload", {

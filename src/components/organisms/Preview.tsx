@@ -4,9 +4,8 @@ import { FormInstance, useForm } from "antd/es/form/Form";
 import usePreview, { Step } from "@hooks/usePreview";
 import useEventBus from "@hooks/useEventBus";
 import { useEffect } from "react";
-import { isImageUrl, normalizeFileList } from "@utils/index";
 import Summary from "@components/molecules/Summary";
-import { FormValues, SameAsAboveOption } from "types/types";
+import { FormValues, SameAsAboveOption } from "types";
 
 interface PreviewProps {
   data: Record<string, any>[];
@@ -63,14 +62,14 @@ const Preview = ({
       const transformedValues = { ...formConfig.initialValues };
 
       // Automatically detect and transform image fields
-      Object.keys(transformedValues).forEach((key) => {
-        if (
-          isImageUrl(transformedValues[key]) ||
-          Array.isArray(transformedValues[key])
-        ) {
-          transformedValues[key] = normalizeFileList(transformedValues[key]);
-        }
-      });
+      // Object.keys(transformedValues).forEach((key) => {
+      //   if (
+      //     isImageUrl(transformedValues[key]) ||
+      //     Array.isArray(transformedValues[key])
+      //   ) {
+      //     transformedValues[key] = normalizeFileList(transformedValues[key]);
+      //   }
+      // });
       form.setFieldsValue(transformedValues);
     }
 
@@ -91,22 +90,18 @@ const Preview = ({
     const formData = new FormData();
 
     Object.entries(values).forEach(([key, value]) => {
-      if (value && value?.originFileObj) {
-        formData.append(key, value.originFileObj);
-      } else if (Array.isArray(value)) {
-        value.forEach((item, index) => {
-          if (item.originFileObj) {
-            formData.append(key, item.originFileObj);
-          } else {
+      if (!key.startsWith("dynamic_temp_field")) {
+        if (Array.isArray(value)) {
+          value.forEach((item, index) => {
             formData.append(`${key}[${index}]`, item);
-          }
-        });
-      } else if (typeof value === "object" && value !== null) {
-        Object.entries(value).forEach(([subKey, subValue]: any[]) => {
-          formData.append(`${key}[${subKey}]`, subValue);
-        });
-      } else {
-        formData.append(key, value);
+          });
+        } else if (typeof value === "object" && value !== null) {
+          Object.entries(value).forEach(([subKey, subValue]: any[]) => {
+            formData.append(`${key}[${subKey}]`, subValue);
+          });
+        } else {
+          formData.append(key, value);
+        }
       }
     });
 
@@ -118,7 +113,6 @@ const Preview = ({
     // if (isPreview) return false;
 
     const values = form.getFieldsValue(true);
-    console.log(values, "values");
     const formatedData = formateDataStepWise(values);
     const formData = await convertIntoFormData(formatedData, values);
 

@@ -99,18 +99,18 @@ const usePreview = (form: FormInstance, data: Record<string, any>) => {
     [setFormValues]
   );
 
-  const next = useCallback(() => {
-    form
-      .validateFields()
-      .then(() => {
-        setCurrent((prev: number) => prev + 1);
-        setFormValues((oldValues: any) => {
-          return { ...oldValues, ...form.getFieldsValue(true) };
-        });
-      })
-      .catch(() => {
-        return false;
-      });
+  const next = useCallback(async () => {
+    try {
+      await form.validateFields(); // Validate form fields
+      setCurrent((prev: number) => prev + 1);
+
+      setFormValues((oldValues: any) => ({
+        ...oldValues,
+        ...form.getFieldsValue(true),
+      }));
+    } catch (error) {
+      console.error("Validation failed:", error);
+    }
   }, [form, setCurrent, setFormValues]);
 
   const prev = useCallback(() => {

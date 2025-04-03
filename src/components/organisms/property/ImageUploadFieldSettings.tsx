@@ -32,11 +32,17 @@ const ImageUploadFieldSettings: React.FC = () => {
           <Select.Option value="PUT">PUT</Select.Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Response URL Key" name={["config", "urlKey"]}>
-        <Input placeholder="Key for uploaded file URL in response" />
+      <Form.Item label="Custom File Name" name={["config", "fileNamePrefix"]}>
+        <Input placeholder="Enter prefix for file. eg. {{context.org}}/{{context.folder}}" />
       </Form.Item>
-      <Form.Item label="Response Status Key" name={["config", "statusKey"]}>
-        <Input placeholder="Key for upload status in response" />
+      <DividerWithHeader title="Delete API Config" />
+      <Form.Item label="Delete API endpoint" name="deleteEndpoint">
+        <Input />
+      </Form.Item>
+      <DividerWithHeader title="Preview Configuration" />
+
+      <Form.Item label="Preview Endpoint" name={["config", "previewEndpoint"]}>
+        <Input placeholder="Enter preview endpoint" />
       </Form.Item>
 
       <DividerWithHeader title="Headers" />

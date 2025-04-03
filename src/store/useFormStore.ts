@@ -1,3 +1,4 @@
+import { Step } from "types";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
@@ -10,7 +11,7 @@ export type FormConfig = {
   context?: any;
 };
 interface FormState {
-  fields: any;
+  fields: recordArray;
   isPreview: boolean;
   selectedField: RecordType | null;
   formValues: RecordType;
@@ -24,7 +25,7 @@ interface FormState {
   setSelected: (data: RecordType | null) => void;
   setFields: (data: RecordType | null) => void;
   setIsPreview: (flag: boolean) => void;
-  setFormValues: (callback: Function) => void;
+  setFormValues: (callback: (values:RecordType) => RecordType) => void;
   getSummary: () => Step[];
   getSummaryV2: () => void;
   setFormConfig: (data?: FormConfig) => void;
@@ -37,17 +38,17 @@ type Summary = Record<string, Record<string, any>>;
 
 const test = [
   {
-    id: '3WbieUidLx647OQgUyvWu',
+    id: 'B9lw1Vyn9yFlt0HlRaoHn',
     type: 'STEPPER',
     variant: 'STEPPER',
     title: 'Step'
   },
   {
-    id: '_Ei9jAjrmItMy-zQrya7-',
+    id: 'AhD0FhYHZE8NB_ft11_-u',
     type: 'UPLOADDOCUMENTS',
     variant: 'FIELD',
     label: 'File Upload Label',
-    name: 'profile',
+    name: 'file',
     validations: {
       required: false,
       maxCount: 1,
@@ -58,28 +59,36 @@ const test = [
       combinator: 'and',
       rules: []
     },
-    parentId: '3WbieUidLx647OQgUyvWu',
+    parentId: 'B9lw1Vyn9yFlt0HlRaoHn',
     options: [
       {
         label: 'Aadhar Card',
-        value: 'aadharCard'
+        value: 'aadharCard',
+        isRequired:true
       },
       {
         label: 'Pan Card',
         value: 'panCard'
       }
     ],
+    headers: [
+      {
+        key: 'token',
+        value: 'json'
+      }
+    ],
     mapFields: {},
     config: {
-      endpoint: 'http://localhost:3000/upload/profile',
-      requestType: 'POST'
+      endpoint: 'http://localhost:3000/upload',
+      requestType: 'POST',
+      fileNamePrefix: 'vyn_dev/NTPC/regular_workmen/'
     }
   }
 ]
 export const useFormStore = create<FormState>()(
   devtools(
     immer((set, get) => ({
-      fields: [],
+      fields: test,
       isPreview: false,
       selectedField: null,
       formValues: {},
@@ -115,7 +124,7 @@ export const useFormStore = create<FormState>()(
           state.fields = callback(get().fields);
         });
       },
-      setFormValues: (callback: any) => {
+      setFormValues: (callback) => {
         set((state: FormState) => {
           state.formValues = callback(get().formValues);
         });

@@ -29,7 +29,6 @@ const UploadDocumentsSettings: React.FC = () => {
       <Form.Item label="Name" name="name">
         <Input />
       </Form.Item>
-
       <DividerWithHeader title="Document Types" />
       <Form.Item
         label="Option Source"
@@ -41,7 +40,6 @@ const UploadDocumentsSettings: React.FC = () => {
           <Select.Option value="api">API</Select.Option>
         </Select>
       </Form.Item>
-
       <Form.Item
         noStyle
         shouldUpdate={(prevValues, currentValues) =>
@@ -65,7 +63,7 @@ const UploadDocumentsSettings: React.FC = () => {
                           <Input placeholder="e.g., Aadhar Card" />
                         </Form.Item>
                       </Col>
-                      <Col span={10}>
+                      <Col span={8}>
                         <Form.Item
                           {...restField}
                           name={[name, "value"]}
@@ -75,7 +73,17 @@ const UploadDocumentsSettings: React.FC = () => {
                           <Input placeholder="e.g., aadhar" />
                         </Form.Item>
                       </Col>
-                      <Col span={4}>
+                      <Col span={2}>
+                        <Form.Item
+                          {...restField}
+                          name={[name, "isRequired"]}
+                          label="*"
+                          rules={[{ message: "Missing value" }]}
+                        >
+                          <Checkbox />
+                        </Form.Item>
+                      </Col>
+                      <Col span={2}>
                         <MinusCircleOutlined
                           onClick={() => remove(name)}
                           style={{ fontSize: "24px", color: "red" }}
@@ -112,6 +120,9 @@ const UploadDocumentsSettings: React.FC = () => {
               <Form.Item label="Value Key" name={"valueKey"}>
                 <Input placeholder="Key for value in response" />
               </Form.Item>
+              <Form.Item label="Required Value key" name={"requiredKey"}>
+                <Input placeholder="Key for required option" />
+              </Form.Item>
               <Form.Item label="Response Data Key" name={"dataPath"}>
                 <Input placeholder="Key for data array in response" />
               </Form.Item>
@@ -119,15 +130,11 @@ const UploadDocumentsSettings: React.FC = () => {
           )
         }
       </Form.Item>
-      <DividerWithHeader title="Delete Config" />
-
+      <DividerWithHeader title="Delete API Config" />
       <Form.Item label="Delete API endpoint" name="deleteEndpoint">
         <Input />
       </Form.Item>
-      <Form.Item label="Delete Key" name="deleteKey">
-        <Input />
-      </Form.Item>
-      <DividerWithHeader title="API Configuration" />
+      <DividerWithHeader title="Upload file API Configuration" />
       <Form.Item label="API Endpoint" name={["config", "endpoint"]}>
         <Input placeholder="Enter API endpoint URL" />
       </Form.Item>
@@ -137,7 +144,13 @@ const UploadDocumentsSettings: React.FC = () => {
           <Select.Option value="PUT">PUT</Select.Option>
         </Select>
       </Form.Item>
+      <Form.Item label="Custom File Name" name={["config", "fileNamePrefix"]}>
+        <Input placeholder="Enter prefix for file. eg. {{context.org}}/{{context.folder}}" />
+      </Form.Item>
 
+      <Form.Item label="Preview Endpoint" name={["config", "previewEndpoint"]}>
+        <Input placeholder="Enter preview endpoint" />
+      </Form.Item>
       <DividerWithHeader title="Headers" />
       <Form.List name={"headers"}>
         {(fields, { add, remove }) => (
@@ -186,7 +199,6 @@ const UploadDocumentsSettings: React.FC = () => {
           </>
         )}
       </Form.List>
-
       <DividerWithHeader title="Validations" />
       <Space direction="vertical" style={{ width: "100%" }}>
         <Form.Item name={["validations", "required"]} valuePropName="checked">
@@ -205,7 +217,6 @@ const UploadDocumentsSettings: React.FC = () => {
           <Input placeholder="e.g., .pdf,.jpg,.png" />
         </Form.Item>
       </Space>
-
       <DividerWithHeader title="Conditions" />
       <QueryBuilderComponent
         handleCondition={handleCondition}
