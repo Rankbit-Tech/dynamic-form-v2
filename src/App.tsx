@@ -7,7 +7,9 @@ function App() {
   const formConfig = useMemo(
     () => ({
       initialValues: {},
-      context: {},
+      context: {
+        org: "NTPC",
+      },
     }),
     []
   );

@@ -65,15 +65,15 @@ export const useSelectOptions = (props: SelectInputProps) => {
   const { formConfig, formValues } = props;
   const { context } = formConfig || {};
 
-  const validateSelection  = (_:any,value:string) => {
+  // const validateSelection  = () => {
 
-    const isValidSelection = formValues[props?.name]?.some((file:Record<string,any>) => requiredOptions.includes(file.name))
-    if( !isValidSelection){
-      return Promise.reject(new Error(`You must select required documents!`));
-    }
-    return Promise.resolve();
-
-  }
+  //   const isValidSelection = !!formValues[props?.name]?.some((file:Record<string,any>) => requiredOptions.includes(file.name))
+  //   console.log(isValidSelection,"isValidSelection")
+  //   if( !isValidSelection){
+  //     return Promise.reject(new Error(`You must select required documents!`));
+  //   }
+  //   return Promise.resolve();
+  // }
   
   const getValuesOfFields = useCallback(
     (fieldsToKeepTrack: string) => {
@@ -273,5 +273,5 @@ export const useSelectOptions = (props: SelectInputProps) => {
     dataPath,
   ]);
 
-  return { loading, options,validateSelection };
+  return { loading, options };
 };

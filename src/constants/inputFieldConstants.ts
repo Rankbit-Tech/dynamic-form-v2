@@ -295,18 +295,18 @@ const INPUT_FIELDS: { [key: string]: InputFieldConfig } = {
             },
         }),
     },
-    [fieldTypes.IMAGEUPLOAD]: {
-        type: fieldTypes.IMAGEUPLOAD,
+    [fieldTypes.FILEUPLOAD]: {
+        type: fieldTypes.FILEUPLOAD,
         propertyComponent: ImageUploadFieldSettings,
         designerComponent: ImageUploadFieldDesigner,
         renderComponent: ImageUpload,
         icon: FaFileImage,
-        title: "Image Upload",
+        title: "File Upload",
         variant: VARIANT.FIELD,
         construct: () => ({
-            type: fieldTypes.IMAGEUPLOAD,
+            type: fieldTypes.FILEUPLOAD,
             variant: VARIANT.FIELD,
-            label: 'Image Upload Label',
+            label: 'File Upload Label',
             name: '',
             validations: {
                 required: false,

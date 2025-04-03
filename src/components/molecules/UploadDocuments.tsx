@@ -93,7 +93,7 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
   } = props;
 
   const { setFormValues, formValues } = useFormStore();
-  const { options, validateSelection } = useSelectOptions({
+  const { options } = useSelectOptions({
     label: props.label || "",
     name: props.name,
     defaultValue: props.defaultValue || "",
@@ -113,6 +113,10 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
   const { requestHeaders, uploadFile, loading, getSignedURI } = useFileUpload({
     headers,
   });
+
+  const isDocumentUploaded = formValues[name]?.some(
+    (file: DocumentRecord) => file.name === selectedType
+  );
 
   const handleTypeChange = (value: string) => {
     form.setFieldsValue({ documentType: value });
@@ -184,7 +188,6 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
     const newPath = encodeURIComponent(path);
 
     const url = await getSignedURI(newPath, config?.previewEndpoint);
-    console.log(url, "url");
     setCurrentPreview(url.data);
     setPreviewVisible(true);
   };
@@ -319,6 +322,26 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
     multiple: validations.multiple,
   };
 
+  const validateUpload = () => {
+    const selectedOption = options.find((opt) => opt.value === selectedType);
+
+    if (selectedOption?.isRequired) {
+      const isMatchingFileUploaded = formValues[name].some(
+        (file: DocumentRecord) => file.name === selectedType
+      );
+
+      if (!isMatchingFileUploaded) {
+        return Promise.reject(
+          new Error(
+            `Please upload the required document for ${selectedOption.label}!`
+          )
+        );
+      }
+    }
+
+    return Promise.resolve();
+  };
+
   return (
     <div className="space-y-4">
       <Flex justify="flex-start" align="flex-start" gap={10}>
@@ -333,7 +356,12 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
                 required: validations.required,
                 message: "This field is required!",
               },
-              { validator: validateSelection }, // Custom validator
+              {
+                required: options.some(
+                  (opt) => opt.isRequired && opt.value === selectedType
+                ),
+                message: "This field is required!",
+              },
             ]}
           >
             <Select
@@ -343,7 +371,13 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
             >
               {options.map((opt) => (
                 <Option key={opt.value} value={opt.value}>
-                  {opt.isRequired ? `${opt.label} *` : opt.label}{" "}
+                  {opt.isRequired ? (
+                    <>
+                      <span className="text-red-500">*</span> {opt.label}
+                    </>
+                  ) : (
+                    opt.label
+                  )}
                 </Option>
               ))}
             </Select>
@@ -355,26 +389,28 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
             name="dynamic_temp_field_upload"
             valuePropName="fileList"
             getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
-            rules={[{ required: true, message: "Please upload a document!" }]}
+            rules={[{ validator: validateUpload }]}
           >
             <Upload {...uploadProps}>
               <Button
                 icon={<UploadOutlined />}
-                disabled={!selectedType || loading}
+                disabled={!selectedType || loading || isDocumentUploaded}
               >
-                Upload Document
+                {isDocumentUploaded ? "Document Uploaded" : "Upload Document"}
               </Button>
             </Upload>
           </Form.Item>
         </div>
       </Flex>
 
-      <Table
-        columns={columns}
-        dataSource={formValues[name]}
-        rowKey="key"
-        pagination={false}
-      />
+      {formValues[name]?.length > 0 && (
+        <Table
+          columns={columns}
+          dataSource={formValues[name]}
+          rowKey="key"
+          pagination={false}
+        />
+      )}
 
       <Modal
         open={previewVisible}
