@@ -1,4 +1,4 @@
-import { Step } from "types/types";
+import { Step } from "types";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
@@ -11,7 +11,7 @@ export type FormConfig = {
   context?: any;
 };
 interface FormState {
-  fields: any;
+  fields: recordArray;
   isPreview: boolean;
   selectedField: RecordType | null;
   formValues: RecordType;
@@ -25,7 +25,7 @@ interface FormState {
   setSelected: (data: RecordType | null) => void;
   setFields: (data: RecordType | null) => void;
   setIsPreview: (flag: boolean) => void;
-  setFormValues: (callback: Function) => void;
+  setFormValues: (callback: (values:RecordType) => RecordType) => void;
   getSummary: () => Step[];
   getSummaryV2: () => void;
   setFormConfig: (data?: FormConfig) => void;
@@ -75,7 +75,7 @@ export const useFormStore = create<FormState>()(
           state.fields = callback(get().fields);
         });
       },
-      setFormValues: (callback: any) => {
+      setFormValues: (callback) => {
         set((state: FormState) => {
           state.formValues = callback(get().formValues);
         });

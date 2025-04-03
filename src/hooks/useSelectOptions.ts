@@ -11,6 +11,7 @@ interface SelectApiProps {
   labelKey: string;
   valueKey: string;
   dataPath?: string;
+  requiredKey?:string
   queryParams?: Record<string, any>[] | null;
   requestType: "GET" | "POST" | "PUT" | "DELETE";
   requestBody?: Record<string, any>[] | null;
@@ -22,8 +23,14 @@ interface BaseSelectInputProps {
   defaultValue: string;
   validations: Record<string, any>;
   formConfig?: FormConfig;
-  options: { label: string; value: string }[];
+  options: { label: string; value: string,isRequired?:boolean }[];
   formValues?: any;
+}
+
+type OptionType = {
+  label:string;
+  value:String;
+  isRequired?:boolean
 }
 
 interface ManualSelectInputProps extends BaseSelectInputProps {
@@ -41,14 +48,33 @@ export const useSelectOptions = (props: SelectInputProps) => {
 
   const [options, setOptions] = useState<SelectInputProps["options"]>(() => {
     return [
-      { label: `Select ${props.label}`, value: "" },
+      { label: `Select ${props.label}`, value: "",isRequired:false },
       ...(props.options || []),
     ];
   });
 
+  const requiredOptions = useMemo(()=>{
+    return options.map((option:OptionType) => {
+      if(option.isRequired){
+        return option.value
+      }
+    }).filter(Boolean)
+  },[options])  
+  
+
   const { formConfig, formValues } = props;
   const { context } = formConfig || {};
 
+  const validateSelection  = (_:any,value:string) => {
+
+    const isValidSelection = formValues[props?.name]?.some((file:Record<string,any>) => requiredOptions.includes(file.name))
+    if( !isValidSelection){
+      return Promise.reject(new Error(`You must select required documents!`));
+    }
+    return Promise.resolve();
+
+  }
+  
   const getValuesOfFields = useCallback(
     (fieldsToKeepTrack: string) => {
       const result: any = {};
@@ -186,9 +212,10 @@ export const useSelectOptions = (props: SelectInputProps) => {
     }
     return {};
   }, [context, formValues, props]);
-
   const labelKey = (props as ApiSelectInputProps).labelKey;
   const valueKey = (props as ApiSelectInputProps).valueKey;
+  const requiredKey = (props as ApiSelectInputProps).requiredKey;
+
   const dataPath = (props as ApiSelectInputProps).dataPath;
 
   const getOptionFields = useCallback(
@@ -201,6 +228,7 @@ export const useSelectOptions = (props: SelectInputProps) => {
       return {
         label: get(item, resolveExpression(labelKey, values, context)),
         value: get(item, resolveExpression(valueKey, values, context)),
+        isRequired: get(item, resolveExpression(requiredKey, values, context)),
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -245,5 +273,5 @@ export const useSelectOptions = (props: SelectInputProps) => {
     dataPath,
   ]);
 
-  return { loading, options };
+  return { loading, options,validateSelection };
 };

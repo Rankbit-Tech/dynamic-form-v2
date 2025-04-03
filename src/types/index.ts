@@ -2,7 +2,7 @@ export interface FormBuilderPageProps {
     onFormSave: (schema: Record<string, any>) => void
 }
 
-interface Field {
+export interface Field {
     label: string;
     value: string | any;
     type: string;

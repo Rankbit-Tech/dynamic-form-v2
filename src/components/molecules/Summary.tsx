@@ -12,7 +12,7 @@ interface summaryProps {
 
 interface Field {
   label: string;
-  value: string;
+  value: any;
   type: string;
   name: string;
 }
@@ -35,14 +35,16 @@ interface FormField {
 
 const RenderImages = ({ field }: { field: Field }) => {
   if (!Array.isArray(field?.value)) return null;
-  console.log(field.value, "field.value");
-  return field.value.map((file) => (
-    <ImagePreview
-      key={file.name}
-      height={60}
-      src={file?.url || URL.createObjectURL(file?.originFileObj)}
-    />
-  ));
+  if (field.type == fieldTypes.UPLOADDOCUMENTS) {
+    return field.value?.reduce((acc, value) => acc.concat(value.name, ","), "");
+  }
+  // return field.value.map((file) => (
+  //   <ImagePreview
+  //     key={file.name}
+  //     height={60}
+  //     src={file?.url || URL.createObjectURL(file?.originFileObj)}
+  //   />
+  // ));
 };
 
 const Summary = ({ validations, isOnRenderPage = false }: summaryProps) => {
@@ -103,6 +105,7 @@ const Summary = ({ validations, isOnRenderPage = false }: summaryProps) => {
       case fieldTypes.IMAGE:
         return <ImagePreview key={field.name} height={60} src={field.value} />;
       case fieldTypes.IMAGEUPLOAD:
+      case fieldTypes.UPLOADDOCUMENTS:
         return <RenderImages field={field} />;
       case fieldTypes.FILEUPLOAD: {
         const name = field?.name || "File Upload";
