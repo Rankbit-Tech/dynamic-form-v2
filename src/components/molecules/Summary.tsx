@@ -35,16 +35,13 @@ interface FormField {
 
 const RenderImages = ({ field }: { field: Field }) => {
   if (!Array.isArray(field?.value)) return null;
-  if (field.type == fieldTypes.UPLOADDOCUMENTS) {
+  if (field.type == fieldTypes.UPLOADDOCUMENTS || fieldTypes.FILEUPLOAD) {
     return field.value?.reduce((acc, value) => acc.concat(value.name, ","), "");
   }
-  // return field.value.map((file) => (
-  //   <ImagePreview
-  //     key={file.name}
-  //     height={60}
-  //     src={file?.url || URL.createObjectURL(file?.originFileObj)}
-  //   />
-  // ));
+
+  return field.value.map((file) => {
+    return <ImagePreview key={file.name} height={60} src={file?.url} />;
+  });
 };
 
 const Summary = ({ validations, isOnRenderPage = false }: summaryProps) => {
@@ -104,13 +101,9 @@ const Summary = ({ validations, isOnRenderPage = false }: summaryProps) => {
     switch (field.type) {
       case fieldTypes.IMAGE:
         return <ImagePreview key={field.name} height={60} src={field.value} />;
-      case fieldTypes.IMAGEUPLOAD:
+      case fieldTypes.FILEUPLOAD:
       case fieldTypes.UPLOADDOCUMENTS:
         return <RenderImages field={field} />;
-      case fieldTypes.FILEUPLOAD: {
-        const name = field?.name || "File Upload";
-        return <span> : &nbsp;{name}</span>;
-      }
       case fieldTypes.DATETIME:
         return dayjs.isDayjs(field.value) ? (
           <span>

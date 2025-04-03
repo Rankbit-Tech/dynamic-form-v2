@@ -224,9 +224,15 @@ const ImageUpload: React.FC<FileUploadProps> = ({
               width="50px"
             />
           );
+        } else {
+          return (
+            <img
+              height="50px"
+              width="50px"
+              src="https://images.freeimages.com/fic/images/icons/2813/flat_jewels/512/file.png?fmt=webp&h=350"
+            />
+          );
         }
-
-        return record?.type;
       },
     },
     {
@@ -285,12 +291,14 @@ const ImageUpload: React.FC<FileUploadProps> = ({
         </Upload>
       </Form.Item>
       <div className="flex flex-col gap-4 mt-4">
-        <Table
-          columns={columns}
-          dataSource={formValues[name]}
-          rowKey="key"
-          pagination={false}
-        />
+        {formValues[name]?.length > 0 && (
+          <Table
+            columns={columns}
+            dataSource={formValues[name]}
+            rowKey="key"
+            pagination={false}
+          />
+        )}
       </div>
       <Modal
         open={previewVisible}

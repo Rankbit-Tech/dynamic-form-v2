@@ -78,7 +78,7 @@ const UploadDocumentsSettings: React.FC = () => {
                           {...restField}
                           name={[name, "isRequired"]}
                           label="*"
-                          rules={[{ message: "Missing value" }]}
+                          valuePropName="checked"
                         >
                           <Checkbox />
                         </Form.Item>
