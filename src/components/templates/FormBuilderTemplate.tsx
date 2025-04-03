@@ -7,7 +7,7 @@ import DragOverlayContainer from "@components/molecules/DragOverlayContainer";
 import SettingsPanel from "@components/organisms/SettingsPanel";
 import DividerWithHeader from "@components/atoms/Divider";
 import { Button, Input } from "antd";
-import { FormBuilderPageProps } from "types/types";
+import { FormBuilderPageProps } from "types";
 
 const FormBuilderTemplate = ({ onFormSave }: FormBuilderPageProps) => {
   const {

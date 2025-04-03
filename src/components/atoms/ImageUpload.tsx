@@ -3,7 +3,6 @@ import {
   Form,
   Upload,
   Button,
-  UploadFile,
   UploadProps,
   message,
   Table,

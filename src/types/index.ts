@@ -1,5 +1,6 @@
 export interface FormBuilderPageProps {
     onFormSave: (schema: Record<string, any>) => void
+    isUpdateState?:boolean
 }
 
 export interface Field {

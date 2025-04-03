@@ -119,11 +119,8 @@ const QueryBuilderComponent: React.FC<QueryBuilderComponentProps> = ({
 
   const fields: Field[] = useFormStore((state) => {
     return state.fields
-      .filter(
-        (field: { variant: string; name: any }) =>
-          field.variant === VARIANT.FIELD && field.name
-      )
-      .map((field: { name: any; label: any }) => ({
+      .filter((field) => field.variant === VARIANT.FIELD && field.name)
+      .map((field) => ({
         name: field.name,
         label: field.label || field.name,
       }));

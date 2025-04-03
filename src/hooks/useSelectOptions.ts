@@ -65,7 +65,7 @@ export const useSelectOptions = (props: SelectInputProps) => {
   const { formConfig, formValues } = props;
   const { context } = formConfig || {};
 
-  const validateSelection  = (_:any,value:string) => {
+  const validateSelection  = () => {
 
     const isValidSelection = formValues[props?.name]?.some((file:Record<string,any>) => requiredOptions.includes(file.name))
     if( !isValidSelection){

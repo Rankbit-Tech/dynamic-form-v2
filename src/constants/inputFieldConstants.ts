@@ -6,8 +6,6 @@ import RadioButtonFieldSettings from '@components/organisms/property/RadioButton
 import CheckBoxFieldSettings from '@components/organisms/property/CheckboxFieldSettings';
 import DateTimeFieldDesigner from '@components/organisms/designer/DateTimeFieldDesigner';
 import DateTimeFieldSettings from '@components/organisms/property/DateTimeFieldSettings';
-import FileUploadFieldSettings from '@components/organisms/property/FileUploadFieldSettings';
-import FileUploadFieldDesigner from '@components/organisms/designer/FileUploadFieldDesigner';
 import StepperDesigner from '@components/organisms/designer/StepperDesigner';
 import NumberFieldSettings from '@components/organisms/property/NumberFieldSettings';
 import NumberFieldDesigner from '@components/organisms/designer/NumberFieldDesigner';
@@ -55,7 +53,6 @@ import InputFieldSettings from '@components/organisms/property/InputFieldSetting
 import InputFieldDesigner from '@components/organisms/designer/InputFieldDesigner';
 import InputField from '@components/atoms/Input';
 import PasswordInput from '@components/atoms/PasswordInput';
-import FileUpload from '@components/atoms/FileUpload';
 import TextField from '@components/atoms/TextField';
 import TextFieldSettings from '@components/organisms/property/TextFieldSettings';
 import TextFieldDesigner from '@components/organisms/designer/TextFieldDesigner';

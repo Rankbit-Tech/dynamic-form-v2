@@ -7,7 +7,7 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import useFormBuilder from "@hooks/useFormBuilder";
-import { FormBuilderPageProps } from "types/types";
+import { FormBuilderPageProps } from "types";
 
 const FormBuilderPage = ({ onFormSave }: FormBuilderPageProps) => {
   const { handleDragEnd } = useFormBuilder();

@@ -2,10 +2,10 @@ import Renderer from "./Renderer";
 import FormBuilderPage from "./FormBuilderPage";
 import { useFormStore } from "@store/useFormStore";
 import "../index.css";
-import { FormBuilderPageProps } from "types/types";
+import { FormBuilderPageProps } from "types";
 
-const Builder = ({ onFormSave }: FormBuilderPageProps) => {
-  console.log("version : 1.4.2");
+const Builder = ({ onFormSave, isUpdateState }: FormBuilderPageProps) => {
+  console.log("version : 1.4.3");
   const { isPreview } = useFormStore((state) => ({
     isPreview: state.isPreview,
   }));
@@ -13,7 +13,7 @@ const Builder = ({ onFormSave }: FormBuilderPageProps) => {
   return (
     <>
       {isPreview ? (
-        <Renderer isPreview={true} />
+        <Renderer isUpdateState={isUpdateState} isPreview={true} />
       ) : (
         <FormBuilderPage onFormSave={onFormSave} />
       )}
