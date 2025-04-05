@@ -1,32 +1,26 @@
 import React from "react";
-import {
-  Input,
-  Form,
-  Checkbox,
-  InputNumber,
-  Flex,
-  Row,
-  Col,
-  Button,
-} from "antd";
+import { Input, Form, Checkbox, InputNumber, Flex, Row, Col } from "antd";
 import useSettingsForm from "@hooks/useSettingsForm";
 import DividerWithHeader from "@components/atoms/Divider";
 import QueryBuilderComponent from "@components/molecules/QueryBuilder";
-import TextArea from "antd/lib/input/TextArea";
+import CodeEditorWithModal from "@components/atoms/CodeEditor";
 
 const InputFieldSettings: React.FC = () => {
+  const [form] = Form.useForm();
+
   const { handleValuesChange, values, handleCondition } = useSettingsForm();
 
-  const handleCode = () => {
-    const value = values?.code;
-
-    console.log(value);
-    const res = eval(value);
-    console.log(res);
-  };
-
+  const editorLabel = (
+    <span>
+      Code Editor{" "}
+      <span className="text-red-500">
+        (This code uses <code>eval()</code>. Please write secure code.)
+      </span>
+    </span>
+  );
   return (
     <Form
+      form={form}
       initialValues={values}
       layout="vertical"
       onValuesChange={handleValuesChange}
@@ -95,11 +89,12 @@ const InputFieldSettings: React.FC = () => {
         <Input placeholder="e.g. {{firstName} {{lastName}}" />
       </Form.Item>
 
-      <Form.Item name="code">
-        <TextArea></TextArea>
+      <Form.Item name="code" label={editorLabel}>
+        <CodeEditorWithModal
+          value={form.getFieldValue("code")}
+          onChange={(val) => form.setFieldsValue({ code: val })}
+        />
       </Form.Item>
-
-      <Button onClick={handleCode}>Execute</Button>
 
       <DividerWithHeader title="Conditions" />
       <QueryBuilderComponent
