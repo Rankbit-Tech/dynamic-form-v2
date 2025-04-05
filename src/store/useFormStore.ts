@@ -41,7 +41,11 @@ const test = [
     id: 'B9lw1Vyn9yFlt0HlRaoHn',
     type: 'STEPPER',
     variant: 'STEPPER',
-    title: 'Step'
+    title: 'Upload Documents',
+    validations: {},
+    conditions: {},
+    mapFields: {},
+    config: {}
   },
   {
     id: 'AhD0FhYHZE8NB_ft11_-u',
@@ -64,7 +68,7 @@ const test = [
       {
         label: 'Aadhar Card',
         value: 'aadharCard',
-        isRequired:true
+        isRequired: true
       },
       {
         label: 'Pan Card',
@@ -81,10 +85,204 @@ const test = [
     config: {
       endpoint: 'http://localhost:3000/upload',
       requestType: 'POST',
-      fileNamePrefix: 'vyn_dev/NTPC/regular_workmen/'
-    }
+      fileNamePrefix: 'vyn_dev/NTPC/regular_workmen/',
+      previewEndpoint: 'http://localhost:3000/getDocument'
+    },
+    deleteEndpoint: 'http://localhost:3000/delete'
+  },
+  {
+    id: 'sQRBLdKjC3apTsSZveoW6',
+    type: 'INPUT',
+    variant: 'FIELD',
+    label: 'Test input',
+    name: 'profile',
+    placeholder: 'Placeholder',
+    validations: {},
+    conditions: {
+      combinator: 'and',
+      rules: []
+    },
+    parentId: 'B9lw1Vyn9yFlt0HlRaoHn',
+    mapFields: {},
+    config: {}
+  },
+  {
+    id: 'Z-6rBBTuTwjtgxQdkUt2f',
+    type: 'STEPPER',
+    variant: 'STEPPER',
+    title: 'Personal Infoemation',
+    validations: {},
+    conditions: {},
+    mapFields: {},
+    config: {}
+  },
+  {
+    id: 'oSsuxgRtXERb25hZ1343H',
+    type: 'GRID',
+    variant: 'GRID',
+    cols: 2,
+    placement: 'start',
+    conditions: {
+      combinator: 'and',
+      rules: []
+    },
+    parentId: 'Z-6rBBTuTwjtgxQdkUt2f'
+  },
+  {
+    id: 'CkyH6WMaFx6CKoLTPm1f6',
+    type: 'GRID',
+    variant: 'GRID',
+    cols: 1,
+    placement: 'start',
+    conditions: {
+      combinator: 'and',
+      rules: []
+    },
+    parentId: 'Z-6rBBTuTwjtgxQdkUt2f',
+    validations: {},
+    mapFields: {},
+    config: {}
+  },
+  {
+    id: 'yywbjFoBk0q65CtabjvRj',
+    type: 'GRID',
+    variant: 'GRID',
+    cols: 2,
+    placement: 'start',
+    conditions: {
+      combinator: 'and',
+      rules: []
+    },
+    parentId: 'Z-6rBBTuTwjtgxQdkUt2f'
+  },
+  {
+    id: 'cBcNoWhyqhNLYkM5sMaEd',
+    type: 'INPUT',
+    variant: 'FIELD',
+    label: 'First Name',
+    name: 'fname',
+    placeholder: 'Placeholder',
+    validations: {
+      required: true
+    },
+    conditions: {
+      combinator: 'and',
+      rules: []
+    },
+    parentId: 'oSsuxgRtXERb25hZ1343H',
+    mapFields: {},
+    config: {}
+  },
+  {
+    id: 's6tC3mW--HlvjNXrmUzQB',
+    type: 'INPUT',
+    variant: 'FIELD',
+    label: 'Last Name',
+    name: 'lname',
+    placeholder: 'Placeholder',
+    validations: {
+      required: true
+    },
+    conditions: {
+      combinator: 'and',
+      rules: []
+    },
+    parentId: 'oSsuxgRtXERb25hZ1343H',
+    mapFields: {},
+    config: {}
+  },
+  {
+    id: '-U9QznLj_pc_KyTS9zUAl',
+    type: 'INPUT',
+    variant: 'FIELD',
+    label: 'Full Name',
+    name: 'fullName',
+    placeholder: 'Placeholder',
+    validations: {
+      customValue: '{{fname}} {{lname}}'
+    },
+    conditions: {
+      combinator: 'and',
+      rules: []
+    },
+    parentId: 'CkyH6WMaFx6CKoLTPm1f6',
+    mapFields: {},
+    config: {}
+  },
+  {
+    id: '9QRyfho95sQiYKIkw6s_g',
+    type: 'STEPPER',
+    variant: 'STEPPER',
+    title: 'Summary',
+    validations: {},
+    conditions: {},
+    mapFields: {},
+    config: {}
+  },
+  {
+    id: 'pGAq2ZwmH3_j8ajPa9dZF',
+    type: 'SUMMARY',
+    variant: 'SUMMARY',
+    label: 'Label',
+    validations: {
+      fields: [
+        'file',
+        'profile',
+        'fname',
+        'lname',
+        'fullName',
+        'dob',
+        'age'
+      ]
+    },
+    conditions: {
+      combinator: 'and',
+      rules: []
+    },
+    parentId: '9QRyfho95sQiYKIkw6s_g',
+    mapFields: {},
+    config: {},
+    check_all: true
+  },
+  {
+    id: '4GvgvYiM997j7DUJM8jnR',
+    type: 'DATETIME',
+    variant: 'FIELD',
+    label: 'Date of Birth',
+    name: 'dob',
+    defaultValue: '',
+    validations: {
+      required: true
+    },
+    conditions: {
+      combinator: 'and',
+      rules: []
+    },
+    parentId: 'yywbjFoBk0q65CtabjvRj',
+    mapFields: {},
+    config: {}
+  },
+  {
+    id: 'us4licTLLycxBI1THhdCA',
+    type: 'INPUT',
+    variant: 'FIELD',
+    label: 'Age',
+    name: 'age',
+    placeholder: '',
+    validations: {
+      disabled: true
+    },
+    conditions: {
+      combinator: 'and',
+      rules: []
+    },
+    parentId: 'yywbjFoBk0q65CtabjvRj',
+    mapFields: {},
+    config: {},
+    code: 'getFormValues((values,context)=>{\n    const birthDate = new Date(values.dob);\n    const today = new Date();\n \n    let age = today.getFullYear() - birthDate.getFullYear();\n    const monthDiff = today.getMonth() - birthDate.getMonth();\n    const dayDiff = today.getDate() - birthDate.getDate();\n \n    // Adjust if the birthday hasn\'t occurred yet this year\n    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {\n        age--;\n    }\n \n    return age;\n})'
   }
 ]
+
 export const useFormStore = create<FormState>()(
   devtools(
     immer((set, get) => ({

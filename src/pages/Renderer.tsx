@@ -7,7 +7,7 @@ import _ from "lodash";
 
 type RendererProps = {
   formConfig?: FormConfig;
-  onFormSubmit?: (formData: FormData, form?: FormInstance) => void;
+  onFormSubmit?: (formData: Record<string, any>, form?: FormInstance) => void;
   isPreview?: boolean;
 };
 

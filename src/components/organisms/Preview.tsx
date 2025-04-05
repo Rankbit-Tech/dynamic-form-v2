@@ -9,7 +9,7 @@ import { FormValues, SameAsAboveOption } from "types";
 
 interface PreviewProps {
   data: Record<string, any>[];
-  onSubmit?: (formData: FormData, form?: FormInstance) => void;
+  onSubmit?: (formData: Record<string, any>, form?: FormInstance) => void;
   isPreview?: boolean;
   isUpdateState?: boolean;
   showSummaryOnly?: boolean;
@@ -28,7 +28,7 @@ const Preview = ({
   isUpdateState,
   showSummaryOnly,
 }: PreviewProps) => {
-  const { setIsPreview, formConfig, setFormValues } = useFormStore(
+  const { setIsPreview, formConfig, setFormValues, setCurrent } = useFormStore(
     (state) => state
   );
   const { subscribe } = useEventBus();
@@ -83,49 +83,53 @@ const Preview = ({
     };
   }, [form, handleValueChange, subscribe, formConfig, setFormValues]);
 
-  const convertIntoFormData = async (
-    values: Record<string, any>,
-    rawData: any
-  ) => {
-    const formData = new FormData();
+  // const convertIntoFormData = async (
+  //   values: Record<string, any>,
+  //   rawData: any
+  // ) => {
+  //   const formData = new FormData();
 
-    Object.entries(values).forEach(([key, value]) => {
-      if (!key.startsWith("dynamic_temp_field")) {
-        if (Array.isArray(value)) {
-          value.forEach((item, index) => {
-            formData.append(`${key}[${index}]`, item);
-          });
-        } else if (typeof value === "object" && value !== null) {
-          Object.entries(value).forEach(([subKey, subValue]: any[]) => {
-            formData.append(`${key}[${subKey}]`, subValue);
-          });
-        } else {
-          formData.append(key, value);
-        }
-      }
-    });
+  //   Object.entries(values).forEach(([key, value]) => {
+  //     if (!key.startsWith("dynamic_temp_field")) {
+  //       if (Array.isArray(value)) {
+  //         value.forEach((item, index) => {
+  //           formData.append(`${key}[${index}]`, item);
+  //         });
+  //       } else if (typeof value === "object" && value !== null) {
+  //         Object.entries(value).forEach(([subKey, subValue]: any[]) => {
+  //           formData.append(`${key}[${subKey}]`, subValue);
+  //         });
+  //       } else {
+  //         formData.append(key, value);
+  //       }
+  //     }
+  //   });
 
-    formData.append("__rawdata__", rawData);
-    return formData;
-  };
+  //   return formData;
+  // };
 
   const handleFinish = async () => {
-    // if (isPreview) return false;
+    if (isPreview) return false;
 
     const values = form.getFieldsValue(true);
     const formatedData = formateDataStepWise(values);
-    const formData = await convertIntoFormData(formatedData, values);
+    // const formData = await convertIntoFormData(formatedData, values);
 
-    onSubmit?.(formData, form);
+    onSubmit?.(formatedData, form);
   };
   if (showSummaryOnly) {
     return <Summary isOnRenderPage={true} />;
   }
+
+  const resetBuilderState = () => {
+    setIsPreview(false);
+    setCurrent(0);
+  };
   return (
     <div>
       {isPreview && (
         <div className="w-full h-[50px] p-2 flex justify-end">
-          <Button type="primary" onClick={() => setIsPreview(false)}>
+          <Button type="primary" onClick={resetBuilderState}>
             Builder
           </Button>
         </div>

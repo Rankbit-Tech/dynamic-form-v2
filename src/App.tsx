@@ -1,6 +1,7 @@
 import FormBuilderPage from "@pages/FormBuilderPage";
 import Renderer from "@pages/Renderer";
 import { useFormStore } from "@store/useFormStore";
+import axios from "axios";
 import { useMemo } from "react";
 
 function App() {
@@ -15,22 +16,17 @@ function App() {
   );
 
   const { isPreview } = useFormStore((state) => state);
-  const onFormSubmit = async (formData: FormData) => {
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
-    }
+  const onFormSubmit = async (formData: any) => {
     try {
-      const response = await fetch("http://localhost:3000/upload", {
-        method: "POST",
-        body: formData,
+      const response = await axios.post("http://localhost:3000/submit", {
+        response: formData,
       });
 
-      if (!response.ok) {
+      if (!response.status) {
         throw new Error(`Upload failed: ${response.statusText}`);
       }
 
-      const data = await response.json();
-      console.log("Upload successful:", data);
+      console.log("Upload successful:", response.data);
     } catch (error) {
       console.error("Upload failed:", error);
     }

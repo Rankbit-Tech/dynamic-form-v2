@@ -18,6 +18,7 @@ const useCodeExecution = ({ code, name, dependencies = [] }: UseCodeExecutionPro
     const executeCode = () => {
       try {
         const result = getFormValues(() => eval(code));
+        console.log(result,"result")
         if(result){
           form.setFieldValue(name, result);
         }
