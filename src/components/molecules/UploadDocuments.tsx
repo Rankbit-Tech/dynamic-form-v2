@@ -22,6 +22,8 @@ import { useFormStore } from "@store/useFormStore";
 import { useSelectOptions } from "@hooks/useSelectOptions";
 import { useFileUpload } from "@hooks/useFileUpload";
 
+import fileTypeImg from "./fileType.png";
+
 interface DocumentType {
   label: string;
   value: string;
@@ -265,7 +267,7 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
       key: "fileType",
       render: (_: any, record: DocumentRecord) => {
         if (record?.type.startsWith("image")) {
-          return <img src="/fileType.png" height="50px" width="50px" />;
+          return <img src={fileTypeImg} height="50px" width="50px" />;
         }
 
         return record?.type;
