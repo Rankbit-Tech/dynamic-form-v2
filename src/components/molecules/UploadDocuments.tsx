@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Form,
   Select,
@@ -91,6 +91,10 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
     deleteEndpoint,
     headers,
   } = props || {};
+
+  useEffect(() => {
+    form.setFieldValue("dynamic_temp_field_selectedType", selectedType);
+  }, [form]);
 
   const { setFormValues, formValues } = useFormStore();
   const { options } = useSelectOptions({
@@ -317,18 +321,16 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
   };
 
   const validateUpload = () => {
-    const selectedOption = options?.find((opt) => opt.value === selectedType);
+    const requiredOptions = options?.filter((opt) => opt.isRequired);
 
-    if (selectedOption?.isRequired) {
-      const isMatchingFileUploaded = formValues[name].some(
-        (file: DocumentRecord) => file.name === selectedType
+    for (const option of requiredOptions) {
+      const isFileUploaded = formValues[name]?.some(
+        (file: DocumentRecord) => file.name === option.value
       );
 
-      if (!isMatchingFileUploaded) {
+      if (!isFileUploaded) {
         return Promise.reject(
-          new Error(
-            `Please upload the required document for ${selectedOption.label}!`
-          )
+          new Error(`Please upload the required document for ${option.label}!`)
         );
       }
     }
@@ -343,7 +345,6 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
           <Form.Item
             label={label}
             name="dynamic_temp_field_selectedType"
-            initialValue={selectedType}
             required
             rules={[
               {
@@ -360,8 +361,8 @@ const UploadDocuments: React.FC<UploadDocumentsProps> = (props) => {
           >
             <Select
               placeholder="Choose an option"
-              onChange={handleTypeChange}
               value={selectedType}
+              onChange={handleTypeChange}
             >
               {options?.map((opt) => (
                 <Option key={opt.value} value={opt.value}>
