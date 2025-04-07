@@ -83,36 +83,36 @@ const Preview = ({
     };
   }, [form, handleValueChange, subscribe, formConfig, setFormValues]);
 
-  const convertIntoFormData = async (values: Record<string, any>) => {
-    const formData = new FormData();
+  // const convertIntoFormData = async (values: Record<string, any>) => {
+  //   const formData = new FormData();
 
-    Object.entries(values).forEach(([key, value]) => {
-      if (!key.startsWith("dynamic_temp_field")) {
-        if (Array.isArray(value)) {
-          value.forEach((item, index) => {
-            formData.append(`${key}[${index}]`, item);
-          });
-        } else if (typeof value === "object" && value !== null) {
-          Object.entries(value).forEach(([subKey, subValue]: any[]) => {
-            formData.append(`${key}[${subKey}]`, subValue);
-          });
-        } else {
-          formData.append(key, value);
-        }
-      }
-    });
+  //   Object.entries(values).forEach(([key, value]) => {
+  //     if (!key.startsWith("dynamic_temp_field")) {
+  //       if (Array.isArray(value)) {
+  //         value.forEach((item, index) => {
+  //           formData.append(`${key}[${index}]`, item);
+  //         });
+  //       } else if (typeof value === "object" && value !== null) {
+  //         Object.entries(value).forEach(([subKey, subValue]: any[]) => {
+  //           formData.append(`${key}[${subKey}]`, subValue);
+  //         });
+  //       } else {
+  //         formData.append(key, value);
+  //       }
+  //     }
+  //   });
 
-    return formData;
-  };
+  //   return formData;
+  // };
 
   const handleFinish = async () => {
     if (isPreview) return false;
 
     const values = form.getFieldsValue(true);
     const formatedData = formateDataStepWise(values);
-    const formData = await convertIntoFormData(formatedData);
+    // const formData = await convertIntoFormData(formatedData);
     await form.validateFields();
-    onSubmit?.(formData, form);
+    onSubmit?.(formatedData, form);
   };
 
   if (showSummaryOnly) {
