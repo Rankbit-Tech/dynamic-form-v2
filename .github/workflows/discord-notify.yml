@@ -1,4 +1,3 @@
-# .github/workflows/discord-notify.yml
 name: Notify Discord
 
 on:
@@ -7,54 +6,59 @@ on:
   issues:
   issue_comment:
   release:
-  fork:
-  create:
-  delete:
 
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Read event and send to Discord
+      - name: Send GitHub event to Discord
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: |
-          echo "Reading event data..."
           EVENT=$(cat "$GITHUB_EVENT_PATH")
-          EVENT_NAME=${{ github.event_name }}
-          REPO=${{ github.repository }}
-          ACTOR=${{ github.actor }}
+          EVENT_NAME="${{ github.event_name }}"
+          REPO="${{ github.repository }}"
+          ACTOR="${{ github.actor }}"
 
           # Default fallback message
           MESSAGE="📢 Event **$EVENT_NAME** occurred in **$REPO** by **$ACTOR**"
 
-          # Customize for some known events
+          # ---- PUSH EVENT ----
           if [ "$EVENT_NAME" = "push" ]; then
-            COMMITS=$(jq -c '.commits[]' <<< "$EVENT")
-            COMMIT_LIST=""
-            for COMMIT in $COMMITS; do
-              MSG=$(jq -r '.message' <<< "$COMMIT")
-              SHA=$(jq -r '.id' <<< "$COMMIT" | cut -c1-7)
-              URL=$(jq -r '.url' <<< "$COMMIT")
-              AUTHOR=$(jq -r '.author.name' <<< "$COMMIT")
-              COMMIT_LIST+="🔸 [\`$SHA\`]($URL) by **$AUTHOR** — $MSG\n"
-            done
-          BRANCH=$(jq -r '.ref' <<< "$EVENT" | sed 's|refs/heads/||')
-          MESSAGE="🟢 **${ACTOR}** pushed to **${BRANCH}** in **${REPO}**\n\n$COMMIT_LIST"
-          elif [ "$EVENT_NAME" = "pull_request" ]; then
-            TITLE=$(jq -r '.pull_request.title' <<< "$EVENT")
-            URL=$(jq -r '.pull_request.html_url' <<< "$EVENT")
-            MESSAGE="🔃 **${ACTOR}** opened a pull request: **${TITLE}**\n🔗 $URL"
-          elif [ "$EVENT_NAME" = "issues" ]; then
-            TITLE=$(jq -r '.issue.title' <<< "$EVENT")
-            URL=$(jq -r '.issue.html_url' <<< "$EVENT")
-            MESSAGE="🐞 New issue created by **${ACTOR}**: **${TITLE}**\n🔗 $URL"
-          elif [ "$EVENT_NAME" = "issue_comment" ]; then
-            COMMENT=$(jq -r '.comment.body' <<< "$EVENT")
-            URL=$(jq -r '.comment.html_url' <<< "$EVENT")
-            MESSAGE="💬 **${ACTOR}** commented on an issue:\n> ${COMMENT}\n🔗 $URL"
+            BRANCH=$(jq -r '.ref' <<< "$EVENT" | sed 's|refs/heads/||')
+            COMMITS=$(jq -r '.commits[] | "- [`\(.id[0:7])`](\(.url)) by **\(.author.name)**: \(.message | gsub("[\\n\\r]"; " "))"' <<< "$EVENT")
+            MESSAGE="🟢 **$ACTOR** pushed to **$BRANCH** in **$REPO**\n\n$COMMITS"
           fi
 
+          # ---- PR EVENT ----
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            TITLE=$(jq -r '.pull_request.title' <<< "$EVENT")
+            URL=$(jq -r '.pull_request.html_url' <<< "$EVENT")
+            MESSAGE="🔃 **${ACTOR}** opened a PR: **${TITLE}**\n🔗 $URL"
+          fi
+
+          # ---- ISSUE EVENT ----
+          if [ "$EVENT_NAME" = "issues" ]; then
+            TITLE=$(jq -r '.issue.title' <<< "$EVENT")
+            URL=$(jq -r '.issue.html_url' <<< "$EVENT")
+            MESSAGE="🐞 **${ACTOR}** created an issue: **${TITLE}**\n🔗 $URL"
+          fi
+
+          # ---- COMMENT EVENT ----
+          if [ "$EVENT_NAME" = "issue_comment" ]; then
+            COMMENT=$(jq -r '.comment.body' <<< "$EVENT" | head -c 200)
+            URL=$(jq -r '.comment.html_url' <<< "$EVENT")
+            MESSAGE="💬 **${ACTOR}** commented:\n> ${COMMENT}\n🔗 $URL"
+          fi
+
+          # ---- RELEASE EVENT ----
+          if [ "$EVENT_NAME" = "release" ]; then
+            NAME=$(jq -r '.release.name' <<< "$EVENT")
+            URL=$(jq -r '.release.html_url' <<< "$EVENT")
+            MESSAGE="🚀 New release by **${ACTOR}**: **${NAME}**\n🔗 $URL"
+          fi
+
+          # ---- SEND TO DISCORD ----
           echo "Sending to Discord..."
           curl -H "Content-Type: application/json" \
                -X POST \
