@@ -1,0 +1,27 @@
+# .github/workflows/discord-notify.yml
+name: Notify Discord
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+  issues:
+  issue_comment:
+  release:
+  fork:
+  watch:
+  create:
+  delete:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Discord
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          PAYLOAD="New event in $GITHUB_REPOSITORY by $GITHUB_ACTOR on $GITHUB_EVENT_NAME"
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d "{\"content\": \"$PAYLOAD\"}" \
+               $DISCORD_WEBHOOK
