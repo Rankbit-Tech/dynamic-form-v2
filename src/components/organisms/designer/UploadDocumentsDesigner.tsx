@@ -2,19 +2,14 @@ import DragAreaSeperator from "@components/atoms/DragAreaSeperator";
 import DragAreaSplitter from "@components/atoms/DragAreaSplitter";
 import { VARIANT } from "@constants/fieldTypes";
 import { useDroppable } from "@dnd-kit/core";
-import { cn } from "@utils/cn";
-import { Card } from "antd";
-import { ReactNode } from "react";
 
 interface UploadDocumentsDesignerProps {
   id: string;
   label: string;
-
   parentId: string;
 }
 const UploadDocumentsDesigner = ({
   id,
-  label,
   parentId,
 }: UploadDocumentsDesignerProps) => {
   const topHalf = useDroppable({
