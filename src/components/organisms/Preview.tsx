@@ -6,6 +6,7 @@ import useEventBus from "@hooks/useEventBus";
 import { useEffect } from "react";
 import Summary from "@components/molecules/Summary";
 import { FormValues, SameAsAboveOption } from "types";
+import dayjs from "dayjs";
 
 interface PreviewProps {
   data: Record<string, any>[];
@@ -29,7 +30,7 @@ const Preview = ({
   showSummaryOnly,
 }: PreviewProps) => {
   const { setIsPreview, formConfig, setFormValues, setCurrent } = useFormStore(
-    (state) => state
+    (state) => state,
   );
   const { subscribe } = useEventBus();
 
@@ -55,21 +56,30 @@ const Preview = ({
         form.setFieldsValue(updatedValues);
 
         handleValueChange(null, { ...form.getFieldsValue(), ...updatedValues });
-      }
+      },
     );
 
     if (formConfig?.initialValues) {
       const transformedValues = { ...formConfig.initialValues };
 
-      // Automatically detect and transform image fields
-      // Object.keys(transformedValues).forEach((key) => {
-      //   if (
-      //     isImageUrl(transformedValues[key]) ||
-      //     Array.isArray(transformedValues[key])
-      //   ) {
-      //     transformedValues[key] = normalizeFileList(transformedValues[key]);
-      //   }
-      // });
+      Object.entries(transformedValues).forEach(([key, value]) => {
+        try {
+          if (typeof value === "string") {
+            const parsedDate = dayjs(value, "YYYY-MM-DD", true);
+
+            if (parsedDate.isValid()) {
+              transformedValues[key] = parsedDate;
+            } else {
+              transformedValues[key] = value;
+            }
+          } else {
+            transformedValues[key] = value;
+          }
+        } catch (e) {
+          console.error("Error parsing value:", value, e);
+          transformedValues[key] = value;
+        }
+      });
       form.setFieldsValue(transformedValues);
     }
 
@@ -106,7 +116,7 @@ const Preview = ({
   // };
 
   const handleFinish = async () => {
-    if (isPreview) return false;
+    // if (isPreview) return false;
 
     const values = form.getFieldsValue(true);
     const formatedData = formateDataStepWise(values);
