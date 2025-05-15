@@ -65,7 +65,7 @@ const Preview = ({
       Object.entries(transformedValues).forEach(([key, value]) => {
         try {
           if (typeof value === "string") {
-            const parsedDate = dayjs(value, "YYYY-MM-DD", true);
+            const parsedDate = dayjs(value);
 
             if (parsedDate.isValid()) {
               transformedValues[key] = parsedDate;
@@ -76,7 +76,6 @@ const Preview = ({
             transformedValues[key] = value;
           }
         } catch (e) {
-          console.error("Error parsing value:", value, e);
           transformedValues[key] = value;
         }
       });
