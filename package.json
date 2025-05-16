@@ -1,7 +1,7 @@
 {
   "name": "form-builder-v2",
   "private": true,
-  "version": "1.4.9",
+  "version": "1.4.10",
   "type": "module",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.es.js",
