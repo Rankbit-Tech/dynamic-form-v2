@@ -64,16 +64,13 @@ const Preview = ({
 
       Object.entries(transformedValues).forEach(([key, value]) => {
         try {
-          if (typeof value === "string") {
+          if (typeof value === "string" && isNaN(Number(value))) {
             const parsedDate = dayjs(value);
-
             if (parsedDate.isValid()) {
               transformedValues[key] = parsedDate;
             } else {
               transformedValues[key] = value;
             }
-          } else {
-            transformedValues[key] = value;
           }
         } catch (e) {
           transformedValues[key] = value;
